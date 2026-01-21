@@ -90,13 +90,12 @@ final class YT_Consent_Translations {
 
     /**
      * Load plugin text domain
+     * Note: Since WordPress 4.6, translations are automatically loaded from WordPress.org
+     * This method is kept for backward compatibility with self-hosted translations
      */
     public function load_textdomain() {
-        load_plugin_textdomain(
-            'yt-consent-translations',
-            false,
-            dirname(YTCT_PLUGIN_BASENAME) . '/languages'
-        );
+        // Translations are automatically loaded by WordPress 4.6+ for plugins hosted on WordPress.org
+        // Manual loading only needed for custom translation files not on WordPress.org
     }
 
     /**
