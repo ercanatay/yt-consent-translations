@@ -19,6 +19,23 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 - ✅ **No Coding Required** - Simple point-and-click interface
 - ✅ **WPML/Polylang Compatible** - Works with multilingual plugins
 
+## 📸 Screenshots
+
+### Admin Settings - Banner Tab
+![Banner Tab](assets/screenshots/01-banner-tab.jpg)
+
+### Admin Settings - Modal Tab
+![Modal Tab](assets/screenshots/02-modal-tab.jpg)
+
+### Admin Settings - Categories Tab
+![Categories Tab](assets/screenshots/03-categories-tab.jpg)
+
+### Admin Settings - Buttons Tab
+![Buttons Tab](assets/screenshots/04-buttons-tab.jpg)
+
+### Frontend - Consent Popup
+![Consent Popup](assets/screenshots/05-consent-popup.jpg)
+
 ## 🌐 Supported Languages (36 Languages)
 
 | Language | Code | Language | Code |
