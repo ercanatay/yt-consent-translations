@@ -73,9 +73,9 @@ final class YT_Consent_Translations {
         // Initialize translator on frontend and admin
         add_action('init', [$this, 'init_translator']);
 
-        // Initialize admin
+        // Initialize admin - must run before admin_menu hook
         if (is_admin()) {
-            add_action('admin_init', [$this, 'init_admin']);
+            $this->init_admin();
         }
 
         // Activation hook
