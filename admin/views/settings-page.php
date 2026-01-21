@@ -16,21 +16,21 @@ if (!current_user_can('manage_options')) {
 }
 
 // Get current options
-$options = get_option(YTCT_OPTION_NAME, [
+$ytct_options = get_option(YTCT_OPTION_NAME, [
     'enabled' => true,
     'language' => 'en',
     'custom_strings' => []
 ]);
 
-$enabled = isset($options['enabled']) ? (bool) $options['enabled'] : true;
-$current_language = isset($options['language']) ? $options['language'] : 'en';
-$custom_strings = isset($options['custom_strings']) ? $options['custom_strings'] : [];
+$ytct_enabled = isset($ytct_options['enabled']) ? (bool) $ytct_options['enabled'] : true;
+$ytct_current_language = isset($ytct_options['language']) ? $ytct_options['language'] : 'en';
+$ytct_custom_strings = isset($ytct_options['custom_strings']) ? $ytct_options['custom_strings'] : [];
 
 // Get available data
-$languages = YTCT_Strings::get_languages();
-$string_groups = YTCT_Strings::get_string_groups();
-$translations = YTCT_Strings::get_translations($current_language);
-$original_strings = YTCT_Strings::get_string_keys();
+$ytct_languages = YTCT_Strings::get_languages();
+$ytct_string_groups = YTCT_Strings::get_string_groups();
+$ytct_translations = YTCT_Strings::get_translations($ytct_current_language);
+$ytct_original_strings = YTCT_Strings::get_string_keys();
 ?>
 
 <div class="ytct-wrap">
@@ -51,21 +51,21 @@ $original_strings = YTCT_Strings::get_string_keys();
                 <div class="ytct-language-select">
                     <label for="ytct-language"><?php esc_html_e('Language Preset:', 'yt-consent-translations'); ?></label>
                     <select id="ytct-language" name="language">
-                        <?php foreach ($languages as $code => $name) : ?>
-                            <option value="<?php echo esc_attr($code); ?>" <?php selected($current_language, $code); ?>>
+                        <?php foreach ($ytct_languages as $ytct_code => $ytct_name) : ?>
+                            <option value="<?php echo esc_attr($ytct_code); ?>" <?php selected($ytct_current_language, $ytct_code); ?>>
                                 <?php 
-                                if ($code === 'auto') {
-                                    $detected = YTCT_Strings::detect_wp_language();
-                                    $detected_name = isset($languages[$detected]) ? $languages[$detected] : 'English';
-                                    printf('%s → %s', esc_html($name), esc_html($detected_name));
+                                if ($ytct_code === 'auto') {
+                                    $ytct_detected = YTCT_Strings::detect_wp_language();
+                                    $ytct_detected_name = isset($ytct_languages[$ytct_detected]) ? $ytct_languages[$ytct_detected] : 'English';
+                                    printf('%s → %s', esc_html($ytct_name), esc_html($ytct_detected_name));
                                 } else {
-                                    echo esc_html($name) . ' (' . esc_html(strtoupper($code)) . ')';
+                                    echo esc_html($ytct_name) . ' (' . esc_html(strtoupper($ytct_code)) . ')';
                                 }
                                 ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <?php if ($current_language === 'auto') : ?>
+                    <?php if ($ytct_current_language === 'auto') : ?>
                         <small style="display: block; margin-top: 5px; color: #666;">
                             <?php 
                             /* translators: %s is the WordPress locale code */
@@ -81,7 +81,7 @@ $original_strings = YTCT_Strings::get_string_keys();
                     <label class="ytct-switch">
                         <!-- Hidden input ensures "0" is sent when checkbox is unchecked -->
                         <input type="hidden" name="enabled" value="0">
-                        <input type="checkbox" id="ytct-enabled" name="enabled" value="1" <?php checked($enabled); ?>>
+                        <input type="checkbox" id="ytct-enabled" name="enabled" value="1" <?php checked($ytct_enabled); ?>>
                         <span class="ytct-switch-slider"></span>
                     </label>
                 </div>
@@ -89,68 +89,68 @@ $original_strings = YTCT_Strings::get_string_keys();
 
             <!-- Tabs -->
             <div class="ytct-tabs">
-                <?php foreach ($string_groups as $group_id => $group) : ?>
-                    <button type="button" class="ytct-tab<?php echo $group_id === 'banner' ? ' active' : ''; ?>" data-tab="<?php echo esc_attr($group_id); ?>">
-                        <?php echo esc_html($group['label']); ?>
+                <?php foreach ($ytct_string_groups as $ytct_group_id => $ytct_group) : ?>
+                    <button type="button" class="ytct-tab<?php echo $ytct_group_id === 'banner' ? ' active' : ''; ?>" data-tab="<?php echo esc_attr($ytct_group_id); ?>">
+                        <?php echo esc_html($ytct_group['label']); ?>
                     </button>
                 <?php endforeach; ?>
             </div>
 
             <!-- Tab Contents -->
-            <?php foreach ($string_groups as $group_id => $group) : ?>
-                <div id="ytct-tab-<?php echo esc_attr($group_id); ?>" class="ytct-tab-content<?php echo $group_id === 'banner' ? ' active' : ''; ?>">
+            <?php foreach ($ytct_string_groups as $ytct_group_id => $ytct_group) : ?>
+                <div id="ytct-tab-<?php echo esc_attr($ytct_group_id); ?>" class="ytct-tab-content<?php echo $ytct_group_id === 'banner' ? ' active' : ''; ?>">
                     <div class="ytct-category-header">
                         <span class="ytct-category-icon">
                             <?php
-                            $icons = [
+                            $ytct_icons = [
                                 'banner' => '🍪',
                                 'modal' => '⚙️',
                                 'categories' => '📂',
                                 'buttons' => '🔘'
                             ];
-                            echo esc_html(isset($icons[$group_id]) ? $icons[$group_id] : '📝');
+                            echo esc_html(isset($ytct_icons[$ytct_group_id]) ? $ytct_icons[$ytct_group_id] : '📝');
                             ?>
                         </span>
-                        <h3><?php echo esc_html($group['label']); ?> <?php esc_html_e('Strings', 'yt-consent-translations'); ?></h3>
+                        <h3><?php echo esc_html($ytct_group['label']); ?> <?php esc_html_e('Strings', 'yt-consent-translations'); ?></h3>
                     </div>
 
-                    <?php foreach ($group['keys'] as $key) : 
-                        $original = isset($original_strings[$key]) ? $original_strings[$key] : '';
-                        $value = isset($custom_strings[$key]) && !empty($custom_strings[$key]) 
-                            ? $custom_strings[$key] 
-                            : (isset($translations[$key]) ? $translations[$key] : '');
-                        $has_placeholder = YTCT_Strings::has_placeholder($key);
-                        $is_long = strlen($original) > 100;
+                    <?php foreach ($ytct_group['keys'] as $ytct_key) : 
+                        $ytct_original = isset($ytct_original_strings[$ytct_key]) ? $ytct_original_strings[$ytct_key] : '';
+                        $ytct_value = isset($ytct_custom_strings[$ytct_key]) && !empty($ytct_custom_strings[$ytct_key]) 
+                            ? $ytct_custom_strings[$ytct_key] 
+                            : (isset($ytct_translations[$ytct_key]) ? $ytct_translations[$ytct_key] : '');
+                        $ytct_has_placeholder = YTCT_Strings::has_placeholder($ytct_key);
+                        $ytct_is_long = strlen($ytct_original) > 100;
                     ?>
                         <div class="ytct-string-group">
-                            <label class="ytct-string-label" for="ytct-string-<?php echo esc_attr($key); ?>">
-                                <?php echo esc_html(YTCT_Strings::get_key_label($key)); ?>
+                            <label class="ytct-string-label" for="ytct-string-<?php echo esc_attr($ytct_key); ?>">
+                                <?php echo esc_html(YTCT_Strings::get_key_label($ytct_key)); ?>
                             </label>
                             
                             <div class="ytct-original">
                                 <strong><?php esc_html_e('Original:', 'yt-consent-translations'); ?></strong><br>
-                                <?php echo esc_html($original); ?>
+                                <?php echo esc_html($ytct_original); ?>
                             </div>
 
-                            <?php if ($is_long) : ?>
+                            <?php if ($ytct_is_long) : ?>
                                 <textarea 
-                                    id="ytct-string-<?php echo esc_attr($key); ?>"
-                                    name="strings[<?php echo esc_attr($key); ?>]"
+                                    id="ytct-string-<?php echo esc_attr($ytct_key); ?>"
+                                    name="strings[<?php echo esc_attr($ytct_key); ?>]"
                                     class="ytct-input ytct-textarea"
                                     placeholder="<?php esc_attr_e('Enter translation...', 'yt-consent-translations'); ?>"
-                                ><?php echo esc_textarea($value); ?></textarea>
+                                ><?php echo esc_textarea($ytct_value); ?></textarea>
                             <?php else : ?>
                                 <input 
                                     type="text"
-                                    id="ytct-string-<?php echo esc_attr($key); ?>"
-                                    name="strings[<?php echo esc_attr($key); ?>]"
+                                    id="ytct-string-<?php echo esc_attr($ytct_key); ?>"
+                                    name="strings[<?php echo esc_attr($ytct_key); ?>]"
                                     class="ytct-input"
-                                    value="<?php echo esc_attr($value); ?>"
+                                    value="<?php echo esc_attr($ytct_value); ?>"
                                     placeholder="<?php esc_attr_e('Enter translation...', 'yt-consent-translations'); ?>"
                                 >
                             <?php endif; ?>
 
-                            <?php if ($has_placeholder) : ?>
+                            <?php if ($ytct_has_placeholder) : ?>
                                 <span class="ytct-placeholder-note">
                                     ⚠️ <?php esc_html_e('Keep', 'yt-consent-translations'); ?> <code>%s</code> <?php esc_html_e('in your translation - it will be replaced with the Privacy Policy URL.', 'yt-consent-translations'); ?>
                                 </span>

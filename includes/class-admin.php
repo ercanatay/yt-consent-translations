@@ -274,6 +274,7 @@ class YTCT_Admin {
             wp_send_json_error(['message' => __('No file uploaded.', 'yt-consent-translations')]);
         }
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES array is validated below
         $ytct_file = $_FILES['import_file'];
 
         if (!isset($ytct_file['error']) || $ytct_file['error'] !== UPLOAD_ERR_OK) {
