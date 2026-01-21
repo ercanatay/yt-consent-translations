@@ -192,6 +192,22 @@ To add a new language, edit `includes/class-strings.php`:
 
 See [CHANGELOG.md](CHANGELOG.md) for full history.
 
+## ⚠️ Important Notes
+
+### String Matching Dependency
+
+This plugin works by matching the **exact original English strings** from YOOtheme Pro's Consent Manager. If YOOtheme updates their theme and changes any of these strings (even a single character), the translation for that string will not work until the plugin is updated.
+
+**What to do if translations stop working after a YOOtheme update:**
+1. Check if YOOtheme changed any consent manager strings
+2. [Report an issue](https://github.com/ercanatay/yt-consent-translations/issues) with the new string
+3. Wait for a plugin update or manually edit the `includes/class-strings.php` file
+
+### Tested With
+- YOOtheme Pro 5.x
+- WordPress 5.0 - 6.4
+- PHP 7.4 - 8.2
+
 ## 🐛 Known Issues
 
 - None at this time

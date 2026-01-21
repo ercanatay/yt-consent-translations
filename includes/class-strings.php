@@ -206,6 +206,11 @@ class YTCT_Strings {
     }
 
     /**
+     * Cached translations (loaded once per request)
+     */
+    private static $translations_cache = null;
+
+    /**
      * Get translations for a specific language
      *
      * @param string $lang Language code
@@ -217,12 +222,17 @@ class YTCT_Strings {
     }
 
     /**
-     * Get all translations for all languages
+     * Get all translations for all languages (cached)
      *
      * @return array
      */
     public static function get_all_translations() {
-        return [
+        // Return cached translations if available (memory optimization)
+        if (self::$translations_cache !== null) {
+            return self::$translations_cache;
+        }
+
+        self::$translations_cache = [
             // English (Default)
             'en' => [
                 'banner_text' => 'We use cookies and similar technologies to improve your experience on our website.',
@@ -1123,6 +1133,8 @@ class YTCT_Strings {
                 'modal_save' => 'I-save'
             ]
         ];
+
+        return self::$translations_cache;
     }
 
     /**
