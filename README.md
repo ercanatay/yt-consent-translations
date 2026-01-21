@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0%2B-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -12,7 +12,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 ## 🎯 Features
 
 - ✅ **21 Translatable Strings** - All consent manager texts
-- ✅ **6 Pre-configured Languages** - Ready to use out of the box
+- ✅ **36 Pre-configured Languages** - Ready to use out of the box
 - ✅ **Auto Language Detection** - Automatically uses WordPress default language
 - ✅ **Easy Admin Interface** - Tabbed UI for better organization
 - ✅ **Import/Export** - Backup and restore your translations as JSON
@@ -173,6 +173,15 @@ To add a new language, edit `includes/class-strings.php`:
 ```
 
 ## 📝 Changelog
+
+### 1.1.0 (2026-01-21)
+- Added 30 new language presets (36 total)
+- Chinese, Spanish, French, Portuguese, Russian, Japanese
+- Indonesian, Italian, Dutch, Polish, Vietnamese, Thai
+- Ukrainian, Czech, Greek, Romanian, Hungarian, Swedish
+- Danish, Finnish, Norwegian, Hebrew, Malay, Bengali
+- Persian, Tamil, Telugu, Marathi, Swahili, Filipino
+- Extended WordPress locale mapping for auto-detection
 
 ### 1.0.0 (2026-01-21)
 - Initial release
