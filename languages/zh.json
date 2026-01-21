@@ -1,0 +1,23 @@
+{
+    "banner_text": "我们使用cookies和类似技术来改善您在我们网站上的体验。",
+    "banner_link": "阅读我们的<a href=\"%s\">隐私政策</a>。",
+    "button_accept": "接受",
+    "button_reject": "拒绝",
+    "button_settings": "管理设置",
+    "modal_title": "隐私设置",
+    "modal_content": "本网站使用cookies和类似技术。它们被分为不同的类别，您可以在下面查看和管理。如果您接受了任何非必要的cookies，您可以随时在设置中更改您的偏好。",
+    "modal_content_link": "在我们的<a href=\"%s\">隐私政策</a>中了解更多。",
+    "functional_title": "功能性",
+    "preferences_title": "偏好设置",
+    "statistics_title": "统计",
+    "marketing_title": "营销",
+    "functional_content": "这些技术是激活我们网站核心功能所必需的。",
+    "preferences_content": "这些技术使我们的网站能够记住您的偏好，并为您提供更个性化的体验。",
+    "statistics_content": "这些技术使我们能够分析网站的使用情况，以衡量和改进性能。",
+    "marketing_content": "这些技术被我们的营销合作伙伴用于向您展示与您兴趣相关的个性化广告。",
+    "show_services": "显示服务",
+    "hide_services": "隐藏服务",
+    "modal_accept": "全部接受",
+    "modal_reject": "全部拒绝",
+    "modal_save": "保存"
+}

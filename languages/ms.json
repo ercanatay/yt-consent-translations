@@ -1,0 +1,23 @@
+{
+    "banner_text": "Kami menggunakan kuki dan teknologi serupa untuk meningkatkan pengalaman anda di laman web kami.",
+    "banner_link": "Baca <a href=\"%s\">Dasar Privasi</a> kami.",
+    "button_accept": "Terima",
+    "button_reject": "Tolak",
+    "button_settings": "Urus Tetapan",
+    "modal_title": "Tetapan Privasi",
+    "modal_content": "Laman web ini menggunakan kuki dan teknologi serupa. Ia dikumpulkan dalam kategori yang boleh anda semak dan urus di bawah. Jika anda telah menerima kuki yang tidak penting, anda boleh menukar pilihan anda pada bila-bila masa dalam tetapan.",
+    "modal_content_link": "Ketahui lebih lanjut dalam <a href=\"%s\">Dasar Privasi</a> kami.",
+    "functional_title": "Fungsional",
+    "preferences_title": "Keutamaan",
+    "statistics_title": "Statistik",
+    "marketing_title": "Pemasaran",
+    "functional_content": "Teknologi ini diperlukan untuk mengaktifkan fungsi teras laman web kami.",
+    "preferences_content": "Teknologi ini membolehkan laman web kami mengingati pilihan anda dan memberikan pengalaman yang lebih peribadi.",
+    "statistics_content": "Teknologi ini membolehkan kami menganalisis penggunaan laman web untuk mengukur dan meningkatkan prestasi.",
+    "marketing_content": "Teknologi ini digunakan oleh rakan pemasaran kami untuk menunjukkan iklan yang diperibadikan berkaitan dengan minat anda.",
+    "show_services": "Tunjukkan Perkhidmatan",
+    "hide_services": "Sembunyikan Perkhidmatan",
+    "modal_accept": "Terima Semua",
+    "modal_reject": "Tolak Semua",
+    "modal_save": "Simpan"
+}

@@ -1,0 +1,23 @@
+{
+    "banner_text": "Používáme soubory cookie a podobné technologie ke zlepšení vašeho zážitku na našich stránkách.",
+    "banner_link": "Přečtěte si naše <a href=\"%s\">Zásady ochrany osobních údajů</a>.",
+    "button_accept": "Přijmout",
+    "button_reject": "Odmítnout",
+    "button_settings": "Spravovat nastavení",
+    "modal_title": "Nastavení soukromí",
+    "modal_content": "Tyto webové stránky používají soubory cookie a podobné technologie. Jsou seskupeny do kategorií, které si můžete prohlédnout a spravovat níže. Pokud jste přijali jakékoli nepodstatné soubory cookie, můžete své preference kdykoli změnit v nastavení.",
+    "modal_content_link": "Další informace najdete v našich <a href=\"%s\">Zásadách ochrany osobních údajů</a>.",
+    "functional_title": "Funkční",
+    "preferences_title": "Předvolby",
+    "statistics_title": "Statistiky",
+    "marketing_title": "Marketing",
+    "functional_content": "Tyto technologie jsou nutné k aktivaci základních funkcí našich webových stránek.",
+    "preferences_content": "Tyto technologie umožňují našim stránkám zapamatovat si vaše preference a poskytnout vám osobnější zážitek.",
+    "statistics_content": "Tyto technologie nám umožňují analyzovat používání našich stránek za účelem měření a zlepšování výkonu.",
+    "marketing_content": "Tyto technologie používají naši marketingoví partneři k zobrazování personalizovaných reklam relevantních pro vaše zájmy.",
+    "show_services": "Zobrazit služby",
+    "hide_services": "Skrýt služby",
+    "modal_accept": "Přijmout vše",
+    "modal_reject": "Odmítnout vše",
+    "modal_save": "Uložit"
+}

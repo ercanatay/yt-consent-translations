@@ -1,0 +1,23 @@
+{
+    "banner_text": "Vi bruger cookies og lignende teknologier for at forbedre din oplevelse på vores hjemmeside.",
+    "banner_link": "Læs vores <a href=\"%s\">Privatlivspolitik</a>.",
+    "button_accept": "Accepter",
+    "button_reject": "Afvis",
+    "button_settings": "Administrer indstillinger",
+    "modal_title": "Privatlivsindstillinger",
+    "modal_content": "Denne hjemmeside bruger cookies og lignende teknologier. De er grupperet i kategorier, som du kan gennemse og administrere nedenfor. Hvis du har accepteret ikke-essentielle cookies, kan du ændre dine præferencer når som helst i indstillingerne.",
+    "modal_content_link": "Læs mere i vores <a href=\"%s\">Privatlivspolitik</a>.",
+    "functional_title": "Funktionelle",
+    "preferences_title": "Præferencer",
+    "statistics_title": "Statistik",
+    "marketing_title": "Marketing",
+    "functional_content": "Disse teknologier er nødvendige for at aktivere kernefunktionaliteten på vores hjemmeside.",
+    "preferences_content": "Disse teknologier gør det muligt for vores hjemmeside at huske dine præferencer og give dig en mere personlig oplevelse.",
+    "statistics_content": "Disse teknologier gør det muligt for os at analysere brugen af vores hjemmeside for at måle og forbedre ydeevnen.",
+    "marketing_content": "Disse teknologier bruges af vores marketingpartnere til at vise dig personlige annoncer, der er relevante for dine interesser.",
+    "show_services": "Vis tjenester",
+    "hide_services": "Skjul tjenester",
+    "modal_accept": "Accepter alle",
+    "modal_reject": "Afvis alle",
+    "modal_save": "Gem"
+}

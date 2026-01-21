@@ -1,0 +1,23 @@
+{
+    "banner_text": "Käytämme evästeitä ja vastaavia teknologioita parantaaksemme kokemustasi verkkosivustollamme.",
+    "banner_link": "Lue <a href=\"%s\">Tietosuojakäytäntömme</a>.",
+    "button_accept": "Hyväksy",
+    "button_reject": "Hylkää",
+    "button_settings": "Hallitse asetuksia",
+    "modal_title": "Yksityisyysasetukset",
+    "modal_content": "Tämä verkkosivusto käyttää evästeitä ja vastaavia teknologioita. Ne on ryhmitelty kategorioihin, joita voit tarkastella ja hallita alla. Jos olet hyväksynyt ei-välttämättömiä evästeitä, voit muuttaa asetuksiasi milloin tahansa.",
+    "modal_content_link": "Lue lisää <a href=\"%s\">Tietosuojakäytännöstämme</a>.",
+    "functional_title": "Toiminnalliset",
+    "preferences_title": "Asetukset",
+    "statistics_title": "Tilastot",
+    "marketing_title": "Markkinointi",
+    "functional_content": "Nämä teknologiat ovat välttämättömiä verkkosivustomme ydintoimintojen aktivoimiseksi.",
+    "preferences_content": "Nämä teknologiat mahdollistavat verkkosivustomme muistamaan asetuksesi ja tarjoamaan sinulle henkilökohtaisemman kokemuksen.",
+    "statistics_content": "Nämä teknologiat mahdollistavat verkkosivustomme käytön analysoinnin suorituskyvyn mittaamiseksi ja parantamiseksi.",
+    "marketing_content": "Markkinointikumppanimme käyttävät näitä teknologioita näyttääkseen sinulle kiinnostuksiisi sopivia henkilökohtaisia mainoksia.",
+    "show_services": "Näytä palvelut",
+    "hide_services": "Piilota palvelut",
+    "modal_accept": "Hyväksy kaikki",
+    "modal_reject": "Hylkää kaikki",
+    "modal_save": "Tallenna"
+}

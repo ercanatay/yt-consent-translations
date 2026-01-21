@@ -1,0 +1,23 @@
+{
+    "banner_text": "Kami menggunakan cookie dan teknologi serupa untuk meningkatkan pengalaman Anda di situs web kami.",
+    "banner_link": "Baca <a href=\"%s\">Kebijakan Privasi</a> kami.",
+    "button_accept": "Terima",
+    "button_reject": "Tolak",
+    "button_settings": "Kelola Pengaturan",
+    "modal_title": "Pengaturan Privasi",
+    "modal_content": "Situs web ini menggunakan cookie dan teknologi serupa. Mereka dikelompokkan ke dalam kategori yang dapat Anda tinjau dan kelola di bawah. Jika Anda telah menerima cookie yang tidak penting, Anda dapat mengubah preferensi Anda kapan saja di pengaturan.",
+    "modal_content_link": "Pelajari lebih lanjut di <a href=\"%s\">Kebijakan Privasi</a> kami.",
+    "functional_title": "Fungsional",
+    "preferences_title": "Preferensi",
+    "statistics_title": "Statistik",
+    "marketing_title": "Pemasaran",
+    "functional_content": "Teknologi ini diperlukan untuk mengaktifkan fungsionalitas inti situs web kami.",
+    "preferences_content": "Teknologi ini memungkinkan situs web kami mengingat preferensi Anda dan memberikan pengalaman yang lebih personal.",
+    "statistics_content": "Teknologi ini memungkinkan kami menganalisis penggunaan situs web untuk mengukur dan meningkatkan kinerja.",
+    "marketing_content": "Teknologi ini digunakan oleh mitra pemasaran kami untuk menampilkan iklan yang dipersonalisasi sesuai minat Anda.",
+    "show_services": "Tampilkan Layanan",
+    "hide_services": "Sembunyikan Layanan",
+    "modal_accept": "Terima Semua",
+    "modal_reject": "Tolak Semua",
+    "modal_save": "Simpan"
+}

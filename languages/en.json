@@ -1,0 +1,23 @@
+{
+    "banner_text": "We use cookies and similar technologies to improve your experience on our website.",
+    "banner_link": "Read our <a href=\"%s\">Privacy Policy</a>.",
+    "button_accept": "Accept",
+    "button_reject": "Reject",
+    "button_settings": "Manage Settings",
+    "modal_title": "Privacy Settings",
+    "modal_content": "This website uses cookies and similar technologies. They are grouped into categories, which you can review and manage below. If you have accepted any non-essential cookies, you can change your preferences at any time in the settings.",
+    "modal_content_link": "Learn more in our <a href=\"%s\">Privacy Policy</a>.",
+    "functional_title": "Functional",
+    "preferences_title": "Preferences",
+    "statistics_title": "Statistics",
+    "marketing_title": "Marketing",
+    "functional_content": "These technologies are required to activate the core functionality of our website.",
+    "preferences_content": "These technologies allow our website to remember your preferences and provide you with a more personalized experience.",
+    "statistics_content": "These technologies enable us to analyse the use of our website in order to measure and improve performance.",
+    "marketing_content": "These technologies are used by our marketing partners to show you personalized advertisements relevant to your interests.",
+    "show_services": "Show Services",
+    "hide_services": "Hide Services",
+    "modal_accept": "Accept all",
+    "modal_reject": "Reject all",
+    "modal_save": "Save"
+}

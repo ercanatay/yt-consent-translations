@@ -1,0 +1,23 @@
+{
+    "banner_text": "Web sitemizde deneyiminizi iyileştirmek için çerezler ve benzer teknolojiler kullanıyoruz.",
+    "banner_link": "<a href=\"%s\">Gizlilik Politikamızı</a> okuyun.",
+    "button_accept": "Kabul Et",
+    "button_reject": "Reddet",
+    "button_settings": "Ayarları Yönet",
+    "modal_title": "Gizlilik Ayarları",
+    "modal_content": "Bu web sitesi çerezler ve benzer teknolojiler kullanmaktadır. Bunlar, aşağıda inceleyip yönetebileceğiniz kategorilere ayrılmıştır. Zorunlu olmayan çerezleri kabul ettiyseniz, tercihlerinizi istediğiniz zaman ayarlardan değiştirebilirsiniz.",
+    "modal_content_link": "<a href=\"%s\">Gizlilik Politikamızdan</a> daha fazla bilgi edinin.",
+    "functional_title": "Fonksiyonel",
+    "preferences_title": "Tercihler",
+    "statistics_title": "İstatistik",
+    "marketing_title": "Pazarlama",
+    "functional_content": "Bu teknolojiler, web sitemizin temel işlevselliğini etkinleştirmek için gereklidir.",
+    "preferences_content": "Bu teknolojiler, web sitemizin tercihlerinizi hatırlamasını ve size daha kişiselleştirilmiş bir deneyim sunmasını sağlar.",
+    "statistics_content": "Bu teknolojiler, performansı ölçmek ve iyileştirmek amacıyla web sitemizin kullanımını analiz etmemizi sağlar.",
+    "marketing_content": "Bu teknolojiler, pazarlama ortaklarımız tarafından ilgi alanlarınıza uygun kişiselleştirilmiş reklamlar göstermek için kullanılır.",
+    "show_services": "Servisleri Göster",
+    "hide_services": "Servisleri Gizle",
+    "modal_accept": "Tümünü Kabul Et",
+    "modal_reject": "Tümünü Reddet",
+    "modal_save": "Kaydet"
+}

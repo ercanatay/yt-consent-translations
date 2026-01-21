@@ -1,0 +1,23 @@
+{
+    "banner_text": "Używamy plików cookie i podobnych technologii, aby poprawić Twoje doświadczenia na naszej stronie.",
+    "banner_link": "Przeczytaj naszą <a href=\"%s\">Politykę Prywatności</a>.",
+    "button_accept": "Akceptuj",
+    "button_reject": "Odrzuć",
+    "button_settings": "Zarządzaj ustawieniami",
+    "modal_title": "Ustawienia prywatności",
+    "modal_content": "Ta strona używa plików cookie i podobnych technologii. Są one pogrupowane w kategorie, które możesz przeglądać i zarządzać poniżej. Jeśli zaakceptowałeś nieistotne pliki cookie, możesz zmienić swoje preferencje w dowolnym momencie w ustawieniach.",
+    "modal_content_link": "Dowiedz się więcej w naszej <a href=\"%s\">Polityce Prywatności</a>.",
+    "functional_title": "Funkcjonalne",
+    "preferences_title": "Preferencje",
+    "statistics_title": "Statystyki",
+    "marketing_title": "Marketing",
+    "functional_content": "Te technologie są wymagane do aktywacji podstawowych funkcji naszej strony.",
+    "preferences_content": "Te technologie pozwalają naszej stronie zapamiętać Twoje preferencje i zapewnić bardziej spersonalizowane doświadczenie.",
+    "statistics_content": "Te technologie umożliwiają nam analizę korzystania z naszej strony w celu mierzenia i poprawy wydajności.",
+    "marketing_content": "Te technologie są używane przez naszych partnerów marketingowych do wyświetlania spersonalizowanych reklam odpowiednich do Twoich zainteresowań.",
+    "show_services": "Pokaż usługi",
+    "hide_services": "Ukryj usługi",
+    "modal_accept": "Akceptuj wszystko",
+    "modal_reject": "Odrzuć wszystko",
+    "modal_save": "Zapisz"
+}

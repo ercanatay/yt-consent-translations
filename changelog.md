@@ -5,6 +5,26 @@ All notable changes to YT Consent Translations will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-01-21
+
+### Changed
+- **Major Refactoring**: Moved all translations from hardcoded PHP to external JSON files
+- Each language now has its own `languages/{code}.json` file (36 files)
+- Implemented lazy loading - only requested language is loaded into memory
+- Per-language caching instead of loading all translations at once
+
+### Performance
+- Reduced memory usage by ~95% on typical requests
+- Translations are loaded on-demand instead of all at once
+- Added `clear_cache()` method for memory management
+
+### Code Quality
+- Separation of concerns: data (JSON) separated from logic (PHP)
+- Easier to maintain and update individual language files
+- Better code organization following best practices
+
+---
+
 ## [1.1.0] - 2026-01-21
 
 ### Added

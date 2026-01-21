@@ -1,0 +1,23 @@
+{
+    "banner_text": "Gumagamit kami ng cookies at katulad na teknolohiya upang mapabuti ang iyong karanasan sa aming website.",
+    "banner_link": "Basahin ang aming <a href=\"%s\">Patakaran sa Privacy</a>.",
+    "button_accept": "Tanggapin",
+    "button_reject": "Tanggihan",
+    "button_settings": "Pamahalaan ang Mga Setting",
+    "modal_title": "Mga Setting ng Privacy",
+    "modal_content": "Ang website na ito ay gumagamit ng cookies at katulad na teknolohiya. Nakagrupo ang mga ito sa mga kategorya na maaari mong suriin at pamahalaan sa ibaba. Kung tinanggap mo ang anumang hindi kinakailangang cookies, maaari mong baguhin ang iyong mga kagustuhan anumang oras sa mga setting.",
+    "modal_content_link": "Matuto pa sa aming <a href=\"%s\">Patakaran sa Privacy</a>.",
+    "functional_title": "Functional",
+    "preferences_title": "Mga Kagustuhan",
+    "statistics_title": "Mga Istatistika",
+    "marketing_title": "Marketing",
+    "functional_content": "Ang mga teknolohiyang ito ay kinakailangan upang ma-activate ang pangunahing functionality ng aming website.",
+    "preferences_content": "Ang mga teknolohiyang ito ay nagpapahintulot sa aming website na tandaan ang iyong mga kagustuhan at magbigay sa iyo ng mas personalized na karanasan.",
+    "statistics_content": "Ang mga teknolohiyang ito ay nagbibigay-daan sa amin na suriin ang paggamit ng aming website upang masukat at mapabuti ang performance.",
+    "marketing_content": "Ang mga teknolohiyang ito ay ginagamit ng aming mga kasosyo sa marketing upang ipakita sa iyo ang mga personalized na advertisement na may kaugnayan sa iyong mga interes.",
+    "show_services": "Ipakita ang mga Serbisyo",
+    "hide_services": "Itago ang mga Serbisyo",
+    "modal_accept": "Tanggapin Lahat",
+    "modal_reject": "Tanggihan Lahat",
+    "modal_save": "I-save"
+}

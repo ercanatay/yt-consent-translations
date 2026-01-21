@@ -1,0 +1,23 @@
+{
+    "banner_text": "当サイトでは、お客様の体験を向上させるためにCookieおよび類似の技術を使用しています。",
+    "banner_link": "<a href=\"%s\">プライバシーポリシー</a>をお読みください。",
+    "button_accept": "同意する",
+    "button_reject": "拒否する",
+    "button_settings": "設定を管理",
+    "modal_title": "プライバシー設定",
+    "modal_content": "当ウェブサイトはCookieおよび類似の技術を使用しています。以下のカテゴリに分類されており、確認・管理することができます。必須でないCookieを受け入れた場合、設定でいつでも変更できます。",
+    "modal_content_link": "詳細は<a href=\"%s\">プライバシーポリシー</a>をご覧ください。",
+    "functional_title": "機能性",
+    "preferences_title": "設定",
+    "statistics_title": "統計",
+    "marketing_title": "マーケティング",
+    "functional_content": "これらの技術は、当サイトの基本機能を有効にするために必要です。",
+    "preferences_content": "これらの技術により、当サイトはお客様の設定を記憶し、より個人化された体験を提供できます。",
+    "statistics_content": "これらの技術により、パフォーマンスを測定・改善するためにサイトの使用状況を分析できます。",
+    "marketing_content": "これらの技術は、マーケティングパートナーがお客様の興味に関連するパーソナライズされた広告を表示するために使用されます。",
+    "show_services": "サービスを表示",
+    "hide_services": "サービスを非表示",
+    "modal_accept": "すべて同意",
+    "modal_reject": "すべて拒否",
+    "modal_save": "保存"
+}

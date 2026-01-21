@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0%2B-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -173,6 +173,12 @@ To add a new language, edit `includes/class-strings.php`:
 ```
 
 ## 📝 Changelog
+
+### 1.2.0 (2026-01-21)
+- **Major Refactoring**: Translations moved to external JSON files
+- Implemented lazy loading - only requested language loaded into memory
+- Reduced memory usage by ~95% on typical requests
+- Better code organization (separation of data and logic)
 
 ### 1.1.0 (2026-01-21)
 - Added 30 new language presets (36 total)

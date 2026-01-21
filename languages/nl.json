@@ -1,0 +1,23 @@
+{
+    "banner_text": "Wij gebruiken cookies en vergelijkbare technologieën om uw ervaring op onze website te verbeteren.",
+    "banner_link": "Lees ons <a href=\"%s\">Privacybeleid</a>.",
+    "button_accept": "Accepteren",
+    "button_reject": "Weigeren",
+    "button_settings": "Instellingen beheren",
+    "modal_title": "Privacy-instellingen",
+    "modal_content": "Deze website maakt gebruik van cookies en vergelijkbare technologieën. Ze zijn gegroepeerd in categorieën die u hieronder kunt bekijken en beheren. Als u niet-essentiële cookies hebt geaccepteerd, kunt u uw voorkeuren op elk moment wijzigen in de instellingen.",
+    "modal_content_link": "Meer informatie in ons <a href=\"%s\">Privacybeleid</a>.",
+    "functional_title": "Functioneel",
+    "preferences_title": "Voorkeuren",
+    "statistics_title": "Statistieken",
+    "marketing_title": "Marketing",
+    "functional_content": "Deze technologieën zijn nodig om de kernfunctionaliteit van onze website te activeren.",
+    "preferences_content": "Deze technologieën stellen onze website in staat om uw voorkeuren te onthouden en u een meer gepersonaliseerde ervaring te bieden.",
+    "statistics_content": "Deze technologieën stellen ons in staat om het gebruik van onze website te analyseren om de prestaties te meten en te verbeteren.",
+    "marketing_content": "Deze technologieën worden door onze marketingpartners gebruikt om u gepersonaliseerde advertenties te tonen die relevant zijn voor uw interesses.",
+    "show_services": "Diensten tonen",
+    "hide_services": "Diensten verbergen",
+    "modal_accept": "Alles accepteren",
+    "modal_reject": "Alles weigeren",
+    "modal_save": "Opslaan"
+}

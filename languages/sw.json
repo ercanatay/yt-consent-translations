@@ -1,0 +1,23 @@
+{
+    "banner_text": "Tunatumia vidakuzi na teknolojia zinazofanana kuboresha uzoefu wako kwenye tovuti yetu.",
+    "banner_link": "Soma <a href=\"%s\">Sera yetu ya Faragha</a>.",
+    "button_accept": "Kubali",
+    "button_reject": "Kataa",
+    "button_settings": "Simamia Mipangilio",
+    "modal_title": "Mipangilio ya Faragha",
+    "modal_content": "Tovuti hii inatumia vidakuzi na teknolojia zinazofanana. Zimewekwa katika vikundi vya aina ambazo unaweza kupitia na kusimamia hapa chini. Ikiwa umekubali vidakuzi visivyo vya lazima, unaweza kubadilisha mapendeleo yako wakati wowote katika mipangilio.",
+    "modal_content_link": "Jifunze zaidi katika <a href=\"%s\">Sera yetu ya Faragha</a>.",
+    "functional_title": "Kazi",
+    "preferences_title": "Mapendeleo",
+    "statistics_title": "Takwimu",
+    "marketing_title": "Uuzaji",
+    "functional_content": "Teknolojia hizi zinahitajika kuwezesha utendaji wa msingi wa tovuti yetu.",
+    "preferences_content": "Teknolojia hizi huruhusu tovuti yetu kukumbuka mapendeleo yako na kukupa uzoefu wa kibinafsi zaidi.",
+    "statistics_content": "Teknolojia hizi hutuwezesha kuchambua matumizi ya tovuti yetu ili kupima na kuboresha utendaji.",
+    "marketing_content": "Teknolojia hizi hutumiwa na washirika wetu wa uuzaji kukuonyesha matangazo yaliyoboreshwa yanayohusiana na masilahi yako.",
+    "show_services": "Onyesha Huduma",
+    "hide_services": "Ficha Huduma",
+    "modal_accept": "Kubali Zote",
+    "modal_reject": "Kataa Zote",
+    "modal_save": "Hifadhi"
+}

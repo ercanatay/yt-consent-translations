@@ -1,0 +1,23 @@
+{
+    "banner_text": "Chúng tôi sử dụng cookie và các công nghệ tương tự để cải thiện trải nghiệm của bạn trên trang web.",
+    "banner_link": "Đọc <a href=\"%s\">Chính sách Bảo mật</a> của chúng tôi.",
+    "button_accept": "Chấp nhận",
+    "button_reject": "Từ chối",
+    "button_settings": "Quản lý cài đặt",
+    "modal_title": "Cài đặt Bảo mật",
+    "modal_content": "Trang web này sử dụng cookie và các công nghệ tương tự. Chúng được nhóm thành các danh mục mà bạn có thể xem xét và quản lý bên dưới. Nếu bạn đã chấp nhận bất kỳ cookie không thiết yếu nào, bạn có thể thay đổi tùy chọn của mình bất cứ lúc nào trong cài đặt.",
+    "modal_content_link": "Tìm hiểu thêm trong <a href=\"%s\">Chính sách Bảo mật</a> của chúng tôi.",
+    "functional_title": "Chức năng",
+    "preferences_title": "Tùy chọn",
+    "statistics_title": "Thống kê",
+    "marketing_title": "Tiếp thị",
+    "functional_content": "Các công nghệ này cần thiết để kích hoạt chức năng cốt lõi của trang web.",
+    "preferences_content": "Các công nghệ này cho phép trang web ghi nhớ tùy chọn của bạn và cung cấp trải nghiệm cá nhân hóa hơn.",
+    "statistics_content": "Các công nghệ này cho phép chúng tôi phân tích việc sử dụng trang web để đo lường và cải thiện hiệu suất.",
+    "marketing_content": "Các công nghệ này được sử dụng bởi các đối tác tiếp thị để hiển thị quảng cáo cá nhân hóa phù hợp với sở thích của bạn.",
+    "show_services": "Hiển thị dịch vụ",
+    "hide_services": "Ẩn dịch vụ",
+    "modal_accept": "Chấp nhận tất cả",
+    "modal_reject": "Từ chối tất cả",
+    "modal_save": "Lưu"
+}

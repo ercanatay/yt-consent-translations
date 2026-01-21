@@ -1,0 +1,23 @@
+{
+    "banner_text": "Folosim cookie-uri și tehnologii similare pentru a îmbunătăți experiența dumneavoastră pe site-ul nostru.",
+    "banner_link": "Citiți <a href=\"%s\">Politica de Confidențialitate</a>.",
+    "button_accept": "Accept",
+    "button_reject": "Refuz",
+    "button_settings": "Gestionare setări",
+    "modal_title": "Setări de confidențialitate",
+    "modal_content": "Acest site folosește cookie-uri și tehnologii similare. Sunt grupate în categorii pe care le puteți examina și gestiona mai jos. Dacă ați acceptat cookie-uri neesențiale, puteți modifica preferințele oricând din setări.",
+    "modal_content_link": "Aflați mai multe în <a href=\"%s\">Politica de Confidențialitate</a>.",
+    "functional_title": "Funcționale",
+    "preferences_title": "Preferințe",
+    "statistics_title": "Statistici",
+    "marketing_title": "Marketing",
+    "functional_content": "Aceste tehnologii sunt necesare pentru activarea funcționalității de bază a site-ului nostru.",
+    "preferences_content": "Aceste tehnologii permit site-ului nostru să rețină preferințele și să vă ofere o experiență mai personalizată.",
+    "statistics_content": "Aceste tehnologii ne permit să analizăm utilizarea site-ului pentru a măsura și îmbunătăți performanța.",
+    "marketing_content": "Aceste tehnologii sunt utilizate de partenerii noștri de marketing pentru a vă afișa reclame personalizate relevante pentru interesele dumneavoastră.",
+    "show_services": "Afișare servicii",
+    "hide_services": "Ascundere servicii",
+    "modal_accept": "Accept toate",
+    "modal_reject": "Refuz toate",
+    "modal_save": "Salvare"
+}

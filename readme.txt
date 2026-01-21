@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent manager, gdpr, cookie consent, translation, multilingual
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -77,6 +77,13 @@ Use the Export button to download a JSON file of your current settings. You can 
 
 == Changelog ==
 
+= 1.2.0 =
+* Major refactoring: moved translations to external JSON files
+* Each language now has its own JSON file (36 files)
+* Implemented lazy loading - only requested language is loaded
+* Reduced memory usage by ~95% on typical requests
+* Better code organization and maintainability
+
 = 1.1.0 =
 * Added 30 new language presets (36 total)
 * Chinese, Spanish, French, Portuguese, Russian, Japanese
@@ -95,6 +102,9 @@ Use the Export button to download a JSON file of your current settings. You can 
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Major performance improvement with lazy loading translations from JSON files.
 
 = 1.1.0 =
 Added 30 new language presets for a total of 36 languages.

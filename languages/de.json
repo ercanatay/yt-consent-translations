@@ -1,0 +1,23 @@
+{
+    "banner_text": "Wir verwenden Cookies und ähnliche Technologien, um Ihre Erfahrung auf unserer Website zu verbessern.",
+    "banner_link": "Lesen Sie unsere <a href=\"%s\">Datenschutzerklärung</a>.",
+    "button_accept": "Akzeptieren",
+    "button_reject": "Ablehnen",
+    "button_settings": "Einstellungen verwalten",
+    "modal_title": "Datenschutzeinstellungen",
+    "modal_content": "Diese Website verwendet Cookies und ähnliche Technologien. Sie sind in Kategorien unterteilt, die Sie unten einsehen und verwalten können. Wenn Sie nicht-essentielle Cookies akzeptiert haben, können Sie Ihre Präferenzen jederzeit in den Einstellungen ändern.",
+    "modal_content_link": "Erfahren Sie mehr in unserer <a href=\"%s\">Datenschutzerklärung</a>.",
+    "functional_title": "Funktional",
+    "preferences_title": "Präferenzen",
+    "statistics_title": "Statistiken",
+    "marketing_title": "Marketing",
+    "functional_content": "Diese Technologien sind erforderlich, um die Kernfunktionalität unserer Website zu aktivieren.",
+    "preferences_content": "Diese Technologien ermöglichen es unserer Website, Ihre Präferenzen zu speichern und Ihnen ein personalisierteres Erlebnis zu bieten.",
+    "statistics_content": "Diese Technologien ermöglichen es uns, die Nutzung unserer Website zu analysieren, um die Leistung zu messen und zu verbessern.",
+    "marketing_content": "Diese Technologien werden von unseren Marketingpartnern verwendet, um Ihnen personalisierte Werbung zu zeigen, die für Ihre Interessen relevant ist.",
+    "show_services": "Dienste anzeigen",
+    "hide_services": "Dienste ausblenden",
+    "modal_accept": "Alle akzeptieren",
+    "modal_reject": "Alle ablehnen",
+    "modal_save": "Speichern"
+}

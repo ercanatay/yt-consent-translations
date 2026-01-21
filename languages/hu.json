@@ -1,0 +1,23 @@
+{
+    "banner_text": "Cookie-kat és hasonló technológiákat használunk a weboldalunkon szerzett élmény javítása érdekében.",
+    "banner_link": "Olvassa el <a href=\"%s\">Adatvédelmi irányelveinket</a>.",
+    "button_accept": "Elfogadom",
+    "button_reject": "Elutasítom",
+    "button_settings": "Beállítások kezelése",
+    "modal_title": "Adatvédelmi beállítások",
+    "modal_content": "Ez a weboldal cookie-kat és hasonló technológiákat használ. Kategóriákba vannak csoportosítva, amelyeket alább áttekinthet és kezelhet. Ha elfogadott nem lényeges cookie-kat, bármikor módosíthatja beállításait.",
+    "modal_content_link": "További információ az <a href=\"%s\">Adatvédelmi irányelveinkben</a>.",
+    "functional_title": "Funkcionális",
+    "preferences_title": "Beállítások",
+    "statistics_title": "Statisztikák",
+    "marketing_title": "Marketing",
+    "functional_content": "Ezek a technológiák szükségesek weboldalunk alapvető funkcióinak aktiválásához.",
+    "preferences_content": "Ezek a technológiák lehetővé teszik weboldalunknak, hogy megjegyezze beállításait és személyre szabottabb élményt nyújtson.",
+    "statistics_content": "Ezek a technológiák lehetővé teszik számunkra a weboldal használatának elemzését a teljesítmény mérése és javítása érdekében.",
+    "marketing_content": "Ezeket a technológiákat marketing partnereink használják az érdeklődési körének megfelelő személyre szabott hirdetések megjelenítésére.",
+    "show_services": "Szolgáltatások megjelenítése",
+    "hide_services": "Szolgáltatások elrejtése",
+    "modal_accept": "Összes elfogadása",
+    "modal_reject": "Összes elutasítása",
+    "modal_save": "Mentés"
+}

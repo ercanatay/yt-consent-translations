@@ -1,0 +1,23 @@
+{
+    "banner_text": "당사는 웹사이트에서 귀하의 경험을 개선하기 위해 쿠키 및 유사한 기술을 사용합니다.",
+    "banner_link": "<a href=\"%s\">개인정보 보호정책</a>을 읽어보세요.",
+    "button_accept": "수락",
+    "button_reject": "거부",
+    "button_settings": "설정 관리",
+    "modal_title": "개인정보 설정",
+    "modal_content": "이 웹사이트는 쿠키 및 유사한 기술을 사용합니다. 이들은 아래에서 검토하고 관리할 수 있는 카테고리로 그룹화되어 있습니다. 필수가 아닌 쿠키를 수락한 경우 설정에서 언제든지 기본 설정을 변경할 수 있습니다.",
+    "modal_content_link": "<a href=\"%s\">개인정보 보호정책</a>에서 자세히 알아보세요.",
+    "functional_title": "기능",
+    "preferences_title": "기본 설정",
+    "statistics_title": "통계",
+    "marketing_title": "마케팅",
+    "functional_content": "이러한 기술은 웹사이트의 핵심 기능을 활성화하는 데 필요합니다.",
+    "preferences_content": "이러한 기술을 통해 웹사이트가 귀하의 기본 설정을 기억하고 보다 개인화된 경험을 제공할 수 있습니다.",
+    "statistics_content": "이러한 기술을 통해 성능을 측정하고 개선하기 위해 웹사이트 사용을 분석할 수 있습니다.",
+    "marketing_content": "이러한 기술은 마케팅 파트너가 귀하의 관심사에 맞는 맞춤형 광고를 표시하는 데 사용됩니다.",
+    "show_services": "서비스 표시",
+    "hide_services": "서비스 숨기기",
+    "modal_accept": "모두 수락",
+    "modal_reject": "모두 거부",
+    "modal_save": "저장"
+}
