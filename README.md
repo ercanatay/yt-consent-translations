@@ -9,8 +9,6 @@
 
 A lightweight WordPress plugin that allows you to customize all 21 text strings in the YOOtheme Pro 5 Consent Manager directly from your admin panel. No coding required!
 
-![Plugin Screenshot](assets/screenshot-banner.png)
-
 ## 🎯 Features
 
 - ✅ **21 Translatable Strings** - All consent manager texts
@@ -94,20 +92,6 @@ composer require ercanatay/yt-consent-translations
 1. **Auto Mode**: Select "Auto (WordPress Default)" to automatically use translations matching your WordPress language
 2. **Manual Mode**: Select a specific language and customize the texts
 3. **Custom**: Modify any preset text to match your brand voice
-
-## 🖼️ Screenshots
-
-### Main Settings Page
-![Settings Page](assets/screenshot-1.png)
-
-### Banner Translations
-![Banner Tab](assets/screenshot-2.png)
-
-### Modal Translations
-![Modal Tab](assets/screenshot-3.png)
-
-### Import/Export
-![Import Export](assets/screenshot-4.png)
 
 ## 🔧 Requirements
 
