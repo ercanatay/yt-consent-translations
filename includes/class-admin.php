@@ -118,6 +118,25 @@ class YTCT_Admin {
     }
 
     /**
+     * Sanitize consent string - allows only safe <a> tags
+     *
+     * @param string $value Input string
+     * @return string Sanitized string
+     */
+    private function sanitize_consent_string($value) {
+        // Only allow <a> tags with href attribute (for privacy policy links)
+        $allowed_html = [
+            'a' => [
+                'href' => true,
+                'title' => true,
+                'target' => true,
+                'rel' => true
+            ]
+        ];
+        return wp_kses($value, $allowed_html);
+    }
+
+    /**
      * AJAX: Save settings
      */
     public function ajax_save_settings() {
@@ -147,7 +166,8 @@ class YTCT_Admin {
         
         foreach ($string_keys as $key) {
             if (isset($_POST['strings'][$key])) {
-                $value = wp_kses_post($_POST['strings'][$key]);
+                // Use strict sanitization - only allow <a> tags
+                $value = $this->sanitize_consent_string($_POST['strings'][$key]);
                 if (!empty($value)) {
                     $custom_strings[$key] = $value;
                 }
@@ -202,27 +222,27 @@ class YTCT_Admin {
     }
 
     /**
-     * AJAX: Export settings
+     * AJAX: Export settings (returns JSON data for download)
      */
     public function ajax_export_settings() {
-        // Check nonce
-        if (!isset($_GET['nonce']) || !wp_verify_nonce($_GET['nonce'], 'ytct_admin_nonce')) {
-            wp_die(__('Security check failed.', 'yt-consent-translations'));
+        // Check nonce (support both GET and POST for backward compatibility)
+        $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : (isset($_GET['nonce']) ? $_GET['nonce'] : '');
+        if (empty($nonce) || !wp_verify_nonce($nonce, 'ytct_admin_nonce')) {
+            wp_send_json_error(['message' => __('Security check failed.', 'yt-consent-translations')]);
         }
 
         // Check permissions
         if (!current_user_can('manage_options')) {
-            wp_die(__('Permission denied.', 'yt-consent-translations'));
+            wp_send_json_error(['message' => __('Permission denied.', 'yt-consent-translations')]);
         }
 
         $options = get_option(YTCT_OPTION_NAME, []);
 
-        header('Content-Type: application/json');
-        header('Content-Disposition: attachment; filename="yt-consent-translations-export.json"');
-        header('Pragma: no-cache');
-
-        echo json_encode($options, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        exit;
+        // Return JSON data for client-side download
+        wp_send_json_success([
+            'filename' => 'yt-consent-translations-export.json',
+            'data' => $options
+        ]);
     }
 
     /**
@@ -239,9 +259,22 @@ class YTCT_Admin {
             wp_send_json_error(['message' => __('Permission denied.', 'yt-consent-translations')]);
         }
 
-        // Check file
+        // Check file exists
         if (!isset($_FILES['import_file']) || $_FILES['import_file']['error'] !== UPLOAD_ERR_OK) {
             wp_send_json_error(['message' => __('File upload failed.', 'yt-consent-translations')]);
+        }
+
+        // Validate file size (max 100KB)
+        $max_size = 100 * 1024; // 100KB
+        if ($_FILES['import_file']['size'] > $max_size) {
+            wp_send_json_error(['message' => __('File too large. Maximum size is 100KB.', 'yt-consent-translations')]);
+        }
+
+        // Validate file type
+        $file_info = wp_check_filetype($_FILES['import_file']['name']);
+        $allowed_extensions = ['json'];
+        if (!$file_info['ext'] || !in_array(strtolower($file_info['ext']), $allowed_extensions)) {
+            wp_send_json_error(['message' => __('Invalid file type. Only JSON files are allowed.', 'yt-consent-translations')]);
         }
 
         // Read file
@@ -267,12 +300,12 @@ class YTCT_Admin {
             }
         }
 
-        // Validate custom strings
+        // Validate custom strings with strict sanitization
         if (isset($data['custom_strings']) && is_array($data['custom_strings'])) {
             $string_keys = array_keys(YTCT_Strings::get_string_keys());
             foreach ($data['custom_strings'] as $key => $value) {
                 if (in_array($key, $string_keys)) {
-                    $options['custom_strings'][$key] = wp_kses_post($value);
+                    $options['custom_strings'][$key] = $this->sanitize_consent_string($value);
                 }
             }
         }

@@ -99,9 +99,15 @@
     }
 
     /**
-     * Switch tab
+     * Switch tab (with validation)
      */
     function switchTab(tabId) {
+        // Validate tabId against known values to prevent DOM manipulation
+        var validTabs = ['banner', 'modal', 'categories', 'buttons'];
+        if (validTabs.indexOf(tabId) === -1) {
+            tabId = 'banner';
+        }
+
         $tabs.removeClass('active');
         $tabs.filter('[data-tab="' + tabId + '"]').addClass('active');
 
@@ -187,10 +193,37 @@
     }
 
     /**
-     * Export settings
+     * Export settings via POST (more secure than GET)
      */
     function exportSettings() {
-        window.location.href = ytctAdmin.ajaxUrl + '?action=ytct_export_settings&nonce=' + ytctAdmin.nonce;
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'ytct_export_settings',
+                nonce: ytctAdmin.nonce
+            },
+            success: function(response) {
+                if (response.success && response.data) {
+                    // Create and download file client-side
+                    var dataStr = JSON.stringify(response.data.data, null, 2);
+                    var blob = new Blob([dataStr], { type: 'application/json' });
+                    var url = URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.download = response.data.filename || 'yt-consent-translations-export.json';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                } else {
+                    showMessage(response.data.message || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            }
+        });
     }
 
     /**
@@ -268,8 +301,10 @@
 
     /**
      * Load language preset via AJAX
+     * @param {string} language - Language code
+     * @param {function} callback - Optional callback after loading
      */
-    function loadLanguagePreset(language) {
+    function loadLanguagePreset(language, callback) {
         $.ajax({
             url: ytctAdmin.ajaxUrl,
             type: 'POST',
@@ -289,6 +324,11 @@
                     });
                     
                     showMessage(ytctAdmin.strings.languageLoaded, 'success');
+                    
+                    // Execute callback if provided
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                 }
             }
         });
@@ -307,18 +347,16 @@
         }
 
         if (options.custom_strings) {
-            // First load the language preset
-            loadLanguagePreset(options.language || 'en');
-            
-            // Then override with custom strings
-            setTimeout(function() {
+            // First load the language preset, then apply custom strings via callback
+            loadLanguagePreset(options.language || 'en', function() {
+                // Override with custom strings after preset is loaded
                 $.each(options.custom_strings, function(key, value) {
                     var $input = $form.find('[name="strings[' + key + ']"]');
                     if ($input.length && value) {
                         $input.val(value);
                     }
                 });
-            }, 500);
+            });
         }
     }
 

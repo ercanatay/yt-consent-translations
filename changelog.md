@@ -23,6 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated README with new language table
 - Total translations: 756 (36 languages × 21 strings)
 
+### Security
+- Replaced `wp_kses_post()` with strict sanitization (only `<a>` tags allowed)
+- Added server-side file type validation for imports (.json only)
+- Added file size limit (100KB) for import uploads
+- Changed export from GET to POST method (prevents nonce exposure)
+- Added tab ID validation in JavaScript
+- Improved multisite cleanup using `get_sites()` instead of raw SQL
+- Fixed version mismatch between plugin header and constant
+
 ---
 
 ## [1.0.0] - 2026-01-21

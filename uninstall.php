@@ -20,9 +20,11 @@ delete_option('yt_consent_translations');
 if (is_multisite()) {
     global $wpdb;
     
-    $blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+    // Note: $wpdb->blogs is a WordPress-defined table name, not user input
+    // Using get_sites() for better compatibility with modern WordPress
+    $sites = get_sites(['fields' => 'ids']);
     
-    foreach ($blog_ids as $blog_id) {
+    foreach ($sites as $blog_id) {
         switch_to_blog($blog_id);
         delete_option('yt_consent_translations');
         restore_current_blog();
