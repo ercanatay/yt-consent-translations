@@ -5,6 +5,26 @@ All notable changes to YT Consent Translations will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-21
+
+### Added
+- 30 new language presets (36 total languages)
+  - Chinese (zh), Spanish (es), French (fr), Portuguese (pt)
+  - Russian (ru), Japanese (ja), Indonesian (id), Italian (it)
+  - Dutch (nl), Polish (pl), Vietnamese (vi), Thai (th)
+  - Ukrainian (uk), Czech (cs), Greek (el), Romanian (ro)
+  - Hungarian (hu), Swedish (sv), Danish (da), Finnish (fi)
+  - Norwegian (nb), Hebrew (he), Malay (ms), Bengali (bn)
+  - Persian (fa), Tamil (ta), Telugu (te), Marathi (mr)
+  - Swahili (sw), Filipino (tl)
+- Extended WordPress locale mapping for auto-detection
+
+### Changed
+- Updated README with new language table
+- Total translations: 756 (36 languages × 21 strings)
+
+---
+
 ## [1.0.0] - 2026-01-21
 
 ### Added
