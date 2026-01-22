@@ -158,7 +158,7 @@ class YTCT_Admin {
         
         // Validate language
         $valid_languages = array_keys(YTCT_Strings::get_languages());
-        if (!in_array($language, $valid_languages)) {
+        if (!in_array($language, $valid_languages, true)) {
             $language = 'en';
         }
 
@@ -319,7 +319,7 @@ class YTCT_Admin {
         // Validate language
         if (isset($data['language'])) {
             $valid_languages = array_keys(YTCT_Strings::get_languages());
-            if (in_array($data['language'], $valid_languages)) {
+            if (in_array($data['language'], $valid_languages, true)) {
                 $options['language'] = $data['language'];
             }
         }
@@ -328,7 +328,7 @@ class YTCT_Admin {
         if (isset($data['custom_strings']) && is_array($data['custom_strings'])) {
             $string_keys = array_keys(YTCT_Strings::get_string_keys());
             foreach ($data['custom_strings'] as $key => $value) {
-                if (in_array($key, $string_keys)) {
+                if (in_array($key, $string_keys, true)) {
                     $options['custom_strings'][$key] = $this->sanitize_consent_string($value);
                 }
             }
@@ -364,7 +364,7 @@ class YTCT_Admin {
 
         // Validate language
         $valid_languages = array_keys(YTCT_Strings::get_languages());
-        if (!in_array($language, $valid_languages)) {
+        if (!in_array($language, $valid_languages, true)) {
             $language = 'en';
         }
 
