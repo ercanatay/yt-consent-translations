@@ -294,7 +294,7 @@ class YTCT_Strings {
 	public static function get_all_translations() {
 		$all_translations = [];
 		
-		foreach (self::$languages as $code => $name) {
+		foreach (array_keys(self::$languages) as $code) {
 			if ($code === 'auto') {
 				continue;
 			}
