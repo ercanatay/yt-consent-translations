@@ -125,7 +125,7 @@ class YTCT_Admin {
 	 */
 	private function sanitize_consent_string($value) {
 		// Only allow <a> tags with href attribute (for privacy policy links)
-		$allowed_html = [
+		static $allowed_html = [
 			'a' => [
 				'href' => true,
 				'title' => true,
