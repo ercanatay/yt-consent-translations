@@ -125,7 +125,7 @@ class YTCT_Admin {
 	 */
 	private function sanitize_consent_string($value) {
 		// Only allow <a> tags with href attribute (for privacy policy links)
-		$allowed_html = [
+		static $allowed_html = [
 			'a' => [
 				'href' => true,
 				'title' => true,
@@ -157,8 +157,7 @@ class YTCT_Admin {
 		$language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'en';
 		
 		// Validate language
-		$valid_languages = array_keys(YTCT_Strings::get_languages());
-		if (!in_array($language, $valid_languages, true)) {
+		if (!YTCT_Strings::is_valid_language($language)) {
 			$language = 'en';
 		}
 
@@ -287,7 +286,7 @@ class YTCT_Admin {
 			wp_send_json_error(['message' => __('Invalid file.', 'yt-consent-translations')]);
 		}
 		$file_info = wp_check_filetype(sanitize_file_name($ytct_file['name']));
-		$allowed_extensions = ['json'];
+		static $allowed_extensions = ['json'];
 		if (!$file_info['ext'] || !in_array(strtolower($file_info['ext']), $allowed_extensions, true)) {
 			wp_send_json_error(['message' => __('Invalid file type. Only JSON files are allowed.', 'yt-consent-translations')]);
 		}
@@ -313,8 +312,7 @@ class YTCT_Admin {
 
 		// Validate language
 		if (isset($data['language'])) {
-			$valid_languages = array_keys(YTCT_Strings::get_languages());
-			if (in_array($data['language'], $valid_languages, true)) {
+			if (YTCT_Strings::is_valid_language($data['language'])) {
 				$options['language'] = $data['language'];
 			}
 		}
@@ -358,8 +356,7 @@ class YTCT_Admin {
 		$language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'en';
 
 		// Validate language
-		$valid_languages = array_keys(YTCT_Strings::get_languages());
-		if (!in_array($language, $valid_languages, true)) {
+		if (!YTCT_Strings::is_valid_language($language)) {
 			$language = 'en';
 		}
 

@@ -139,6 +139,16 @@ class YTCT_Strings {
 	}
 
 	/**
+	 * Check if a language code is valid
+	 *
+	 * @param string $lang Language code
+	 * @return bool
+	 */
+	public static function is_valid_language($lang) {
+		return isset(self::$languages[$lang]);
+	}
+
+	/**
 	 * Base language code mapping (2-letter codes to plugin language codes)
 	 * Used as fallback when exact locale is not found
 	 */
@@ -386,7 +396,7 @@ class YTCT_Strings {
 	 * @return bool
 	 */
 	public static function has_placeholder($key) {
-		$placeholders = ['banner_link', 'modal_content_link'];
-		return in_array($key, $placeholders, true);
+		static $placeholders = ['banner_link' => true, 'modal_content_link' => true];
+		return isset($placeholders[$key]);
 	}
 }
