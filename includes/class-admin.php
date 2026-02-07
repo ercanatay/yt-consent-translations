@@ -125,7 +125,7 @@ class YTCT_Admin {
 	 */
 	private function sanitize_consent_string($value) {
 		// Only allow <a> tags with href attribute (for privacy policy links)
-		$allowed_html = [
+		static $allowed_html = [
 			'a' => [
 				'href' => true,
 				'title' => true,
@@ -143,8 +143,7 @@ class YTCT_Admin {
 	 * @return string
 	 */
 	private function get_valid_language($language) {
-		$valid_languages = array_keys(YTCT_Strings::get_languages());
-		return in_array($language, $valid_languages, true) ? $language : 'en';
+		return YTCT_Strings::is_valid_language($language) ? $language : 'en';
 	}
 
 	/**
@@ -373,8 +372,8 @@ class YTCT_Admin {
 			wp_send_json_error(['message' => __('Invalid file.', 'yt-consent-translations')]);
 		}
 		$file_info = wp_check_filetype(sanitize_file_name($ytct_file['name']));
-		$allowed_extensions = ['json'];
-		if (!$file_info['ext'] || !in_array(strtolower($file_info['ext']), $allowed_extensions, true)) {
+		static $allowed_extensions = ['json' => true];
+		if (!$file_info['ext'] || !isset($allowed_extensions[strtolower($file_info['ext'])])) {
 			wp_send_json_error(['message' => __('Invalid file type. Only JSON files are allowed.', 'yt-consent-translations')]);
 		}
 
@@ -408,9 +407,9 @@ class YTCT_Admin {
 
 		// Validate custom strings with strict sanitization
 		if (isset($data['custom_strings']) && is_array($data['custom_strings'])) {
-			$string_keys = array_keys(YTCT_Strings::get_string_keys());
+			$string_keys = YTCT_Strings::get_string_keys();
 			foreach ($data['custom_strings'] as $key => $value) {
-				if (in_array($key, $string_keys, true) && is_scalar($value)) {
+				if (isset($string_keys[$key]) && is_scalar($value)) {
 					$sanitized_value = $this->sanitize_consent_string((string) $value);
 					if ($sanitized_value !== '') {
 						$submitted_strings[$key] = $sanitized_value;
