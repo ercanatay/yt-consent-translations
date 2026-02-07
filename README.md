@@ -243,8 +243,6 @@ To add a new language, edit `includes/class-strings.php`:
 - Import/Export functionality
 - Tabbed admin interface
 
-See [CHANGELOG.md](CHANGELOG.md) for full history.
-
 ## ⚠️ Important Notes
 
 ### String Matching Dependency
@@ -258,8 +256,8 @@ This plugin works by matching the **exact original English strings** from YOOthe
 
 ### Tested With
 - YOOtheme Pro 5.x
-- WordPress 5.0 - 6.4
-- PHP 7.4 - 8.2
+- WordPress 5.0 - 6.9
+- PHP 7.4 - 8.3
 
 ## 🐛 Known Issues
 
