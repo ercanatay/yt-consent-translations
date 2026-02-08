@@ -107,10 +107,27 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 2. Upload the `yt-consent-translations` folder to `/wp-content/plugins/`
 3. Activate through **Plugins** menu in WordPress
 
-### Method 3: Composer (Coming Soon)
+### Method 3: Composer (GitHub VCS)
+
+`ercanatay/yt-consent-translations` is not currently distributed on Packagist.
+To install with Composer, add this repository as a VCS source first:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ercanatay/yt-consent-translations"
+        }
+    ],
+    "require": {
+        "ercanatay/yt-consent-translations": "^1.3"
+    }
+}
+```
 
 ```bash
-composer require ercanatay/yt-consent-translations
+composer update ercanatay/yt-consent-translations
 ```
 
 ## ⚙️ Configuration
