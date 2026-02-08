@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.2-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -244,6 +244,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.2 (2026-02-08)
+- **Plugin Check**: Hardened admin request parsing with sanitized `filter_input()` paths and explicit nonce-context handling for upload payload access
+- **i18n**: Updated all translatable calls to the current text domain and fixed ordered placeholder guidance for `%s`/`%1$s` translator-facing help text
+- **Packaging**: Removed non-production root artifacts flagged by Plugin Check (`.github`, `.gitignore`, shell runner, and daily markdown report)
+- **Options Scan**: Added object-cache layer for locale option aggregation and documented unavoidable wildcard queries in scoped uninstall/summary paths
 
 ### 1.3.1 (2026-02-08)
 - **i18n Fix**: Replaced hardcoded snapshot/quality-check admin messages in JavaScript with localized strings from PHP

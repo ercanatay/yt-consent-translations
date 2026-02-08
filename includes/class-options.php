@@ -20,6 +20,11 @@ class YTCT_Options {
 	const MAX_SNAPSHOTS = 20;
 
 	/**
+	 * Cache group used for expensive option scans.
+	 */
+	const CACHE_GROUP = 'ytct_options';
+
+	/**
 	 * Get normalized locale code.
 	 *
 	 * @param string $locale Locale value.
@@ -155,6 +160,7 @@ class YTCT_Options {
 		$sanitized = self::sanitize_options($options);
 		$option_name = self::get_option_name($locale);
 		update_option($option_name, $sanitized);
+		wp_cache_delete('all_locale_options', self::CACHE_GROUP);
 
 		self::append_snapshot($sanitized, $locale, $label);
 
@@ -169,6 +175,7 @@ class YTCT_Options {
 	 */
 	public static function delete_options($locale = '') {
 		delete_option(self::get_option_name($locale));
+		wp_cache_delete('all_locale_options', self::CACHE_GROUP);
 	}
 
 	/**
@@ -265,10 +272,16 @@ class YTCT_Options {
 	public static function get_all_locale_options() {
 		global $wpdb;
 
+		$cached = wp_cache_get('all_locale_options', self::CACHE_GROUP);
+		if (is_array($cached)) {
+			return $cached;
+		}
+
 		$results = [];
 		$base = YTCT_OPTION_NAME . '__';
 		$escaped = esc_sql($wpdb->esc_like($base)) . '%';
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Wildcard lookup across locale-scoped option names requires a direct query.
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT option_name, option_value FROM {$wpdb->options} WHERE option_name LIKE %s",
@@ -295,6 +308,7 @@ class YTCT_Options {
 		}
 
 		ksort($results);
+		wp_cache_set('all_locale_options', $results, self::CACHE_GROUP, 300);
 		return $results;
 	}
 }

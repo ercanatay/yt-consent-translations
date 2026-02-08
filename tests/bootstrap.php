@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- Development test bootstrap with intentional WordPress core function shims.
 /**
  * Lightweight WordPress stubs for local plugin tests.
  */
@@ -40,10 +41,16 @@ if (!function_exists('sanitize_key')) {
 	}
 }
 
+if (!function_exists('wp_strip_all_tags')) {
+	function wp_strip_all_tags($text) {
+		return preg_replace('/<[^>]*>/', '', (string) $text);
+	}
+}
+
 if (!function_exists('sanitize_text_field')) {
 	function sanitize_text_field($text) {
 		$text = (string) $text;
-		$text = strip_tags($text);
+		$text = wp_strip_all_tags($text);
 		return trim($text);
 	}
 }
@@ -86,6 +93,29 @@ if (!function_exists('update_option')) {
 if (!function_exists('delete_option')) {
 	function delete_option($option) {
 		unset($GLOBALS['ytct_option_store'][$option]);
+		return true;
+	}
+}
+
+if (!function_exists('wp_cache_get')) {
+	function wp_cache_get($key, $group = '') {
+		$cache_key = $group . '::' . $key;
+		return array_key_exists($cache_key, $GLOBALS['ytct_option_store']) ? $GLOBALS['ytct_option_store'][$cache_key] : false;
+	}
+}
+
+if (!function_exists('wp_cache_set')) {
+	function wp_cache_set($key, $value, $group = '', $expire = 0) {
+		$cache_key = $group . '::' . $key;
+		$GLOBALS['ytct_option_store'][$cache_key] = $value;
+		return true;
+	}
+}
+
+if (!function_exists('wp_cache_delete')) {
+	function wp_cache_delete($key, $group = '') {
+		$cache_key = $group . '::' . $key;
+		unset($GLOBALS['ytct_option_store'][$cache_key]);
 		return true;
 	}
 }

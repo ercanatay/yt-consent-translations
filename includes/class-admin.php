@@ -68,8 +68,8 @@ class YTCT_Admin {
 	 */
 	public function add_menu_page() {
 		add_options_page(
-			__('YT Consent Translations', 'yt-consent-translations'),
-			__('YT Consent Translations', 'yt-consent-translations'),
+			__('YT Consent Translations', 'yt-consent-translations-1.3.2'),
+			__('YT Consent Translations', 'yt-consent-translations-1.3.2'),
 			'manage_options',
 			'yt-consent-translations',
 			[$this, 'render_settings_page']
@@ -106,26 +106,26 @@ class YTCT_Admin {
 			'ajaxUrl' => admin_url('admin-ajax.php'),
 			'nonce' => wp_create_nonce('ytct_admin_nonce'),
 			'strings' => [
-				'saving' => __('Saving...', 'yt-consent-translations'),
-				'saved' => __('Settings saved successfully!', 'yt-consent-translations'),
-				'error' => __('An error occurred. Please try again.', 'yt-consent-translations'),
-				'confirmReset' => __('Are you sure you want to reset all settings for this locale scope to defaults?', 'yt-consent-translations'),
-				'resetting' => __('Resetting...', 'yt-consent-translations'),
-				'resetSuccess' => __('Settings reset successfully!', 'yt-consent-translations'),
-				'importing' => __('Importing...', 'yt-consent-translations'),
-				'importSuccess' => __('Settings imported successfully!', 'yt-consent-translations'),
-				'invalidFile' => __('Please select a valid JSON file.', 'yt-consent-translations'),
-				'languageLoaded' => __('Language preset loaded!', 'yt-consent-translations'),
-				'scopeLoaded' => __('Locale scope loaded.', 'yt-consent-translations'),
-				'qualityCheckRunning' => __('Running quality checks...', 'yt-consent-translations'),
-				'qualityCheckOk' => __('No blocking quality issues found.', 'yt-consent-translations'),
-				'healthCheckRunning' => __('Running compatibility health check...', 'yt-consent-translations'),
-				'healthCheckOk' => __('Compatibility check completed.', 'yt-consent-translations'),
-				'restored' => __('Snapshot restored successfully.', 'yt-consent-translations'),
-				'unsavedChanges' => __('You have unsaved changes. Leave without saving?', 'yt-consent-translations'),
-				'selectSnapshot' => __('Select a snapshot', 'yt-consent-translations'),
-				'selectSnapshotFirst' => __('Select a snapshot first.', 'yt-consent-translations'),
-				'qualityCheckFailed' => __('Quality check reported issues/warnings.', 'yt-consent-translations')
+				'saving' => __('Saving...', 'yt-consent-translations-1.3.2'),
+				'saved' => __('Settings saved successfully!', 'yt-consent-translations-1.3.2'),
+				'error' => __('An error occurred. Please try again.', 'yt-consent-translations-1.3.2'),
+				'confirmReset' => __('Are you sure you want to reset all settings for this locale scope to defaults?', 'yt-consent-translations-1.3.2'),
+				'resetting' => __('Resetting...', 'yt-consent-translations-1.3.2'),
+				'resetSuccess' => __('Settings reset successfully!', 'yt-consent-translations-1.3.2'),
+				'importing' => __('Importing...', 'yt-consent-translations-1.3.2'),
+				'importSuccess' => __('Settings imported successfully!', 'yt-consent-translations-1.3.2'),
+				'invalidFile' => __('Please select a valid JSON file.', 'yt-consent-translations-1.3.2'),
+				'languageLoaded' => __('Language preset loaded!', 'yt-consent-translations-1.3.2'),
+				'scopeLoaded' => __('Locale scope loaded.', 'yt-consent-translations-1.3.2'),
+				'qualityCheckRunning' => __('Running quality checks...', 'yt-consent-translations-1.3.2'),
+				'qualityCheckOk' => __('No blocking quality issues found.', 'yt-consent-translations-1.3.2'),
+				'healthCheckRunning' => __('Running compatibility health check...', 'yt-consent-translations-1.3.2'),
+				'healthCheckOk' => __('Compatibility check completed.', 'yt-consent-translations-1.3.2'),
+				'restored' => __('Snapshot restored successfully.', 'yt-consent-translations-1.3.2'),
+				'unsavedChanges' => __('You have unsaved changes. Leave without saving?', 'yt-consent-translations-1.3.2'),
+				'selectSnapshot' => __('Select a snapshot', 'yt-consent-translations-1.3.2'),
+				'selectSnapshotFirst' => __('Select a snapshot first.', 'yt-consent-translations-1.3.2'),
+				'qualityCheckFailed' => __('Quality check reported issues/warnings.', 'yt-consent-translations-1.3.2')
 			]
 		]);
 	}
@@ -144,18 +144,34 @@ class YTCT_Admin {
 	}
 
 	/**
+	 * Read a scalar POST field and sanitize it.
+	 *
+	 * @param string $key POST field name.
+	 * @param string $default Default value when missing/invalid.
+	 * @return string
+	 */
+	private function get_post_scalar($key, $default = '') {
+		$value = filter_input(INPUT_POST, $key, FILTER_DEFAULT);
+		if (!is_scalar($value)) {
+			return $default;
+		}
+
+		return sanitize_text_field(wp_unslash((string) $value));
+	}
+
+	/**
 	 * Verify nonce and capabilities for AJAX actions.
 	 *
 	 * @return void
 	 */
 	private function verify_ajax_request() {
-		$nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+		$nonce = $this->get_post_scalar('nonce');
 		if (empty($nonce) || !wp_verify_nonce($nonce, 'ytct_admin_nonce')) {
-			wp_send_json_error(['message' => __('Security check failed.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Security check failed.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		if (!current_user_can('manage_options')) {
-			wp_send_json_error(['message' => __('Permission denied.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Permission denied.', 'yt-consent-translations-1.3.2')]);
 		}
 	}
 
@@ -195,7 +211,7 @@ class YTCT_Admin {
 	 */
 	private function get_scope_locale($raw_locale = null) {
 		if ($raw_locale === null) {
-			$raw_locale = isset($_POST['settings_locale']) ? sanitize_text_field(wp_unslash($_POST['settings_locale'])) : '';
+			$raw_locale = $this->get_post_scalar('settings_locale');
 		}
 
 		return YTCT_Options::normalize_locale((string) $raw_locale);
@@ -318,7 +334,7 @@ class YTCT_Admin {
 		if (!empty($invalid_placeholder_fields)) {
 			$issues[] = sprintf(
 				/* translators: 1: %s placeholder, 2: %1$s placeholder, 3: field labels. */
-				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations'),
+				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations-1.3.2'),
 				'%s',
 				'%1$s',
 				implode(', ', $invalid_placeholder_fields)
@@ -332,7 +348,7 @@ class YTCT_Admin {
 			if ($value !== '' && substr_count($value, '<a ') !== substr_count($value, '</a>')) {
 				$warnings[] = sprintf(
 					/* translators: %s field label */
-					__('%s may contain malformed anchor HTML.', 'yt-consent-translations'),
+					__('%s may contain malformed anchor HTML.', 'yt-consent-translations-1.3.2'),
 					YTCT_Strings::get_key_label($key)
 				);
 			}
@@ -342,7 +358,7 @@ class YTCT_Admin {
 				if ($ratio > 1.8) {
 					$warnings[] = sprintf(
 						/* translators: %s field label */
-						__('%s is much longer than the preset and may overflow on small screens.', 'yt-consent-translations'),
+						__('%s is much longer than the preset and may overflow on small screens.', 'yt-consent-translations-1.3.2'),
 						YTCT_Strings::get_key_label($key)
 					);
 				}
@@ -363,7 +379,7 @@ class YTCT_Admin {
 			if ($left !== '' && $right !== '' && $left_cmp === $right_cmp) {
 				$warnings[] = sprintf(
 					/* translators: 1: first field label, 2: second field label */
-					__('Fields %1$s and %2$s are identical. Consider using distinct labels for clarity.', 'yt-consent-translations'),
+					__('Fields %1$s and %2$s are identical. Consider using distinct labels for clarity.', 'yt-consent-translations-1.3.2'),
 					YTCT_Strings::get_key_label($pair[0]),
 					YTCT_Strings::get_key_label($pair[1])
 				);
@@ -433,8 +449,8 @@ class YTCT_Admin {
 		$this->verify_ajax_request();
 
 		$scope_locale = $this->get_scope_locale();
-		$enabled = !empty($_POST['enabled']) && sanitize_text_field(wp_unslash($_POST['enabled'])) !== '0';
-		$language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'en';
+		$enabled = $this->get_post_scalar('enabled', '0') !== '0';
+		$language = $this->get_post_scalar('language', 'en');
 		$language = $this->get_valid_language($language);
 
 		$resolved_language = $this->resolve_language_for_scope($language, $scope_locale);
@@ -445,7 +461,7 @@ class YTCT_Admin {
 		if (!empty($invalid_placeholder_fields)) {
 			$message = sprintf(
 				/* translators: 1: %s placeholder, 2: %1$s placeholder, 3: field labels. */
-				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations'),
+				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations-1.3.2'),
 				'%s',
 				'%1$s',
 				implode(', ', $invalid_placeholder_fields)
@@ -469,7 +485,7 @@ class YTCT_Admin {
 		$scope_payload['options'] = $stored;
 
 		wp_send_json_success([
-			'message' => __('Settings saved successfully!', 'yt-consent-translations'),
+			'message' => __('Settings saved successfully!', 'yt-consent-translations-1.3.2'),
 			'scope' => $scope_payload
 		]);
 	}
@@ -490,7 +506,7 @@ class YTCT_Admin {
 		YTCT_Strings::clear_cache();
 
 		wp_send_json_success([
-			'message' => __('Settings reset successfully!', 'yt-consent-translations'),
+			'message' => __('Settings reset successfully!', 'yt-consent-translations-1.3.2'),
 			'scope' => $this->build_scope_payload($scope_locale),
 			'options' => $stored
 		]);
@@ -534,34 +550,35 @@ class YTCT_Admin {
 
 		$scope_locale = $this->get_scope_locale();
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce already validated in verify_ajax_request().
 		if (!isset($_FILES['import_file'])) {
-			wp_send_json_error(['message' => __('No file uploaded.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('No file uploaded.', 'yt-consent-translations-1.3.2')]);
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- validated below
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce is validated and file payload is validated below.
 		$ytct_file = $_FILES['import_file'];
 
 		if (!isset($ytct_file['error']) || $ytct_file['error'] !== UPLOAD_ERR_OK) {
-			wp_send_json_error(['message' => __('File upload failed.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('File upload failed.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		$max_size = 150 * 1024;
 		if (!isset($ytct_file['size']) || $ytct_file['size'] > $max_size) {
-			wp_send_json_error(['message' => __('File too large. Maximum size is 150KB.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('File too large. Maximum size is 150KB.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		if (!isset($ytct_file['name'])) {
-			wp_send_json_error(['message' => __('Invalid file.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Invalid file.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		$file_info = wp_check_filetype(sanitize_file_name($ytct_file['name']));
 		static $allowed_extensions = ['json' => true];
 		if (!$file_info['ext'] || !isset($allowed_extensions[strtolower($file_info['ext'])])) {
-			wp_send_json_error(['message' => __('Invalid file type. Only JSON files are allowed.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Invalid file type. Only JSON files are allowed.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		if (!isset($ytct_file['tmp_name']) || !is_uploaded_file($ytct_file['tmp_name'])) {
-			wp_send_json_error(['message' => __('Invalid file upload.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Invalid file upload.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- reading uploaded temp file
@@ -569,7 +586,7 @@ class YTCT_Admin {
 		$data = json_decode($content, true);
 
 		if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
-			wp_send_json_error(['message' => __('Invalid JSON file.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Invalid JSON file.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		$import_payload = null;
@@ -609,7 +626,7 @@ class YTCT_Admin {
 		if (!empty($invalid_placeholder_fields)) {
 			$message = sprintf(
 				/* translators: 1: %s placeholder, 2: %1$s placeholder, 3: field labels. */
-				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations'),
+				__('The following fields must include %1$s or %2$s: %3$s', 'yt-consent-translations-1.3.2'),
 				'%s',
 				'%1$s',
 				implode(', ', $invalid_placeholder_fields)
@@ -629,7 +646,7 @@ class YTCT_Admin {
 		YTCT_Strings::clear_cache();
 
 		wp_send_json_success([
-			'message' => __('Settings imported successfully!', 'yt-consent-translations'),
+			'message' => __('Settings imported successfully!', 'yt-consent-translations-1.3.2'),
 			'scope' => $this->build_scope_payload($scope_locale),
 			'options' => $stored
 		]);
@@ -644,7 +661,7 @@ class YTCT_Admin {
 		$this->verify_ajax_request();
 
 		$scope_locale = $this->get_scope_locale();
-		$language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'en';
+		$language = $this->get_post_scalar('language', 'en');
 		$language = $this->get_valid_language($language);
 		$resolved_language = $this->resolve_language_for_scope($language, $scope_locale);
 		$translations = YTCT_Strings::get_translations($resolved_language);
@@ -702,21 +719,21 @@ class YTCT_Admin {
 		$this->verify_ajax_request();
 
 		$scope_locale = $this->get_scope_locale();
-		$snapshot_id = isset($_POST['snapshot_id']) ? sanitize_text_field(wp_unslash($_POST['snapshot_id'])) : '';
+		$snapshot_id = $this->get_post_scalar('snapshot_id');
 		if ($snapshot_id === '') {
-			wp_send_json_error(['message' => __('Snapshot ID is required.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Snapshot ID is required.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		$restored = YTCT_Options::restore_snapshot($snapshot_id, $scope_locale);
 		if (!is_array($restored)) {
-			wp_send_json_error(['message' => __('Snapshot could not be restored.', 'yt-consent-translations')]);
+			wp_send_json_error(['message' => __('Snapshot could not be restored.', 'yt-consent-translations-1.3.2')]);
 		}
 
 		YTCT_Translator::get_instance()->clear_cache();
 		YTCT_Strings::clear_cache();
 
 		wp_send_json_success([
-			'message' => __('Snapshot restored successfully.', 'yt-consent-translations'),
+			'message' => __('Snapshot restored successfully.', 'yt-consent-translations-1.3.2'),
 			'scope' => $this->build_scope_payload($scope_locale),
 			'options' => $restored
 		]);
@@ -748,7 +765,7 @@ class YTCT_Admin {
 		$this->verify_ajax_request();
 
 		$scope_locale = $this->get_scope_locale();
-		$language = isset($_POST['language']) ? sanitize_text_field(wp_unslash($_POST['language'])) : 'en';
+		$language = $this->get_post_scalar('language', 'en');
 		$language = $this->get_valid_language($language);
 
 		$resolved_language = $this->resolve_language_for_scope($language, $scope_locale);

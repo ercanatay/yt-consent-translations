@@ -32,6 +32,7 @@ function ytct_delete_scoped_options() {
 
 	foreach ($patterns as $pattern) {
 		$escaped = esc_sql($wpdb->esc_like(str_replace('%', '', $pattern))) . '%';
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time uninstall cleanup of wildcard option names.
 		$rows = $wpdb->get_col(
 			$wpdb->prepare(
 				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",

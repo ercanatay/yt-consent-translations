@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -80,6 +80,12 @@ Use the Export button to download a JSON file of your current settings. You can 
 
 == Changelog ==
 
+= 1.3.2 =
+* Plugin Check hardening: added sanitized `filter_input()` request handling in admin flows and clarified nonce handling for upload endpoints.
+* i18n: aligned all translatable strings with updated text domain and fixed ordered placeholder usage with translator guidance.
+* Packaging: removed non-production root artifacts flagged by Plugin Check (`.github`, `.gitignore`, shell runner, and daily markdown report).
+* Performance/quality: added cache layer for locale option scan and documented one-time uninstall wildcard query usage.
+
 = 1.3.1 =
 * Fixed i18n coverage for snapshot/quality-check admin messages by replacing hardcoded JavaScript text with localized strings
 * Fixed uninstall script block structure for multisite cleanup flow
@@ -154,6 +160,9 @@ Use the Export button to download a JSON file of your current settings. You can 
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.2 =
+Plugin Check compliance release focused on admin request hardening, i18n placeholder/domain fixes, and production package cleanup.
 
 = 1.3.1 =
 Maintenance bugfix release with localized admin UI messages, multisite uninstall cleanup fix, and test bootstrap cleanup.

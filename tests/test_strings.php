@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile -- Development-only CLI assertions.
 require_once __DIR__ . '/bootstrap.php';
 require_once dirname(__DIR__) . '/includes/class-strings.php';
 
