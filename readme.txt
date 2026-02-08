@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.2.7
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,7 +18,10 @@ YT Consent Translations allows you to customize all text strings in the YOOtheme
 
 * Translate all 21 Consent Manager strings
 * 36 pre-configured language presets
+* Locale-scoped overrides for multilingual setups
 * Easy-to-use tabbed interface
+* Live preview, inline QA checks, and compatibility health panel
+* Snapshot history with rollback support
 * Import/Export settings as JSON
 * No coding required
 * Compatible with WPML and Polylang
@@ -54,7 +57,7 @@ Yes! Simply select any language preset and modify the texts to your needs. Your 
 
 = Does it work with multilingual plugins? =
 
-The plugin stores translations per WordPress installation. For true multilingual support with WPML or Polylang, you may need to configure the plugin separately for each language or use the multilingual plugin's string translation feature.
+The plugin supports locale-scoped settings (for example `en_US`, `tr_TR`) so you can maintain different overrides per locale while still using shared language presets.
 
 = How do I backup my translations? =
 
@@ -76,6 +79,14 @@ Use the Export button to download a JSON file of your current settings. You can 
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.0 =
+* Added locale-scoped settings storage for multilingual workflows (WPML/Polylang friendly)
+* Added compatibility health reporting for potential YOOtheme source string drift
+* Implemented documented extension APIs: `ytct_translations` filter and `YTCT_DISABLED` constant behavior
+* Added live preview panel, inline field validation, field-level reset actions, and unsaved-change protection
+* Added settings snapshots with one-click rollback
+* Added release-gate workflow and lightweight PHP tests
 
 = 1.2.7 =
 * Performance: Replaced repeated array scans with constant-time lookup maps (`isset`) in language/placeholder validation paths
@@ -137,6 +148,9 @@ Use the Export button to download a JSON file of your current settings. You can 
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+Feature release with locale-scoped overrides, live preview, compatibility monitoring, rollback snapshots, and release gate tests.
 
 = 1.2.7 =
 Maintenance release with performance optimizations, validation hardening, and documentation/tooling updates.

@@ -7,102 +7,147 @@
 (function($) {
     'use strict';
 
-    // Cache DOM elements
     var $form = $('#ytct-settings-form');
     var $saveBtn = $('#ytct-save-btn');
     var $resetBtn = $('#ytct-reset-btn');
     var $exportBtn = $('#ytct-export-btn');
     var $importBtn = $('#ytct-import-btn');
+    var $qualityBtn = $('#ytct-quality-btn');
+    var $healthBtn = $('#ytct-health-btn');
+    var $restoreBtn = $('#ytct-restore-btn');
     var $languageSelect = $('#ytct-language');
+    var $scopeSelect = $('#ytct-scope-locale');
+    var $scopeHidden = $('#ytct-settings-locale');
     var $message = $('#ytct-message');
     var $tabs = $('.ytct-tab');
     var $tabContents = $('.ytct-tab-content');
     var $modal = $('#ytct-import-modal');
+    var $qualityReport = $('#ytct-quality-report');
 
-    /**
-     * Initialize
-     */
+    var state = {
+        initialHash: '',
+        isDirty: false
+    };
+
     function init() {
         bindEvents();
         initTabs();
+        initializePresetValues();
+        refreshAllUiState();
+        captureInitialState();
     }
 
-    /**
-     * Bind events
-     */
     function bindEvents() {
-        // Save settings
         $form.on('submit', function(e) {
             e.preventDefault();
             saveSettings();
         });
 
-        // Reset settings
         $resetBtn.on('click', function(e) {
             e.preventDefault();
-            if (confirm(ytctAdmin.strings.confirmReset)) {
+            if (window.confirm(ytctAdmin.strings.confirmReset)) {
                 resetSettings();
             }
         });
 
-        // Export settings
         $exportBtn.on('click', function(e) {
             e.preventDefault();
             exportSettings();
         });
 
-        // Import button - show modal
         $importBtn.on('click', function(e) {
             e.preventDefault();
             showImportModal();
         });
 
-        // Language change - load preset
+        $qualityBtn.on('click', function(e) {
+            e.preventDefault();
+            runQualityCheck();
+        });
+
+        $healthBtn.on('click', function(e) {
+            e.preventDefault();
+            runHealthCheck();
+        });
+
+        $restoreBtn.on('click', function(e) {
+            e.preventDefault();
+            restoreSnapshot();
+        });
+
+        $scopeSelect.on('change', function() {
+            var locale = $(this).val();
+            loadScope(locale);
+        });
+
         $languageSelect.on('change', function() {
             loadLanguagePreset($(this).val());
         });
 
-        // Tab switching
         $tabs.on('click', function() {
             switchTab($(this).data('tab'));
         });
 
-        // Modal close
         $('.ytct-modal-close, .ytct-modal-overlay').on('click', function(e) {
             if (e.target === this) {
                 hideImportModal();
             }
         });
 
-        // Import form submit
         $('#ytct-import-form').on('submit', function(e) {
             e.preventDefault();
             importSettings();
         });
 
-        // File input change
         $('#ytct-import-file').on('change', function() {
             var fileName = $(this).val().split('\\').pop();
             if (fileName) {
                 $(this).siblings('.ytct-file-name').text(fileName).show();
             }
         });
+
+        $form.on('input', 'input[name^="strings["], textarea[name^="strings["]', function() {
+            var $input = $(this);
+            var key = $input.data('key');
+            validateField(key, $input);
+            updatePreviewForKey(key, $input.val());
+            updateFieldMetrics(key, $input);
+            markDirtyIfNeeded();
+        });
+
+        $form.on('click', '.ytct-reset-field', function(e) {
+            e.preventDefault();
+            var key = $(this).data('key');
+            resetFieldToPreset(key);
+            markDirtyIfNeeded();
+        });
+
+        $(window).on('beforeunload', function(e) {
+            if (!state.isDirty) {
+                return;
+            }
+
+            e.preventDefault();
+            e.returnValue = ytctAdmin.strings.unsavedChanges;
+            return ytctAdmin.strings.unsavedChanges;
+        });
     }
 
-    /**
-     * Initialize tabs
-     */
+    function initializePresetValues() {
+        $form.find('input[name^="strings["], textarea[name^="strings["]').each(function() {
+            var $input = $(this);
+            if ($input.attr('data-preset') === undefined) {
+                $input.attr('data-preset', $input.val() || '');
+            }
+        });
+    }
+
     function initTabs() {
-        // Show first tab by default
         var activeTab = $tabs.filter('.active').data('tab') || 'banner';
         switchTab(activeTab);
     }
 
-    /**
-     * Switch tab (with validation)
-     */
     function switchTab(tabId) {
-        // Validate tabId against known values to prevent DOM manipulation
         var validTabs = ['banner', 'modal', 'categories', 'buttons'];
         if (validTabs.indexOf(tabId) === -1) {
             tabId = 'banner';
@@ -115,20 +160,174 @@
         $('#ytct-tab-' + tabId).addClass('active');
     }
 
-    /**
-     * Save settings via AJAX
-     */
+    function getScopeLocale() {
+        return $scopeHidden.val() || $scopeSelect.val() || '';
+    }
+
+    function serializeFormState() {
+        var payload = {
+            enabled: $('#ytct-enabled').is(':checked'),
+            language: $languageSelect.val(),
+            settings_locale: getScopeLocale(),
+            strings: {}
+        };
+
+        $form.find('input[name^="strings["], textarea[name^="strings["]').each(function() {
+            var $input = $(this);
+            payload.strings[$input.data('key')] = $input.val();
+        });
+
+        return JSON.stringify(payload);
+    }
+
+    function captureInitialState() {
+        state.initialHash = serializeFormState();
+        state.isDirty = false;
+    }
+
+    function markDirtyIfNeeded() {
+        state.isDirty = serializeFormState() !== state.initialHash;
+    }
+
+    function refreshAllUiState() {
+        validateAllFields();
+        refreshPreview();
+        refreshFieldMetrics();
+    }
+
+    function refreshPreview() {
+        $form.find('input[name^="strings["], textarea[name^="strings["]').each(function() {
+            var $input = $(this);
+            updatePreviewForKey($input.data('key'), $input.val());
+        });
+    }
+
+    function updatePreviewForKey(key, value) {
+        if (!key) {
+            return;
+        }
+
+        var $targets = $('[data-preview-key="' + key + '"]');
+        if (!$targets.length) {
+            return;
+        }
+
+        if (key === 'banner_link' || key === 'modal_content_link') {
+            var htmlValue = (value || '').replace(/%1\$s|%s/g, '#');
+            $targets.html(htmlValue);
+            return;
+        }
+
+        $targets.text(value || '');
+    }
+
+    function validateAllFields() {
+        $form.find('input[name^="strings["], textarea[name^="strings["]').each(function() {
+            var $input = $(this);
+            validateField($input.data('key'), $input);
+        });
+    }
+
+    function validateField(key, $input) {
+        if (!key || !$input || !$input.length) {
+            return;
+        }
+
+        var value = ($input.val() || '').trim();
+        var preset = ($input.attr('data-preset') || '').trim();
+        var originalLength = parseInt($input.attr('data-original-length'), 10) || 0;
+        var issues = [];
+        var warnings = [];
+
+        if ((key === 'banner_link' || key === 'modal_content_link') && value !== '') {
+            if (value.indexOf('%s') === -1 && value.indexOf('%1$s') === -1) {
+                issues.push('Missing required placeholder (%s or %1$s).');
+            }
+        }
+
+        if (value !== '' && value.indexOf('<a ') !== -1) {
+            var openCount = (value.match(/<a\s/gi) || []).length;
+            var closeCount = (value.match(/<\/a>/gi) || []).length;
+            if (openCount !== closeCount) {
+                warnings.push('Anchor HTML may be unbalanced.');
+            }
+        }
+
+        if (originalLength > 40 && value.length > 0) {
+            var ratio = value.length / originalLength;
+            if (ratio > 1.8) {
+                warnings.push('Text is much longer than the original and may overflow.');
+            }
+        }
+
+        if (preset && value && preset.toLowerCase() === value.toLowerCase()) {
+            warnings.push('Value equals preset (no override needed).');
+        }
+
+        var $feedback = $('.ytct-inline-feedback[data-key="' + key + '"]');
+        $feedback.removeClass('ytct-inline-error ytct-inline-warning').empty();
+        $input.removeClass('ytct-field-error ytct-field-warning');
+
+        if (issues.length) {
+            $feedback.addClass('ytct-inline-error').text(issues[0]);
+            $input.addClass('ytct-field-error');
+        } else if (warnings.length) {
+            $feedback.addClass('ytct-inline-warning').text(warnings[0]);
+            $input.addClass('ytct-field-warning');
+        }
+    }
+
+    function refreshFieldMetrics() {
+        $form.find('input[name^="strings["], textarea[name^="strings["]').each(function() {
+            var $input = $(this);
+            updateFieldMetrics($input.data('key'), $input);
+        });
+    }
+
+    function updateFieldMetrics(key, $input) {
+        if (!key || !$input || !$input.length) {
+            return;
+        }
+
+        var value = $input.val() || '';
+        var preset = $input.attr('data-preset') || '';
+        var originalLength = parseInt($input.attr('data-original-length'), 10) || 0;
+        var parts = [value.length + ' chars'];
+
+        if (originalLength > 0) {
+            parts.push('orig ' + originalLength);
+        }
+
+        if (preset.length > 0 && value !== preset) {
+            parts.push('customized');
+        }
+
+        $('.ytct-field-metrics[data-key="' + key + '"]').text(parts.join(' | '));
+    }
+
+    function resetFieldToPreset(key) {
+        var $input = $form.find('[name="strings[' + key + ']"]');
+        if (!$input.length) {
+            return;
+        }
+
+        var preset = $input.attr('data-preset') || '';
+        $input.val(preset);
+        validateField(key, $input);
+        updatePreviewForKey(key, preset);
+        updateFieldMetrics(key, $input);
+    }
+
     function saveSettings() {
         var $btn = $saveBtn;
         var originalText = $btn.html();
 
-        // Disable button and show loading
         $btn.prop('disabled', true).html('<span class="ytct-spinner"></span> ' + ytctAdmin.strings.saving);
 
-        // Collect form data
         var formData = new FormData($form[0]);
         formData.append('action', 'ytct_save_settings');
         formData.append('nonce', ytctAdmin.nonce);
+        formData.set('settings_locale', getScopeLocale());
 
         $.ajax({
             url: ytctAdmin.ajaxUrl,
@@ -137,10 +336,12 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                if (response.success) {
+                if (response.success && response.data && response.data.scope) {
+                    applyScopePayload(response.data.scope, false);
                     showMessage(response.data.message || ytctAdmin.strings.saved, 'success');
+                    captureInitialState();
                 } else {
-                    showMessage(response.data.message || ytctAdmin.strings.error, 'error');
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
                 }
             },
             error: function() {
@@ -152,9 +353,6 @@
         });
     }
 
-    /**
-     * Reset settings via AJAX
-     */
     function resetSettings() {
         var $btn = $resetBtn;
         var originalText = $btn.html();
@@ -166,21 +364,16 @@
             type: 'POST',
             data: {
                 action: 'ytct_reset_settings',
-                nonce: ytctAdmin.nonce
+                nonce: ytctAdmin.nonce,
+                settings_locale: getScopeLocale()
             },
             success: function(response) {
-                if (response.success) {
+                if (response.success && response.data && response.data.scope) {
+                    applyScopePayload(response.data.scope, false);
                     showMessage(response.data.message || ytctAdmin.strings.resetSuccess, 'success');
-                    
-                    // Reset form fields
-                    $languageSelect.val('en');
-                    $form.find('input[type="text"], textarea').val('');
-                    $('#ytct-enabled').prop('checked', true);
-                    
-                    // Load English preset
-                    loadLanguagePreset('en');
+                    captureInitialState();
                 } else {
-                    showMessage(response.data.message || ytctAdmin.strings.error, 'error');
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
                 }
             },
             error: function() {
@@ -192,20 +385,17 @@
         });
     }
 
-    /**
-     * Export settings via POST (more secure than GET)
-     */
     function exportSettings() {
         $.ajax({
             url: ytctAdmin.ajaxUrl,
             type: 'POST',
             data: {
                 action: 'ytct_export_settings',
-                nonce: ytctAdmin.nonce
+                nonce: ytctAdmin.nonce,
+                settings_locale: getScopeLocale()
             },
             success: function(response) {
                 if (response.success && response.data) {
-                    // Create and download file client-side
                     var dataStr = JSON.stringify(response.data.data, null, 2);
                     var blob = new Blob([dataStr], { type: 'application/json' });
                     var url = URL.createObjectURL(blob);
@@ -217,7 +407,7 @@
                     document.body.removeChild(link);
                     URL.revokeObjectURL(url);
                 } else {
-                    showMessage(response.data.message || ytctAdmin.strings.error, 'error');
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
                 }
             },
             error: function() {
@@ -226,17 +416,11 @@
         });
     }
 
-    /**
-     * Show import modal
-     */
     function showImportModal() {
         $modal.addClass('show');
         $('body').css('overflow', 'hidden');
     }
 
-    /**
-     * Hide import modal
-     */
     function hideImportModal() {
         $modal.removeClass('show');
         $('body').css('overflow', '');
@@ -244,19 +428,16 @@
         $('.ytct-file-name').hide();
     }
 
-    /**
-     * Import settings via AJAX
-     */
     function importSettings() {
         var fileInput = $('#ytct-import-file')[0];
-        
+
         if (!fileInput.files || !fileInput.files[0]) {
             showMessage(ytctAdmin.strings.invalidFile, 'error');
             return;
         }
 
         var file = fileInput.files[0];
-        if (!file.name.endsWith('.json')) {
+        if (!file.name.toLowerCase().endsWith('.json')) {
             showMessage(ytctAdmin.strings.invalidFile, 'error');
             return;
         }
@@ -269,6 +450,7 @@
         var formData = new FormData();
         formData.append('action', 'ytct_import_settings');
         formData.append('nonce', ytctAdmin.nonce);
+        formData.append('settings_locale', getScopeLocale());
         formData.append('import_file', file);
 
         $.ajax({
@@ -278,16 +460,13 @@
             processData: false,
             contentType: false,
             success: function(response) {
-                if (response.success) {
+                if (response.success && response.data && response.data.scope) {
                     hideImportModal();
+                    applyScopePayload(response.data.scope, false);
                     showMessage(response.data.message || ytctAdmin.strings.importSuccess, 'success');
-                    
-                    // Update form with imported values
-                    if (response.data.options) {
-                        updateFormWithOptions(response.data.options);
-                    }
+                    captureInitialState();
                 } else {
-                    showMessage(response.data.message || ytctAdmin.strings.error, 'error');
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
                 }
             },
             error: function() {
@@ -299,70 +478,305 @@
         });
     }
 
-    /**
-     * Load language preset via AJAX
-     * @param {string} language - Language code
-     * @param {function} callback - Optional callback after loading
-     */
-    function loadLanguagePreset(language, callback) {
+    function loadLanguagePreset(language) {
         $.ajax({
             url: ytctAdmin.ajaxUrl,
             type: 'POST',
             data: {
                 action: 'ytct_load_language',
                 nonce: ytctAdmin.nonce,
-                language: language
+                language: language,
+                settings_locale: getScopeLocale()
             },
             success: function(response) {
-                if (response.success && response.data.translations) {
-                    // Update form fields with translations
+                if (response.success && response.data && response.data.translations) {
                     $.each(response.data.translations, function(key, value) {
                         var $input = $form.find('[name="strings[' + key + ']"]');
                         if ($input.length) {
                             $input.val(value);
+                            $input.attr('data-preset', value);
                         }
                     });
-                    
+
+                    refreshAllUiState();
+                    markDirtyIfNeeded();
                     showMessage(ytctAdmin.strings.languageLoaded, 'success');
-                    
-                    // Execute callback if provided
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
                 }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
             }
         });
     }
 
-    /**
-     * Update form with options
-     */
-    function updateFormWithOptions(options) {
-        if (options.enabled !== undefined) {
-            $('#ytct-enabled').prop('checked', !!options.enabled);
-        }
-
-        if (options.language) {
-            $languageSelect.val(options.language);
-        }
-
-        if (options.custom_strings) {
-            // First load the language preset, then apply custom strings via callback
-            loadLanguagePreset(options.language || 'en', function() {
-                // Override with custom strings after preset is loaded
-                $.each(options.custom_strings, function(key, value) {
-                    var $input = $form.find('[name="strings[' + key + ']"]');
-                    if ($input.length && value) {
-                        $input.val(value);
-                    }
-                });
-            });
-        }
+    function loadScope(scopeLocale) {
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'ytct_load_scope',
+                nonce: ytctAdmin.nonce,
+                settings_locale: scopeLocale
+            },
+            success: function(response) {
+                if (response.success && response.data && response.data.scope) {
+                    applyScopePayload(response.data.scope, true);
+                    showMessage(ytctAdmin.strings.scopeLoaded, 'success');
+                    captureInitialState();
+                } else {
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            }
+        });
     }
 
-    /**
-     * Show message
-     */
+    function applyScopePayload(scope, setScopeSelect) {
+        if (!scope) {
+            return;
+        }
+
+        if (scope.scopeLocale) {
+            $scopeHidden.val(scope.scopeLocale);
+            if (setScopeSelect !== false) {
+                $scopeSelect.val(scope.scopeLocale);
+            }
+        }
+
+        if (scope.options) {
+            if (scope.options.enabled !== undefined) {
+                $('#ytct-enabled').prop('checked', !!scope.options.enabled);
+            }
+
+            if (scope.options.language) {
+                $languageSelect.val(scope.options.language);
+            }
+        }
+
+        if (scope.presetTranslations) {
+            $.each(scope.presetTranslations, function(key, value) {
+                var $input = $form.find('[name="strings[' + key + ']"]');
+                if ($input.length) {
+                    $input.attr('data-preset', value);
+                }
+            });
+        }
+
+        if (scope.effectiveStrings) {
+            $.each(scope.effectiveStrings, function(key, value) {
+                var $input = $form.find('[name="strings[' + key + ']"]');
+                if ($input.length) {
+                    $input.val(value);
+                }
+            });
+        }
+
+        if (scope.snapshots) {
+            updateSnapshotSelect(scope.snapshots);
+        }
+
+        if (scope.health) {
+            renderHealth(scope.health);
+        }
+
+        if (scope.quality) {
+            renderQuality(scope.quality);
+        }
+
+        refreshAllUiState();
+    }
+
+    function updateSnapshotSelect(snapshots) {
+        var $select = $('#ytct-snapshot-select');
+        $select.empty();
+        $select.append($('<option>', {
+            value: '',
+            text: 'Select a snapshot'
+        }));
+
+        if (!Array.isArray(snapshots)) {
+            return;
+        }
+
+        snapshots.forEach(function(snapshot) {
+            if (!snapshot || !snapshot.id) {
+                return;
+            }
+
+            var label = (snapshot.label || 'snapshot') + ' - ' + (snapshot.created_at || '');
+            $select.append($('<option>', {
+                value: snapshot.id,
+                text: label
+            }));
+        });
+    }
+
+    function restoreSnapshot() {
+        var snapshotId = $('#ytct-snapshot-select').val();
+        if (!snapshotId) {
+            showMessage('Select a snapshot first.', 'error');
+            return;
+        }
+
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'ytct_restore_snapshot',
+                nonce: ytctAdmin.nonce,
+                settings_locale: getScopeLocale(),
+                snapshot_id: snapshotId
+            },
+            success: function(response) {
+                if (response.success && response.data && response.data.scope) {
+                    applyScopePayload(response.data.scope, false);
+                    showMessage(response.data.message || ytctAdmin.strings.restored, 'success');
+                    captureInitialState();
+                } else {
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            }
+        });
+    }
+
+    function runQualityCheck() {
+        var originalText = $qualityBtn.html();
+        $qualityBtn.prop('disabled', true).text(ytctAdmin.strings.qualityCheckRunning);
+
+        var formData = new FormData($form[0]);
+        formData.append('action', 'ytct_quality_check');
+        formData.append('nonce', ytctAdmin.nonce);
+        formData.set('settings_locale', getScopeLocale());
+
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success && response.data && response.data.quality) {
+                    renderQuality(response.data.quality);
+                    if (response.data.quality.status === 'ok') {
+                        showMessage(ytctAdmin.strings.qualityCheckOk, 'success');
+                    } else {
+                        showMessage('Quality check reported issues/warnings.', 'error');
+                    }
+                } else {
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            },
+            complete: function() {
+                $qualityBtn.prop('disabled', false).html(originalText);
+            }
+        });
+    }
+
+    function renderQuality(quality) {
+        if (!quality) {
+            $qualityReport.removeClass('show').empty();
+            return;
+        }
+
+        var html = [];
+        if (Array.isArray(quality.issues) && quality.issues.length) {
+            html.push('<strong>Issues</strong><ul>');
+            quality.issues.forEach(function(issue) {
+                html.push('<li>' + escapeHtml(issue) + '</li>');
+            });
+            html.push('</ul>');
+        }
+
+        if (Array.isArray(quality.warnings) && quality.warnings.length) {
+            html.push('<strong>Warnings</strong><ul>');
+            quality.warnings.forEach(function(warning) {
+                html.push('<li>' + escapeHtml(warning) + '</li>');
+            });
+            html.push('</ul>');
+        }
+
+        if (!html.length) {
+            html.push('<p>No quality issues found.</p>');
+        }
+
+        $qualityReport
+            .removeClass('ytct-quality-ok ytct-quality-warning ytct-quality-error')
+            .addClass('show ytct-quality-' + (quality.status || 'ok'))
+            .html(html.join(''));
+    }
+
+    function runHealthCheck() {
+        var originalText = $healthBtn.html();
+        $healthBtn.prop('disabled', true).text(ytctAdmin.strings.healthCheckRunning);
+
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'ytct_health_check',
+                nonce: ytctAdmin.nonce,
+                settings_locale: getScopeLocale()
+            },
+            success: function(response) {
+                if (response.success && response.data && response.data.health) {
+                    renderHealth(response.data.health);
+                    showMessage(ytctAdmin.strings.healthCheckOk, 'success');
+                } else {
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            },
+            complete: function() {
+                $healthBtn.prop('disabled', false).html(originalText);
+            }
+        });
+    }
+
+    function renderHealth(health) {
+        var $panel = $('#ytct-health-panel');
+        var $list = $('#ytct-health-list');
+        if (!$panel.length || !$list.length || !health) {
+            return;
+        }
+
+        $panel
+            .removeClass('ytct-health-healthy ytct-health-notice ytct-health-warning')
+            .addClass('ytct-health-' + (health.status || 'healthy'));
+
+        var items = [];
+        if (Array.isArray(health.issues) && health.issues.length) {
+            health.issues.forEach(function(issue) {
+                items.push('<li class="ytct-health-issue">' + escapeHtml(issue) + '</li>');
+            });
+        }
+
+        if (Array.isArray(health.warnings) && health.warnings.length) {
+            health.warnings.forEach(function(warning) {
+                items.push('<li class="ytct-health-warning">' + escapeHtml(warning) + '</li>');
+            });
+        }
+
+        if (!items.length) {
+            items.push('<li class="ytct-health-ok">No compatibility issues reported.</li>');
+        }
+
+        $list.html(items.join(''));
+    }
+
+    function escapeHtml(text) {
+        return $('<div>').text(text || '').html();
+    }
+
     function showMessage(text, type) {
         $message
             .removeClass('ytct-message-success ytct-message-error')
@@ -370,18 +784,15 @@
             .text(text)
             .addClass('show');
 
-        // Auto hide after 5 seconds
         setTimeout(function() {
             $message.removeClass('show');
         }, 5000);
 
-        // Scroll to message
         $('html, body').animate({
             scrollTop: $message.offset().top - 50
         }, 300);
     }
 
-    // Initialize when document is ready
     $(document).ready(init);
 
 })(jQuery);

@@ -23,13 +23,14 @@ Thank you for your interest in contributing! Here's how you can help.
    - Copy `languages/en.json` as a template
    - Translate all values
 4. Run `python scripts/validate_json.py` to verify your JSON file
-5. Submit a Pull Request
+5. Run `bash scripts/run_tests.sh` before opening your PR
+6. Submit a Pull Request
 
 ### Code Standards
 
 - Follow [WordPress Coding Standards](https://developer.wordpress.org/coding-standards/)
 - Use meaningful commit messages
-- Test your changes before submitting
+- Test your changes before submitting (`bash scripts/run_tests.sh`)
 
 ## Pull Request Process
 

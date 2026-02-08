@@ -176,21 +176,7 @@ class YTCT_Strings {
 	 * @return string Language code
 	 */
 	public static function detect_wp_language() {
-		$locale = get_locale();
-		
-		// 1. Direct match in locale_map (most specific)
-		if (isset(self::$locale_map[$locale])) {
-			return self::$locale_map[$locale];
-		}
-		
-		// 2. Try base language from explicit mapping (deterministic)
-		$base_lang = substr($locale, 0, 2);
-		if (isset(self::$base_lang_map[$base_lang])) {
-			return self::$base_lang_map[$base_lang];
-		}
-		
-		// 3. Default to English
-		return 'en';
+		return self::detect_language_from_locale(get_locale());
 	}
 
 	/**
@@ -224,6 +210,57 @@ class YTCT_Strings {
 	 */
 	public static function get_locale_map() {
 		return self::$locale_map;
+	}
+
+	/**
+	 * Get unique WordPress locale list supported by mappings.
+	 *
+	 * @return array
+	 */
+	public static function get_supported_wp_locales() {
+		$locales = array_keys(self::$locale_map);
+		$current = get_locale();
+		$locale_lookup = array_fill_keys($locales, true);
+		if (is_string($current) && $current !== '' && !isset($locale_lookup[$current])) {
+			$locales[] = $current;
+		}
+
+		sort($locales);
+		return $locales;
+	}
+
+	/**
+	 * Get human-readable label for a WordPress locale.
+	 *
+	 * @param string $locale Locale value.
+	 * @return string
+	 */
+	public static function get_locale_label($locale) {
+		$locale = is_string($locale) ? $locale : '';
+		$lang_code = self::detect_language_from_locale($locale);
+		$languages = self::get_languages();
+		$lang_name = isset($languages[$lang_code]) ? $languages[$lang_code] : strtoupper($lang_code);
+		return sprintf('%s (%s)', $locale, $lang_name);
+	}
+
+	/**
+	 * Resolve plugin language code from arbitrary locale.
+	 *
+	 * @param string $locale Locale value.
+	 * @return string
+	 */
+	public static function detect_language_from_locale($locale) {
+		if (!is_string($locale) || $locale === '') {
+			return 'en';
+		}
+
+		$normalized = str_replace('-', '_', $locale);
+		if (isset(self::$locale_map[$normalized])) {
+			return self::$locale_map[$normalized];
+		}
+
+		$base_lang = substr($normalized, 0, 2);
+		return isset(self::$base_lang_map[$base_lang]) ? self::$base_lang_map[$base_lang] : 'en';
 	}
 
 	/**

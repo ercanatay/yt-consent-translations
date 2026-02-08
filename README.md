@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.2.7-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -14,7 +14,11 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 - ✅ **21 Translatable Strings** - All consent manager texts
 - ✅ **36 Pre-configured Languages** - Ready to use out of the box
 - ✅ **Auto Language Detection** - Automatically uses WordPress default language
+- ✅ **Locale Scope Support** - Store different overrides per WordPress locale
 - ✅ **Easy Admin Interface** - Tabbed UI for better organization
+- ✅ **Live Preview & Inline QA** - Real-time preview with field-level validation
+- ✅ **Compatibility Health Check** - Detect potential YOOtheme string drift
+- ✅ **Snapshots & Rollback** - Restore previous settings in one click
 - ✅ **Import/Export** - Backup and restore your translations as JSON
 - ✅ **No Coding Required** - Simple point-and-click interface
 - ✅ **WPML/Polylang Compatible** - Works with multilingual plugins
@@ -161,6 +165,17 @@ add_filter('ytct_translations', function($translations, $language) {
 define('YTCT_DISABLED', true);
 ```
 
+### Locale-aware Storage
+
+Starting with `1.3.0`, settings are stored per locale scope (for example: `en_US`, `tr_TR`).
+This is useful for WPML/Polylang scenarios where each locale needs different consent wording.
+
+### Quality & Compatibility Tooling
+
+- Built-in quality checks for placeholders, link integrity, and text length warnings
+- Compatibility health panel to surface potential YOOtheme source string changes
+- Snapshot history with rollback support
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -190,6 +205,14 @@ To add a new language, edit `includes/class-strings.php`:
 ```
 
 ## 📝 Changelog
+
+### 1.3.0 (2026-02-08)
+- **Per-Locale Overrides**: Added locale-scoped settings storage to support different translation overrides by WordPress locale
+- **Compatibility Monitoring**: Added runtime health reporting to detect potential YOOtheme consent source string drift
+- **Developer API**: Implemented documented `ytct_translations` filter and `YTCT_DISABLED` runtime constant behavior
+- **Admin UX**: Added live preview, inline validation feedback, unsaved-change guard, field reset actions, and quality check tooling
+- **Recovery**: Added snapshot history and one-click rollback for settings
+- **Release Gate**: Added lightweight PHP tests and CI workflow (`release-gate.yml`) with syntax/JSON/security checks
 
 ### 1.2.7 (2026-02-08)
 - **Performance**: Replaced repeated `in_array()` scans with constant-time lookup maps (`isset`) in import/language/placeholder validation paths

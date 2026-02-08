@@ -84,11 +84,7 @@ class YTCT_Translator {
 	 */
 	private function get_options() {
 		if (null === $this->options) {
-			$this->options = get_option(YTCT_OPTION_NAME, [
-				'enabled' => true,
-				'language' => 'en',
-				'custom_strings' => []
-			]);
+			$this->options = YTCT_Options::get_options();
 		}
 		return $this->options;
 	}
@@ -120,6 +116,15 @@ class YTCT_Translator {
 					}
 				}
 			}
+
+			/**
+			 * Filter final translation map before gettext interception.
+			 *
+			 * @param array  $translations Active translations.
+			 * @param string $language Active language code.
+			 * @param array  $options Plugin options for current locale.
+			 */
+			$this->translations = apply_filters('ytct_translations', $this->translations, $language, $options);
 		}
 		return $this->translations;
 	}
@@ -159,11 +164,13 @@ class YTCT_Translator {
 		$map = $this->get_original_to_key_map();
 		
 		if (!isset($map[$original])) {
+			YTCT_Health::record_unmatched($original);
 			return $translated;
 		}
 
 		$key = $map[$original];
 		$translations = $this->get_translations();
+		YTCT_Health::record_match();
 
 		// Return custom translation if exists
 		if (isset($translations[$key]) && !empty($translations[$key])) {
