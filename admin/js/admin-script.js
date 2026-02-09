@@ -15,6 +15,7 @@
     var $qualityBtn = $('#ytct-quality-btn');
     var $healthBtn = $('#ytct-health-btn');
     var $restoreBtn = $('#ytct-restore-btn');
+    var $checkUpdateBtn = $('#ytct-check-update-btn');
     var $languageSelect = $('#ytct-language');
     var $scopeSelect = $('#ytct-scope-locale');
     var $scopeHidden = $('#ytct-settings-locale');
@@ -75,6 +76,11 @@
             restoreSnapshot();
         });
 
+        $checkUpdateBtn.on('click', function(e) {
+            e.preventDefault();
+            checkUpdateNow();
+        });
+
         $scopeSelect.on('change', function() {
             var locale = $(this).val();
             loadScope(locale);
@@ -119,6 +125,10 @@
             e.preventDefault();
             var key = $(this).data('key');
             resetFieldToPreset(key);
+            markDirtyIfNeeded();
+        });
+
+        $form.on('change', '#ytct-enabled, #ytct-update-channel-enabled', function() {
             markDirtyIfNeeded();
         });
 
@@ -167,6 +177,7 @@
     function serializeFormState() {
         var payload = {
             enabled: $('#ytct-enabled').is(':checked'),
+            update_channel_enabled: $('#ytct-update-channel-enabled').is(':checked'),
             language: $languageSelect.val(),
             settings_locale: getScopeLocale(),
             strings: {}
@@ -585,7 +596,57 @@
             renderQuality(scope.quality);
         }
 
+        if (scope.updater) {
+            renderUpdater(scope.updater);
+        }
+
         refreshAllUiState();
+    }
+
+    function renderUpdater(updater) {
+        if (!updater) {
+            return;
+        }
+
+        $('#ytct-update-channel-enabled').prop('checked', !!updater.enabled);
+        $('#ytct-updater-current-version').text(updater.currentVersion || '');
+        $('#ytct-updater-latest-version').text(updater.latestVersion || 'Unknown');
+        $('#ytct-updater-last-check').text(formatIsoDate(updater.lastCheckedAt));
+        $('#ytct-updater-status').text(formatUpdaterStatus(updater.status, !!updater.updateAvailable));
+        $('#ytct-updater-last-install').text(formatIsoDate(updater.lastInstallAt));
+        $('#ytct-updater-last-error').text(updater.lastError || 'None');
+    }
+
+    function formatUpdaterStatus(status, updateAvailable) {
+        var map = {
+            idle: 'idle',
+            up_to_date: 'up_to_date',
+            update_available: 'update_available',
+            error: 'error',
+            installing: 'installing',
+            updated: 'updated',
+            update_failed: 'update_failed'
+        };
+
+        var normalized = map[status] || 'idle';
+        if (updateAvailable && normalized !== 'updated') {
+            return 'update_available';
+        }
+
+        return normalized;
+    }
+
+    function formatIsoDate(value) {
+        if (!value) {
+            return 'Never';
+        }
+
+        var date = new Date(value);
+        if (isNaN(date.getTime())) {
+            return value;
+        }
+
+        return date.toLocaleString();
     }
 
     function updateSnapshotSelect(snapshots) {
@@ -640,6 +701,42 @@
             },
             error: function() {
                 showMessage(ytctAdmin.strings.error, 'error');
+            }
+        });
+    }
+
+    function checkUpdateNow() {
+        var originalText = $checkUpdateBtn.html();
+        $checkUpdateBtn.prop('disabled', true).text(ytctAdmin.strings.checkUpdateRunning);
+
+        $.ajax({
+            url: ytctAdmin.ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'ytct_check_update_now',
+                nonce: ytctAdmin.nonce,
+                settings_locale: getScopeLocale()
+            },
+            success: function(response) {
+                if (response.success && response.data && response.data.updater) {
+                    var type = 'success';
+                    var updater = response.data.updater;
+                    renderUpdater(updater);
+
+                    if (updater.status === 'error' || updater.status === 'update_failed') {
+                        type = 'error';
+                    }
+
+                    showMessage(response.data.message || ytctAdmin.strings.checkUpdateNoChange, type);
+                } else {
+                    showMessage((response.data && response.data.message) || ytctAdmin.strings.error, 'error');
+                }
+            },
+            error: function() {
+                showMessage(ytctAdmin.strings.error, 'error');
+            },
+            complete: function() {
+                $checkUpdateBtn.prop('disabled', false).html(originalText);
             }
         });
     }

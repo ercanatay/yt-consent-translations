@@ -62,6 +62,7 @@ final class YT_Consent_Translations {
 		require_once YTCT_PLUGIN_DIR . 'includes/class-options.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-health.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-translator.php';
+		require_once YTCT_PLUGIN_DIR . 'includes/class-updater.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-admin.php';
 	}
 
@@ -73,6 +74,7 @@ final class YT_Consent_Translations {
 		add_action('plugins_loaded', [$this, 'load_textdomain']);
 
 		// Initialize translator on frontend and admin
+		add_action('init', [$this, 'init_updater']);
 		add_action('init', [$this, 'init_translator']);
 		add_action('init', [$this, 'init_health_monitor']);
 
@@ -89,6 +91,15 @@ final class YT_Consent_Translations {
 
 		// Add settings link on plugins page
 		add_filter('plugin_action_links_' . YTCT_PLUGIN_BASENAME, [$this, 'add_settings_link']);
+	}
+
+	/**
+	 * Initialize updater integration.
+	 *
+	 * @return void
+	 */
+	public function init_updater() {
+		YTCT_Updater::boot();
 	}
 
 	/**
@@ -143,6 +154,8 @@ final class YT_Consent_Translations {
 			YTCT_Options::update_options(YTCT_Options::get_default_options(), '', 'activation');
 		}
 
+		YTCT_Updater::on_activation();
+
 		// Flush rewrite rules
 		flush_rewrite_rules();
 	}
@@ -151,6 +164,7 @@ final class YT_Consent_Translations {
 	 * Plugin deactivation
 	 */
 	public function deactivate() {
+		YTCT_Updater::on_deactivation();
 		flush_rewrite_rules();
 	}
 

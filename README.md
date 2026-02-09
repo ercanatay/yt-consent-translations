@@ -20,6 +20,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 - ✅ **Compatibility Health Check** - Detect potential YOOtheme string drift
 - ✅ **Snapshots & Rollback** - Restore previous settings in one click
 - ✅ **Import/Export** - Backup and restore your translations as JSON
+- ✅ **GitHub Stable Auto Update** - Optional site-wide channel with background checks and auto-install
 - ✅ **No Coding Required** - Simple point-and-click interface
 - ✅ **WPML/Polylang Compatible** - Works with multilingual plugins
 
@@ -134,14 +135,25 @@ composer update ercanatay/yt-consent-translations
 
 1. Go to **Settings → YT Consent Translations**
 2. Select your language preset or set to "Auto"
-3. Customize any text as needed
-4. Click **Save Changes**
+3. Configure **GitHub Stable Auto Update** channel (site-wide toggle)
+4. Customize any text as needed
+5. Click **Save Changes**
 
 ### Quick Start
 
 1. **Auto Mode**: Select "Auto (WordPress Default)" to automatically use translations matching your WordPress language
 2. **Manual Mode**: Select a specific language and customize the texts
 3. **Custom**: Modify any preset text to match your brand voice
+
+### GitHub Stable Auto Update Channel
+
+- Source: GitHub latest stable release (`releases/latest`)
+- Package strategy: release asset if available, otherwise GitHub `zipball_url`
+- Scope: site-wide setting (not locale-scoped)
+- Default: enabled on new installs
+- Check interval: every 12 hours (`twicedaily`)
+- Failure behavior: automatic retry on next cycle + last error surfaced in admin updater panel
+- Manual trigger: **Check Now** button in plugin settings
 
 ## 🔧 Requirements
 

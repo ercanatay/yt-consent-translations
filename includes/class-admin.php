@@ -59,6 +59,7 @@ class YTCT_Admin {
 		add_action('wp_ajax_ytct_restore_snapshot', [$this, 'ajax_restore_snapshot']);
 		add_action('wp_ajax_ytct_health_check', [$this, 'ajax_health_check']);
 		add_action('wp_ajax_ytct_quality_check', [$this, 'ajax_quality_check']);
+		add_action('wp_ajax_ytct_check_update_now', [$this, 'ajax_check_update_now']);
 	}
 
 	/**
@@ -125,7 +126,12 @@ class YTCT_Admin {
 				'unsavedChanges' => __('You have unsaved changes. Leave without saving?', 'yt-consent-translations-1.3.3'),
 				'selectSnapshot' => __('Select a snapshot', 'yt-consent-translations-1.3.3'),
 				'selectSnapshotFirst' => __('Select a snapshot first.', 'yt-consent-translations-1.3.3'),
-				'qualityCheckFailed' => __('Quality check reported issues/warnings.', 'yt-consent-translations-1.3.3')
+				'qualityCheckFailed' => __('Quality check reported issues/warnings.', 'yt-consent-translations-1.3.3'),
+				'checkUpdateRunning' => __('Checking GitHub stable release...', 'yt-consent-translations-1.3.3'),
+				'checkUpdateNoChange' => __('No new version found. Plugin is up to date.', 'yt-consent-translations-1.3.3'),
+				'checkUpdateFound' => __('New version detected. Enable update channel to allow auto-install.', 'yt-consent-translations-1.3.3'),
+				'checkUpdateInstalled' => __('New version installed successfully.', 'yt-consent-translations-1.3.3'),
+				'checkUpdateInstallFailed' => __('New version detected, but installation failed. Check updater status.', 'yt-consent-translations-1.3.3')
 			]
 		]);
 	}
@@ -436,7 +442,8 @@ class YTCT_Admin {
 			'effectiveStrings' => $effective_strings,
 			'quality' => $quality,
 			'health' => $health,
-			'snapshots' => $snapshot_summaries
+			'snapshots' => $snapshot_summaries,
+			'updater' => YTCT_Updater::get_admin_payload()
 		];
 	}
 
@@ -450,6 +457,7 @@ class YTCT_Admin {
 
 		$scope_locale = $this->get_scope_locale();
 		$enabled = $this->get_post_scalar('enabled', '0') !== '0';
+		$update_channel_enabled = $this->get_post_scalar('update_channel_enabled', '0') !== '0';
 		$language = $this->get_post_scalar('language', 'en');
 		$language = $this->get_valid_language($language);
 
@@ -477,6 +485,9 @@ class YTCT_Admin {
 		];
 
 		$stored = YTCT_Options::update_options($options, $scope_locale, 'manual_save');
+		YTCT_Updater::update_settings([
+			'enabled' => $update_channel_enabled
+		]);
 
 		YTCT_Translator::get_instance()->clear_cache();
 		YTCT_Strings::clear_cache();
@@ -782,6 +793,31 @@ class YTCT_Admin {
 		$quality = $this->build_quality_report($effective_strings, $preset_translations);
 		wp_send_json_success([
 			'quality' => $quality
+		]);
+	}
+
+	/**
+	 * AJAX: Run immediate GitHub update check.
+	 *
+	 * @return void
+	 */
+	public function ajax_check_update_now() {
+		$this->verify_ajax_request();
+
+		$updater = YTCT_Updater::manual_check();
+
+		$message = __('No new version found. Plugin is up to date.', 'yt-consent-translations-1.3.3');
+		if (!empty($updater['installationAttempted']) && !empty($updater['installationSucceeded'])) {
+			$message = __('New version installed successfully.', 'yt-consent-translations-1.3.3');
+		} elseif (!empty($updater['installationAttempted'])) {
+			$message = __('New version detected, but installation failed. Check updater status.', 'yt-consent-translations-1.3.3');
+		} elseif (!empty($updater['updateAvailable'])) {
+			$message = __('New version detected. Enable update channel to allow auto-install.', 'yt-consent-translations-1.3.3');
+		}
+
+		wp_send_json_success([
+			'message' => $message,
+			'updater' => YTCT_Updater::get_admin_payload()
 		]);
 	}
 }

@@ -23,6 +23,7 @@ YT Consent Translations allows you to customize all text strings in the YOOtheme
 * Live preview, inline QA checks, and compatibility health panel
 * Snapshot history with rollback support
 * Import/Export settings as JSON
+* GitHub stable auto-update channel (site-wide toggle, 12-hour checks)
 * No coding required
 * Compatible with WPML and Polylang
 
@@ -62,6 +63,10 @@ The plugin supports locale-scoped settings (for example `en_US`, `tr_TR`) so you
 = How do I backup my translations? =
 
 Use the Export button to download a JSON file of your current settings. You can Import this file later to restore your translations.
+
+= How does GitHub auto-update work? =
+
+Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin checks the latest stable release every 12 hours and auto-installs newer versions using WordPress Upgrader. If GitHub is temporarily unreachable, it retries automatically and shows the last error in the updater panel.
 
 = My translations are not showing up =
 

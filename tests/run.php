@@ -3,7 +3,8 @@
 $tests = [
 	__DIR__ . '/test_strings.php',
 	__DIR__ . '/test_options.php',
-	__DIR__ . '/test_health.php'
+	__DIR__ . '/test_health.php',
+	__DIR__ . '/test_updater.php'
 ];
 
 foreach ($tests as $test) {
