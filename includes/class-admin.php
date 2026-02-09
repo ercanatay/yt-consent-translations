@@ -248,9 +248,14 @@ class YTCT_Admin {
 				'rel' => true
 			]
 		];
-		return wp_kses($value, $allowed_html);
-	}
+		$value = wp_kses($value, $allowed_html);
 
+		if (function_exists("wp_targeted_link_rel")) {
+			$value = wp_targeted_link_rel($value);
+		}
+
+		return $value;
+	}
 	/**
 	 * Validate selected language against supported list.
 	 *
