@@ -16,6 +16,8 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 // Delete legacy plugin option
 delete_option('yt_consent_translations');
 delete_option('ytct_health_report');
+delete_option('ytct_updater_settings');
+delete_option('ytct_updater_state');
 
 /**
  * Delete locale-scoped options and snapshot options.
@@ -61,6 +63,8 @@ if (is_multisite()) {
 		switch_to_blog($ytct_blog_id);
 		delete_option('yt_consent_translations');
 		delete_option('ytct_health_report');
+		delete_option('ytct_updater_settings');
+		delete_option('ytct_updater_state');
 		ytct_delete_scoped_options();
 		restore_current_blog();
 	}

@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,7 @@ YT Consent Translations allows you to customize all text strings in the YOOtheme
 * Live preview, inline QA checks, and compatibility health panel
 * Snapshot history with rollback support
 * Import/Export settings as JSON
+* GitHub stable auto-update channel (site-wide toggle, 12-hour checks)
 * No coding required
 * Compatible with WPML and Polylang
 
@@ -63,6 +64,10 @@ The plugin supports locale-scoped settings (for example `en_US`, `tr_TR`) so you
 
 Use the Export button to download a JSON file of your current settings. You can Import this file later to restore your translations.
 
+= How does GitHub auto-update work? =
+
+Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin checks the latest stable release every 12 hours and auto-installs newer versions using WordPress Upgrader. If GitHub is temporarily unreachable, it retries automatically and shows the last error in the updater panel.
+
 = My translations are not showing up =
 
 1. Make sure the plugin is enabled (check the toggle in settings)
@@ -79,6 +84,13 @@ Use the Export button to download a JSON file of your current settings. You can 
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.4 =
+* Added GitHub stable auto-update channel using WordPress Upgrader with `releases/latest` + `zipball_url` fallback.
+* Added site-wide updater controls/status panel and manual "Check Now" action in settings.
+* Added 12-hour scheduled update checks (`twicedaily`) with retry-on-failure and persisted last-error reporting.
+* Added updater-focused test coverage and uninstall cleanup for updater options.
+* Synced plugin metadata/versioning to `1.3.4`.
 
 = 1.3.3 =
 * Full double-check release: reran syntax/tests/JSON/security scans across the plugin and validated clean results.
@@ -164,6 +176,9 @@ Use the Export button to download a JSON file of your current settings. You can 
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.4 =
+Feature release with GitHub stable auto-update channel, scheduled background checks, manual check action, and updater observability in admin settings.
 
 = 1.3.3 =
 Maintenance verification release with full project re-check and synchronized version metadata.

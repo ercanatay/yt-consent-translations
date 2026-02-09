@@ -3,12 +3,12 @@
  * Plugin Name: YT Consent Translations
  * Plugin URI: https://github.com/ercanatay/yt-consent-translations
  * Description: Easily translate YOOtheme Pro 5 Consent Manager texts from the WordPress admin panel. Supports multiple languages including English, Turkish, Hindi, Korean, Arabic, and German.
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: Ercan ATAY
  * Author URI: https://www.ercanatay.com/en/
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: yt-consent-translations-1.3.3
+ * Text Domain: yt-consent-translations-1.3.4
  * Domain Path: /languages
  * Requires at least: 5.0
  * Requires PHP: 7.4
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('YTCT_VERSION', '1.3.3');
+define('YTCT_VERSION', '1.3.4');
 define('YTCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('YTCT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('YTCT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -62,6 +62,7 @@ final class YT_Consent_Translations {
 		require_once YTCT_PLUGIN_DIR . 'includes/class-options.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-health.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-translator.php';
+		require_once YTCT_PLUGIN_DIR . 'includes/class-updater.php';
 		require_once YTCT_PLUGIN_DIR . 'includes/class-admin.php';
 	}
 
@@ -73,6 +74,7 @@ final class YT_Consent_Translations {
 		add_action('plugins_loaded', [$this, 'load_textdomain']);
 
 		// Initialize translator on frontend and admin
+		add_action('init', [$this, 'init_updater']);
 		add_action('init', [$this, 'init_translator']);
 		add_action('init', [$this, 'init_health_monitor']);
 
@@ -89,6 +91,15 @@ final class YT_Consent_Translations {
 
 		// Add settings link on plugins page
 		add_filter('plugin_action_links_' . YTCT_PLUGIN_BASENAME, [$this, 'add_settings_link']);
+	}
+
+	/**
+	 * Initialize updater integration.
+	 *
+	 * @return void
+	 */
+	public function init_updater() {
+		YTCT_Updater::boot();
 	}
 
 	/**
@@ -143,6 +154,8 @@ final class YT_Consent_Translations {
 			YTCT_Options::update_options(YTCT_Options::get_default_options(), '', 'activation');
 		}
 
+		YTCT_Updater::on_activation();
+
 		// Flush rewrite rules
 		flush_rewrite_rules();
 	}
@@ -151,6 +164,7 @@ final class YT_Consent_Translations {
 	 * Plugin deactivation
 	 */
 	public function deactivate() {
+		YTCT_Updater::on_deactivation();
 		flush_rewrite_rules();
 	}
 
@@ -161,7 +175,7 @@ final class YT_Consent_Translations {
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
 			admin_url('options-general.php?page=yt-consent-translations'),
-			__('Settings', 'yt-consent-translations-1.3.3')
+			__('Settings', 'yt-consent-translations-1.3.4')
 		);
 		array_unshift($links, $settings_link);
 		return $links;

@@ -20,7 +20,14 @@ if (!defined('YTCT_OPTION_NAME')) {
 	define('YTCT_OPTION_NAME', 'yt_consent_translations');
 }
 
+if (!defined('YTCT_PLUGIN_BASENAME')) {
+	define('YTCT_PLUGIN_BASENAME', 'yt-consent-translations/yt-consent-translations.php');
+}
+
 $GLOBALS['ytct_option_store'] = [];
+$GLOBALS['ytct_transient_store'] = [];
+$GLOBALS['ytct_site_transient_store'] = [];
+$GLOBALS['ytct_scheduled_events'] = [];
 
 if (!function_exists('__')) {
 	function __($text, $domain = null) {
@@ -73,6 +80,12 @@ if (!function_exists('add_action')) {
 	}
 }
 
+if (!function_exists('add_filter')) {
+	function add_filter($hook, $callable, $priority = 10, $accepted_args = 1) {
+		return true;
+	}
+}
+
 if (!function_exists('get_option')) {
 	function get_option($option, $default = false) {
 		if (array_key_exists($option, $GLOBALS['ytct_option_store'])) {
@@ -116,6 +129,169 @@ if (!function_exists('wp_cache_delete')) {
 	function wp_cache_delete($key, $group = '') {
 		$cache_key = $group . '::' . $key;
 		unset($GLOBALS['ytct_option_store'][$cache_key]);
+		return true;
+	}
+}
+
+if (!function_exists('get_transient')) {
+	function get_transient($transient) {
+		if (array_key_exists($transient, $GLOBALS['ytct_transient_store'])) {
+			return $GLOBALS['ytct_transient_store'][$transient];
+		}
+		return false;
+	}
+}
+
+if (!function_exists('set_transient')) {
+	function set_transient($transient, $value, $expiration = 0) {
+		$GLOBALS['ytct_transient_store'][$transient] = $value;
+		return true;
+	}
+}
+
+if (!function_exists('delete_transient')) {
+	function delete_transient($transient) {
+		unset($GLOBALS['ytct_transient_store'][$transient]);
+		return true;
+	}
+}
+
+if (!function_exists('get_site_transient')) {
+	function get_site_transient($transient) {
+		if (array_key_exists($transient, $GLOBALS['ytct_site_transient_store'])) {
+			return $GLOBALS['ytct_site_transient_store'][$transient];
+		}
+		return false;
+	}
+}
+
+if (!function_exists('set_site_transient')) {
+	function set_site_transient($transient, $value, $expiration = 0) {
+		$GLOBALS['ytct_site_transient_store'][$transient] = $value;
+		return true;
+	}
+}
+
+if (!class_exists('WP_Error')) {
+	class WP_Error {
+		private $code;
+		private $message;
+
+		public function __construct($code = '', $message = '') {
+			$this->code = $code;
+			$this->message = (string) $message;
+		}
+
+		public function get_error_message() {
+			return $this->message;
+		}
+	}
+}
+
+if (!function_exists('is_wp_error')) {
+	function is_wp_error($thing) {
+		return $thing instanceof WP_Error;
+	}
+}
+
+if (!function_exists('wp_remote_get')) {
+	function wp_remote_get($url, $args = []) {
+		if (isset($GLOBALS['ytct_remote_get_mock_callback']) && is_callable($GLOBALS['ytct_remote_get_mock_callback'])) {
+			return call_user_func($GLOBALS['ytct_remote_get_mock_callback'], $url, $args);
+		}
+
+		if (isset($GLOBALS['ytct_remote_get_mock_queue']) && is_array($GLOBALS['ytct_remote_get_mock_queue']) && !empty($GLOBALS['ytct_remote_get_mock_queue'])) {
+			return array_shift($GLOBALS['ytct_remote_get_mock_queue']);
+		}
+
+		if (array_key_exists('ytct_remote_get_mock', $GLOBALS)) {
+			return $GLOBALS['ytct_remote_get_mock'];
+		}
+
+		return [
+			'response' => ['code' => 200],
+			'body' => '{}'
+		];
+	}
+}
+
+if (!function_exists('wp_remote_retrieve_response_code')) {
+	function wp_remote_retrieve_response_code($response) {
+		if (is_array($response) && isset($response['response']['code'])) {
+			return (int) $response['response']['code'];
+		}
+		return 0;
+	}
+}
+
+if (!function_exists('wp_remote_retrieve_body')) {
+	function wp_remote_retrieve_body($response) {
+		if (is_array($response) && isset($response['body']) && is_string($response['body'])) {
+			return $response['body'];
+		}
+		return '';
+	}
+}
+
+if (!function_exists('wp_next_scheduled')) {
+	function wp_next_scheduled($hook) {
+		$events = isset($GLOBALS['ytct_scheduled_events']) && is_array($GLOBALS['ytct_scheduled_events']) ? $GLOBALS['ytct_scheduled_events'] : [];
+		$timestamps = [];
+		foreach ($events as $event) {
+			if (isset($event['hook']) && $event['hook'] === $hook && isset($event['timestamp'])) {
+				$timestamps[] = (int) $event['timestamp'];
+			}
+		}
+		if (empty($timestamps)) {
+			return false;
+		}
+		sort($timestamps);
+		return $timestamps[0];
+	}
+}
+
+if (!function_exists('wp_schedule_event')) {
+	function wp_schedule_event($timestamp, $recurrence, $hook, $args = []) {
+		$key = $hook . ':' . (int) $timestamp;
+		$GLOBALS['ytct_scheduled_events'][$key] = [
+			'timestamp' => (int) $timestamp,
+			'recurrence' => (string) $recurrence,
+			'hook' => (string) $hook,
+			'args' => is_array($args) ? $args : []
+		];
+		return true;
+	}
+}
+
+if (!function_exists('wp_unschedule_event')) {
+	function wp_unschedule_event($timestamp, $hook, $args = []) {
+		$key = $hook . ':' . (int) $timestamp;
+		unset($GLOBALS['ytct_scheduled_events'][$key]);
+		return true;
+	}
+}
+
+if (!function_exists('home_url')) {
+	function home_url($path = '') {
+		$path = (string) $path;
+		return 'https://example.test' . $path;
+	}
+}
+
+if (!function_exists('esc_url_raw')) {
+	function esc_url_raw($url) {
+		return (string) $url;
+	}
+}
+
+if (!function_exists('untrailingslashit')) {
+	function untrailingslashit($string) {
+		return rtrim((string) $string, '/\\');
+	}
+}
+
+if (!function_exists('wp_clean_plugins_cache')) {
+	function wp_clean_plugins_cache($clear_update_cache = true) {
 		return true;
 	}
 }

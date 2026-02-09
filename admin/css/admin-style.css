@@ -101,6 +101,55 @@
     background: #f7fbf7;
 }
 
+.ytct-updater-panel {
+    margin: 16px 25px;
+    border: 1px solid #d9e2ec;
+    border-left: 4px solid #145374;
+    border-radius: 6px;
+    padding: 14px 16px;
+    background: #f7fbff;
+}
+
+.ytct-updater-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.ytct-updater-head h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.ytct-updater-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 10px 14px;
+    margin-top: 10px;
+}
+
+.ytct-updater-item {
+    background: #fff;
+    border: 1px solid #e6edf2;
+    border-radius: 4px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ytct-updater-label {
+    font-size: 12px;
+    color: #607d8b;
+}
+
+.ytct-updater-actions {
+    margin-top: 12px;
+}
+
 .ytct-health h3 {
     margin: 0 0 6px 0;
     font-size: 16px;
@@ -671,6 +720,10 @@ li.ytct-health-warning {
 
     .ytct-tab-content {
         padding: 15px;
+    }
+
+    .ytct-updater-grid {
+        grid-template-columns: 1fr;
     }
 
     .ytct-footer {

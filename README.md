@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.3-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.4-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -20,6 +20,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 - ✅ **Compatibility Health Check** - Detect potential YOOtheme string drift
 - ✅ **Snapshots & Rollback** - Restore previous settings in one click
 - ✅ **Import/Export** - Backup and restore your translations as JSON
+- ✅ **GitHub Stable Auto Update** - Optional site-wide channel with background checks and auto-install
 - ✅ **No Coding Required** - Simple point-and-click interface
 - ✅ **WPML/Polylang Compatible** - Works with multilingual plugins
 
@@ -134,14 +135,25 @@ composer update ercanatay/yt-consent-translations
 
 1. Go to **Settings → YT Consent Translations**
 2. Select your language preset or set to "Auto"
-3. Customize any text as needed
-4. Click **Save Changes**
+3. Configure **GitHub Stable Auto Update** channel (site-wide toggle)
+4. Customize any text as needed
+5. Click **Save Changes**
 
 ### Quick Start
 
 1. **Auto Mode**: Select "Auto (WordPress Default)" to automatically use translations matching your WordPress language
 2. **Manual Mode**: Select a specific language and customize the texts
 3. **Custom**: Modify any preset text to match your brand voice
+
+### GitHub Stable Auto Update Channel
+
+- Source: GitHub latest stable release (`releases/latest`)
+- Package strategy: release asset if available, otherwise GitHub `zipball_url`
+- Scope: site-wide setting (not locale-scoped)
+- Default: enabled on new installs
+- Check interval: every 12 hours (`twicedaily`)
+- Failure behavior: automatic retry on next cycle + last error surfaced in admin updater panel
+- Manual trigger: **Check Now** button in plugin settings
 
 ## 🔧 Requirements
 
@@ -244,6 +256,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.4 (2026-02-09)
+- **Updater**: Added GitHub stable auto-update channel powered by WordPress Upgrader (`releases/latest` with `zipball_url` fallback)
+- **Admin UX**: Added site-wide updater panel with enable toggle, status fields, and a manual **Check Now** action
+- **Automation**: Added 12-hour update check scheduling (`twicedaily`) with silent retry and persisted last-error reporting
+- **Tests**: Added updater test coverage (`test_updater.php`) and expanded bootstrap stubs for updater-related WordPress functions
+- **Cleanup**: Added updater option cleanup on uninstall and synchronized release metadata to `1.3.4`
 
 ### 1.3.3 (2026-02-08)
 - **Double-Check Release**: Re-ran full syntax/tests/JSON/security validation sweep across the plugin with clean results
