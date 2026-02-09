@@ -171,10 +171,7 @@ class YTCT_Admin {
 	 * @return void
 	 */
 	private function verify_ajax_request() {
-		if (!headers_sent()) {
-			send_nosniff_header();
-			send_frame_options_header();
-		}
+		$this->send_ajax_security_headers();
 
 		$nonce = $this->get_post_scalar('nonce');
 		if (empty($nonce) || !wp_verify_nonce($nonce, 'ytct_admin_nonce')) {
@@ -184,6 +181,56 @@ class YTCT_Admin {
 		if (!current_user_can('manage_options')) {
 			wp_send_json_error(['message' => __('Permission denied.', 'yt-consent-translations-1.3.5')]);
 		}
+	}
+
+	/**
+	 * Send security headers for admin AJAX responses.
+	 *
+	 * @return void
+	 */
+	protected function send_ajax_security_headers() {
+		if ($this->headers_already_sent()) {
+			return;
+		}
+
+		send_nosniff_header();
+		if (!$this->has_response_header('X-Frame-Options')) {
+			send_frame_options_header();
+		}
+	}
+
+	/**
+	 * Check whether headers have already been sent.
+	 *
+	 * @return bool
+	 */
+	protected function headers_already_sent() {
+		return headers_sent();
+	}
+
+	/**
+	 * Get currently queued response headers.
+	 *
+	 * @return array<int, string>
+	 */
+	protected function get_response_headers() {
+		return headers_list();
+	}
+
+	/**
+	 * Check whether a response header has already been set.
+	 *
+	 * @param string $header_name Header name without colon.
+	 * @return bool
+	 */
+	private function has_response_header($header_name) {
+		foreach ($this->get_response_headers() as $header) {
+			if (stripos($header, $header_name . ':') === 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

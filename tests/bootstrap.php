@@ -28,6 +28,8 @@ $GLOBALS['ytct_option_store'] = [];
 $GLOBALS['ytct_transient_store'] = [];
 $GLOBALS['ytct_site_transient_store'] = [];
 $GLOBALS['ytct_scheduled_events'] = [];
+$GLOBALS['ytct_send_nosniff_calls'] = 0;
+$GLOBALS['ytct_send_frame_options_calls'] = 0;
 
 if (!function_exists('__')) {
 	function __($text, $domain = null) {
@@ -328,5 +330,17 @@ if (!function_exists('wp_get_theme')) {
 				return 'yootheme';
 			}
 		};
+	}
+}
+
+if (!function_exists('send_nosniff_header')) {
+	function send_nosniff_header() {
+		$GLOBALS['ytct_send_nosniff_calls'] = isset($GLOBALS['ytct_send_nosniff_calls']) ? (int) $GLOBALS['ytct_send_nosniff_calls'] + 1 : 1;
+	}
+}
+
+if (!function_exists('send_frame_options_header')) {
+	function send_frame_options_header() {
+		$GLOBALS['ytct_send_frame_options_calls'] = isset($GLOBALS['ytct_send_frame_options_calls']) ? (int) $GLOBALS['ytct_send_frame_options_calls'] + 1 : 1;
 	}
 }
