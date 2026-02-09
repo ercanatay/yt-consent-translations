@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.3-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.4-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -256,6 +256,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.4 (2026-02-09)
+- **Updater**: Added GitHub stable auto-update channel powered by WordPress Upgrader (`releases/latest` with `zipball_url` fallback)
+- **Admin UX**: Added site-wide updater panel with enable toggle, status fields, and a manual **Check Now** action
+- **Automation**: Added 12-hour update check scheduling (`twicedaily`) with silent retry and persisted last-error reporting
+- **Tests**: Added updater test coverage (`test_updater.php`) and expanded bootstrap stubs for updater-related WordPress functions
+- **Cleanup**: Added updater option cleanup on uninstall and synchronized release metadata to `1.3.4`
 
 ### 1.3.3 (2026-02-08)
 - **Double-Check Release**: Re-ran full syntax/tests/JSON/security validation sweep across the plugin with clean results
