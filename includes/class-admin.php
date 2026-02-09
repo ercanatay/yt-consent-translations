@@ -250,7 +250,7 @@ class YTCT_Admin {
 		];
 		$value = wp_kses($value, $allowed_html);
 
-		if (function_exists("wp_targeted_link_rel")) {
+		if (function_exists('wp_targeted_link_rel')) {
 			$value = wp_targeted_link_rel($value);
 		}
 
