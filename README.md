@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.5-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.6-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -256,6 +256,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.6 (2026-02-09)
+- **Security**: Added reverse tabnabbing protection for sanitized `target="_blank"` consent links using `wp_targeted_link_rel()`
+- **Security**: Added admin AJAX response hardening with `X-Content-Type-Options: nosniff` and conditional `X-Frame-Options` fallback behavior
+- **Tests**: Added `test_admin_headers.php` regression coverage with header helper stubs in the CLI bootstrap
+- **Packaging**: Removed non-production `.jules` release artifact
+- **Release Sync**: Updated plugin/readme/composer metadata and text-domain version references to `1.3.6`
 
 ### 1.3.5 (2026-02-09)
 - **Language Completeness**: Completed remaining Romanian preset gap by localizing `button_accept` from `Accept` to `Acceptă`

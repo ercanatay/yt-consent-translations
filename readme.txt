@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,13 @@ Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin c
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.6 =
+* Security: Added reverse tabnabbing protection to sanitized consent links via `wp_targeted_link_rel()`.
+* Security: Added admin AJAX security headers (`X-Content-Type-Options` and fallback `X-Frame-Options`) without overriding stricter pre-existing frame policies.
+* Tests: Added admin AJAX header regression coverage (`tests/test_admin_headers.php`) and bootstrap stubs for header helpers.
+* Packaging: Removed non-production `.jules` artifact from release tree.
+* Synced plugin metadata/versioning and text-domain references to `1.3.6`.
 
 = 1.3.5 =
 * Completed Romanian preset translation gap: updated `button_accept` from `Accept` to `Acceptă`.
@@ -180,6 +187,9 @@ Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin c
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.6 =
+Security hardening release for reverse tabnabbing and admin AJAX response headers, with added regression tests and synchronized release metadata.
 
 = 1.3.5 =
 Language completeness maintenance release for Romanian preset correction and release metadata sync.
