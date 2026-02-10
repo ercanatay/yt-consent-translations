@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,14 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.9 =
+* Security: Sanitized admin live-preview link HTML to only preserve safe anchor output (`<a href title>`) and forced `rel="noopener noreferrer"`.
+* SQL safety: Removed redundant `esc_sql()` wrappers around `$wpdb->esc_like()` wildcard queries in scoped option scans and uninstall cleanup.
+* Performance: Persisted snapshot/health/updater internal options with `autoload=false` to reduce autoload pressure.
+* Uninstall hygiene: Added updater cron hook cleanup (`ytct_updater_cron_check`) for single-site and multisite uninstall paths, including WordPress pre-6.1 fallback logic.
+* Cache consistency: Reset translator original-string map during cache clear and aligned test bootstrap `update_option()` signature with current core usage.
+* Synced plugin metadata/versioning to `1.3.9`.
 
 = 1.3.8 =
 * Accessibility: added semantic ARIA roles/attributes for admin translation tabs (`tablist`, `tab`, `tabpanel`) with deterministic roving `tabindex`.
@@ -202,6 +210,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.9 =
+Security and maintenance release that hardens admin preview sanitization, reduces autoload overhead for internal options, improves uninstall cron cleanup coverage, and syncs release metadata.
 
 = 1.3.8 =
 Accessibility-focused maintenance release that improves admin settings tab semantics/keyboard support and removes a non-production development artifact from release packaging.
