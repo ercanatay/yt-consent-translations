@@ -109,7 +109,7 @@ class YTCT_Options {
 
 				$value = (string) $value;
 				if ($value !== '') {
-					$custom_strings[$key] = $value;
+					$custom_strings[$key] = wp_kses($value, YTCT_Strings::get_allowed_html());
 				}
 			}
 		}

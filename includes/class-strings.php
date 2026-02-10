@@ -458,4 +458,20 @@ class YTCT_Strings {
 		static $placeholders = ['banner_link' => true, 'modal_content_link' => true];
 		return isset($placeholders[$key]);
 	}
+
+	/**
+	 * Get allowed HTML tags for consent strings.
+	 *
+	 * @return array
+	 */
+	public static function get_allowed_html() {
+		return [
+			'a' => [
+				'href' => true,
+				'title' => true,
+				'target' => true,
+				'rel' => true
+			]
+		];
+	}
 }

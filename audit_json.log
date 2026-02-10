@@ -1,0 +1,42 @@
+Validating JSON files in /app/languages...
+
+OK: ar.json
+OK: bn.json
+OK: cs.json
+OK: da.json
+OK: de.json
+OK: el.json
+OK: en.json
+OK: es.json
+OK: fa.json
+OK: fi.json
+OK: fr.json
+OK: he.json
+OK: hi.json
+OK: hu.json
+OK: id.json
+OK: it.json
+OK: ja.json
+OK: ko.json
+OK: mr.json
+OK: ms.json
+OK: nb.json
+OK: nl.json
+OK: pl.json
+OK: pt.json
+OK: ro.json
+OK: ru.json
+OK: sv.json
+OK: sw.json
+OK: ta.json
+OK: te.json
+OK: th.json
+OK: tl.json
+OK: tr.json
+OK: uk.json
+OK: vi.json
+OK: zh.json
+
+==================================================
+Validated 36 JSON files.
+Result: All files are valid.
