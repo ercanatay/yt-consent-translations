@@ -1,5 +1,13 @@
 <?php
 // phpcs:ignoreFile -- Development-only CLI assertions.
+if (!defined('ABSPATH') && PHP_SAPI === 'cli') {
+	define('ABSPATH', dirname(__DIR__) . '/');
+}
+
+if (!defined('ABSPATH')) {
+	exit;
+}
+
 require_once __DIR__ . '/bootstrap.php';
 require_once dirname(__DIR__) . '/includes/class-updater.php';
 
@@ -15,8 +23,8 @@ if ($settings['enabled'] !== false) {
 	$failures[] = 'sanitize_settings should keep explicit enabled=false.';
 }
 
-if ($settings['channel'] !== 'stable') {
-	$failures[] = 'sanitize_settings should force stable channel.';
+if ($settings['channel'] !== 'wordpress') {
+	$failures[] = 'sanitize_settings should force wordpress channel.';
 }
 
 if ($settings['check_interval'] !== 'twicedaily') {
@@ -39,39 +47,48 @@ if (YTCT_Updater::is_newer_version(YTCT_VERSION)) {
 	$failures[] = 'is_newer_version should return false for equal version.';
 }
 
-$GLOBALS['ytct_remote_get_mock'] = new WP_Error('http_error', 'GitHub unreachable');
-YTCT_Updater::check_for_updates(true);
-$error_state = YTCT_Updater::get_state();
-if ($error_state['status'] !== 'error') {
-	$failures[] = 'check_for_updates should persist error status on HTTP errors.';
+$GLOBALS['ytct_site_transient_store']['update_plugins'] = (object) [];
+$checked = YTCT_Updater::check_for_updates(false);
+if (!empty($checked['updateAvailable'])) {
+	$failures[] = 'check_for_updates should not mark update available when metadata is missing.';
 }
 
-if ($error_state['last_error'] === '') {
-	$failures[] = 'check_for_updates should persist last_error on HTTP errors.';
+if ($checked['status'] !== 'up_to_date') {
+	$failures[] = 'check_for_updates should default status to up_to_date when metadata is missing.';
 }
 
-$release_payload = [
-	'tag_name' => 'v9.9.9',
-	'draft' => false,
-	'prerelease' => false,
-	'zipball_url' => 'https://api.github.com/repos/ercanatay/yt-consent-translations/zipball/v9.9.9',
-	'html_url' => 'https://github.com/ercanatay/yt-consent-translations/releases/tag/v9.9.9',
-	'body' => 'Test release body',
-	'published_at' => '2026-02-09T00:00:00Z'
+$update_transient = new stdClass();
+$update_transient->response = [
+	YTCT_PLUGIN_BASENAME => (object) [
+		'new_version' => '9.9.9'
+	]
 ];
+$GLOBALS['ytct_site_transient_store']['update_plugins'] = $update_transient;
 
-$GLOBALS['ytct_remote_get_mock'] = [
-	'response' => ['code' => 200],
-	'body' => json_encode($release_payload)
-];
-
-$checked = YTCT_Updater::check_for_updates(true);
+$checked = YTCT_Updater::check_for_updates(false);
 if (empty($checked['updateAvailable'])) {
-	$failures[] = 'check_for_updates should mark updateAvailable when remote version is newer.';
+	$failures[] = 'check_for_updates should mark updateAvailable when metadata version is newer.';
 }
 
 if ($checked['latestVersion'] !== '9.9.9') {
-	$failures[] = 'check_for_updates should persist latestVersion from release tag.';
+	$failures[] = 'check_for_updates should persist latestVersion from update metadata.';
+}
+
+if ($checked['status'] !== 'update_available') {
+	$failures[] = 'check_for_updates should set status update_available when a newer version exists.';
+}
+
+$up_to_date_transient = new stdClass();
+$up_to_date_transient->no_update = [
+	YTCT_PLUGIN_BASENAME => (object) [
+		'new_version' => YTCT_VERSION
+	]
+];
+$GLOBALS['ytct_site_transient_store']['update_plugins'] = $up_to_date_transient;
+
+$checked = YTCT_Updater::check_for_updates(false);
+if ($checked['status'] !== 'up_to_date') {
+	$failures[] = 'check_for_updates should set status up_to_date when no update is available.';
 }
 
 $GLOBALS['ytct_scheduled_events'] = [];

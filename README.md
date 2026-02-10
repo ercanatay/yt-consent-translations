@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.6-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.7-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -20,7 +20,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 - ✅ **Compatibility Health Check** - Detect potential YOOtheme string drift
 - ✅ **Snapshots & Rollback** - Restore previous settings in one click
 - ✅ **Import/Export** - Backup and restore your translations as JSON
-- ✅ **GitHub Stable Auto Update** - Optional site-wide channel with background checks and auto-install
+- ✅ **WordPress.org Update Status** - Site-wide periodic check visibility in plugin settings
 - ✅ **No Coding Required** - Simple point-and-click interface
 - ✅ **WPML/Polylang Compatible** - Works with multilingual plugins
 
@@ -135,7 +135,7 @@ composer update ercanatay/yt-consent-translations
 
 1. Go to **Settings → YT Consent Translations**
 2. Select your language preset or set to "Auto"
-3. Configure **GitHub Stable Auto Update** channel (site-wide toggle)
+3. Configure **WordPress.org Update Status** checks (site-wide toggle)
 4. Customize any text as needed
 5. Click **Save Changes**
 
@@ -145,15 +145,14 @@ composer update ercanatay/yt-consent-translations
 2. **Manual Mode**: Select a specific language and customize the texts
 3. **Custom**: Modify any preset text to match your brand voice
 
-### GitHub Stable Auto Update Channel
+### WordPress.org Update Status Panel
 
-- Source: GitHub latest stable release (`releases/latest`)
-- Package strategy: release asset if available, otherwise GitHub `zipball_url`
+- Source: WordPress core plugin update metadata (`update_plugins` transient)
 - Scope: site-wide setting (not locale-scoped)
 - Default: enabled on new installs
 - Check interval: every 12 hours (`twicedaily`)
-- Failure behavior: automatic retry on next cycle + last error surfaced in admin updater panel
 - Manual trigger: **Check Now** button in plugin settings
+- Status labels are human-readable in admin (for example: `Up to date`, `Update available`)
 
 ## 🔧 Requirements
 
@@ -256,6 +255,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.7 (2026-02-10)
+- **WordPress.org Compliance**: Removed custom updater hooks that modify WordPress update routines (`site_transient_update_plugins`, `pre_set_site_transient_update_plugins`, `auto_update_plugin`)
+- **Updater UX**: Reworked updater flow to read WordPress.org update metadata and display localized status labels (fixes raw `up_to_date` output)
+- **i18n**: Standardized plugin text domain usage to `yt-consent-translations-main` across plugin/admin/health/string modules
+- **Compatibility**: Removed deprecated `wp_targeted_link_rel()` usage from admin sanitization path
+- **Plugin Check**: Added direct file access guards to CLI test files and aligned test coverage with the new updater behavior
 
 ### 1.3.6 (2026-02-09)
 - **Security**: Added reverse tabnabbing protection for sanitized `target="_blank"` consent links using `wp_targeted_link_rel()`

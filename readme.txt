@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,7 +23,7 @@ YT Consent Translations allows you to customize all text strings in the YOOtheme
 * Live preview, inline QA checks, and compatibility health panel
 * Snapshot history with rollback support
 * Import/Export settings as JSON
-* GitHub stable auto-update channel (site-wide toggle, 12-hour checks)
+* WordPress.org update status panel with site-wide periodic checks
 * No coding required
 * Compatible with WPML and Polylang
 
@@ -64,9 +64,9 @@ The plugin supports locale-scoped settings (for example `en_US`, `tr_TR`) so you
 
 Use the Export button to download a JSON file of your current settings. You can Import this file later to restore your translations.
 
-= How does GitHub auto-update work? =
+= How does the updater panel work? =
 
-Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin checks the latest stable release every 12 hours and auto-installs newer versions using WordPress Upgrader. If GitHub is temporarily unreachable, it retries automatically and shows the last error in the updater panel.
+Enable periodic checks from plugin settings. The plugin reads WordPress core update metadata every 12 hours and shows current update status in the updater panel. Use "Check Now" for an immediate refresh.
 
 = My translations are not showing up =
 
@@ -84,6 +84,14 @@ Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin c
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.7 =
+* WordPress.org compliance: removed custom updater hooks that altered core update routines.
+* Updater refactor: switched updater state checks to WordPress core update metadata and human-readable admin status labels.
+* i18n: standardized text domain usage to `yt-consent-translations-main` across plugin files.
+* Compatibility: removed deprecated `wp_targeted_link_rel()` usage from admin sanitization flow.
+* Tests: added direct file access guards and updated updater tests for the new metadata-driven flow.
+* Synced plugin metadata/versioning to `1.3.7`.
 
 = 1.3.6 =
 * Security: Added reverse tabnabbing protection to sanitized consent links via `wp_targeted_link_rel()`.
@@ -187,6 +195,9 @@ Enable the "GitHub Stable Auto Update" toggle from plugin settings. The plugin c
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.7 =
+Compliance and updater-flow alignment release: moves updater status tracking to WordPress.org metadata, fixes admin status labels, standardizes text domain usage, and removes deprecated updater/sanitization paths.
 
 = 1.3.6 =
 Security hardening release for reverse tabnabbing and admin AJAX response headers, with added regression tests and synchronized release metadata.

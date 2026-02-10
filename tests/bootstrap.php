@@ -4,6 +4,10 @@
  * Lightweight WordPress stubs for local plugin tests.
  */
 
+if (!defined('ABSPATH') && PHP_SAPI !== 'cli') {
+	exit;
+}
+
 if (!defined('ABSPATH')) {
 	define('ABSPATH', __DIR__ . '/');
 }

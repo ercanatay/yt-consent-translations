@@ -1,5 +1,13 @@
 <?php
 // phpcs:ignoreFile -- Development-only CLI assertions.
+if (!defined('ABSPATH') && PHP_SAPI === 'cli') {
+	define('ABSPATH', dirname(__DIR__) . '/');
+}
+
+if (!defined('ABSPATH')) {
+	exit;
+}
+
 require_once __DIR__ . '/bootstrap.php';
 require_once dirname(__DIR__) . '/includes/class-admin.php';
 

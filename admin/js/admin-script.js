@@ -612,28 +612,32 @@
         $('#ytct-updater-current-version').text(updater.currentVersion || '');
         $('#ytct-updater-latest-version').text(updater.latestVersion || 'Unknown');
         $('#ytct-updater-last-check').text(formatIsoDate(updater.lastCheckedAt));
-        $('#ytct-updater-status').text(formatUpdaterStatus(updater.status, !!updater.updateAvailable));
+        $('#ytct-updater-status').text(formatUpdaterStatus(updater.status, !!updater.updateAvailable, updater.statusLabel));
         $('#ytct-updater-last-install').text(formatIsoDate(updater.lastInstallAt));
         $('#ytct-updater-last-error').text(updater.lastError || 'None');
     }
 
-    function formatUpdaterStatus(status, updateAvailable) {
-        var map = {
-            idle: 'idle',
-            up_to_date: 'up_to_date',
-            update_available: 'update_available',
-            error: 'error',
-            installing: 'installing',
-            updated: 'updated',
-            update_failed: 'update_failed'
-        };
-
-        var normalized = map[status] || 'idle';
-        if (updateAvailable && normalized !== 'updated') {
-            return 'update_available';
+    function formatUpdaterStatus(status, updateAvailable, statusLabel) {
+        if (statusLabel) {
+            return statusLabel;
         }
 
-        return normalized;
+        var map = {
+            idle: 'Idle',
+            up_to_date: 'Up to date',
+            update_available: 'Update available',
+            error: 'Error',
+            installing: 'Installing',
+            updated: 'Updated',
+            update_failed: 'Update failed'
+        };
+
+        var normalized = status && map[status] ? status : 'idle';
+        if (updateAvailable && normalized !== 'updated') {
+            return map.update_available;
+        }
+
+        return map[normalized];
     }
 
     function formatIsoDate(value) {
