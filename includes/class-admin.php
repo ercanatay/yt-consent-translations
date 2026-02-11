@@ -135,7 +135,8 @@ class YTCT_Admin {
 				'checkUpdateInstallFailed' => __('Update check completed with an error. Check updater status.', 'yt-consent-translations-main'),
 				'copyLocaleRunning' => __('Copying...', 'yt-consent-translations-main'),
 				'confirmCopyLocale' => __('Copy all settings from the selected locale? This will overwrite current settings for this scope.', 'yt-consent-translations-main'),
-				'selectSourceLocale' => __('Select a source locale first.', 'yt-consent-translations-main')
+				'selectSourceLocale' => __('Select a source locale first.', 'yt-consent-translations-main'),
+				'statsSummary' => __('{customized}/{total} customized ({percent}%)', 'yt-consent-translations-main')
 			]
 		]);
 	}

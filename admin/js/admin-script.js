@@ -1100,8 +1100,14 @@
         });
 
         var percent = total > 0 ? Math.round((customized / total) * 100) : 0;
+        var summaryTemplate = (ytctAdmin.strings && ytctAdmin.strings.statsSummary) ? ytctAdmin.strings.statsSummary : '{customized}/{total} customized ({percent}%)';
+        var summaryText = summaryTemplate
+            .replace('{customized}', String(customized))
+            .replace('{total}', String(total))
+            .replace('{percent}', String(percent));
+
         $('#ytct-stats-bar-fill').css('width', percent + '%');
-        $('#ytct-stats-text').text(customized + '/' + total + ' customized (' + percent + '%)');
+        $('#ytct-stats-text').text(summaryText);
     }
 
     function escapeHtml(text) {
