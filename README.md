@@ -1,6 +1,6 @@
 # YT Consent Translations
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.9-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.10-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -255,6 +255,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.10 (2026-02-10)
+- **Bugfix (i18n)**: Localized admin statistics summary text generated in JavaScript (`{customized}/{total} customized ({percent}%)`) via `wp_localize_script`
+- **QA**: Re-ran test suite, PHP syntax checks, JSON validation, and static scan with clean results
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.3.10`
 
 ### 1.3.9 (2026-02-10)
 - **Security**: Sanitized admin live-preview link HTML to allow only safe anchor output (text + `<a href title>`) with enforced `rel="noopener noreferrer"`

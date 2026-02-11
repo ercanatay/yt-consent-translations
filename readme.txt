@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,11 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.10 =
+* Bugfix (i18n): localized admin statistics summary text generated in JavaScript via `wp_localize_script`.
+* QA: reran tests, PHP syntax checks, JSON validation, and static scan with clean results.
+* Synced plugin metadata/versioning to `1.3.10`.
 
 = 1.3.9 =
 * Security: Sanitized admin live-preview link HTML to only preserve safe anchor output (`<a href title>`) and forced `rel="noopener noreferrer"`.
@@ -210,6 +215,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.10 =
+Maintenance bugfix release that localizes the admin statistics summary text in JavaScript and synchronizes release metadata.
 
 = 1.3.9 =
 Security and maintenance release that hardens admin preview sanitization, reduces autoload overhead for internal options, improves uninstall cron cleanup coverage, and syncs release metadata.
