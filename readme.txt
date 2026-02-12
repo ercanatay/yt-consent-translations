@@ -3,7 +3,7 @@ Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.11
+Stable tag: 1.3.12
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,11 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.12 =
+* i18n fix: restored plugin text domain usage to `cybokron-consent-manager-translations-yootheme-main` across plugin/admin/health/strings/updater modules for Plugin Check compatibility.
+* Updated plugin header `Text Domain` to `cybokron-consent-manager-translations-yootheme-main`.
+* Synced plugin metadata/versioning to `1.3.12`.
 
 = 1.3.11 =
 * Renamed plugin display name and slug to `Cybokron Consent Manager Translations for YOOtheme Pro` / `cybokron-consent-manager-translations-yootheme` for WordPress.org naming compliance.
@@ -221,6 +226,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.12 =
+i18n hotfix release that restores the expected text domain suffix (`-main`) required by Plugin Check.
 
 = 1.3.11 =
 Naming-compliance release that updates plugin display name/slug and synchronizes metadata to the new unique identifier.

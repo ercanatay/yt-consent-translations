@@ -1,6 +1,6 @@
 # Cybokron Consent Manager Translations for YOOtheme Pro
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.11-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.12-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -110,7 +110,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 
 ### Method 3: Composer (GitHub VCS)
 
-`ercanatay/yt-consent-translations` is not currently distributed on Packagist.
+`ercanatay/cybokron-consent-manager-translations-yootheme` is not currently distributed on Packagist.
 To install with Composer, add this repository as a VCS source first:
 
 ```json
@@ -118,17 +118,17 @@ To install with Composer, add this repository as a VCS source first:
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/ercanatay/yt-consent-translations"
+            "url": "https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme"
         }
     ],
     "require": {
-        "ercanatay/yt-consent-translations": "^1.3"
+        "ercanatay/cybokron-consent-manager-translations-yootheme": "^1.3"
     }
 }
 ```
 
 ```bash
-composer update ercanatay/yt-consent-translations
+composer update ercanatay/cybokron-consent-manager-translations-yootheme
 ```
 
 ## ⚙️ Configuration
@@ -255,6 +255,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.12 (2026-02-12)
+- **i18n Fix**: Restored the expected text domain `cybokron-consent-manager-translations-yootheme-main` across plugin/admin/health/strings/updater modules
+- **Plugin Check Compatibility**: Updated plugin header `Text Domain` to the expected `-main` suffix
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.3.12`
+- **Release**: Published package/tag `v1.3.12` on GitHub Releases
 
 ### 1.3.11 (2026-02-12)
 - **Naming Compliance**: Renamed plugin display name and slug to `Cybokron Consent Manager Translations for YOOtheme Pro` / `cybokron-consent-manager-translations-yootheme`
@@ -400,7 +406,7 @@ This plugin works by matching the **exact original English strings** from YOOthe
 
 **What to do if translations stop working after a YOOtheme update:**
 1. Check if YOOtheme changed any consent manager strings
-2. [Report an issue](https://github.com/ercanatay/yt-consent-translations/issues) with the new string
+2. [Report an issue](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme/issues) with the new string
 3. Wait for a plugin update or manually edit the `includes/class-strings.php` file
 
 ### Tested With
@@ -437,7 +443,7 @@ If you find this plugin helpful, please consider:
 
 - Giving it a ⭐ on GitHub
 - Sharing it with others who might benefit
-- [Reporting issues](https://github.com/ercanatay/yt-consent-translations/issues) you encounter
+- [Reporting issues](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme/issues) you encounter
 
 ---
 
