@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-JSON Language File Validator for YT Consent Translations
+JSON Language File Validator for Cybokron Consent Manager Translations for YOOtheme Pro
 
 Validates all JSON language files in the languages/ directory to ensure:
 1. Valid JSON syntax

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Daily Report Generator for YT Consent Translations
+Daily Report Generator for Cybokron Consent Manager Translations for YOOtheme Pro
 Runs validation and scan scripts, and generates a formatted report.
 """
 

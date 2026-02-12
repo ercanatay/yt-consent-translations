@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Code Quality & Security Scanner for YT Consent Translations
+Code Quality & Security Scanner for Cybokron Consent Manager Translations for YOOtheme Pro
 """
 
 import os
@@ -29,7 +29,7 @@ def get_php_files(root_dir):
     return php_files
 
 def check_version_consistency():
-    main_file = os.path.join(PLUGIN_DIR, 'yt-consent-translations.php')
+    main_file = os.path.join(PLUGIN_DIR, 'cybokron-consent-manager-translations-yootheme.php')
     readme_file = os.path.join(PLUGIN_DIR, 'readme.txt')
 
     version_main = None

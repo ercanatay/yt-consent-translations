@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall script for YT Consent Translations
+ * Uninstall script for Cybokron Consent Manager Translations for YOOtheme Pro
  *
  * This file runs when the plugin is uninstalled from WordPress.
  * It removes all plugin data from the database.

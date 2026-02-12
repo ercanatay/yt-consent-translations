@@ -1,5 +1,5 @@
 /**
- * YT Consent Translations - Admin Script
+ * Cybokron Consent Manager Translations for YOOtheme Pro - Admin Script
  *
  * @package YT_Consent_Translations
  */
@@ -526,7 +526,7 @@
                     var url = URL.createObjectURL(blob);
                     var link = document.createElement('a');
                     link.href = url;
-                    link.download = response.data.filename || 'yt-consent-translations-export.json';
+                    link.download = response.data.filename || 'cybokron-consent-manager-translations-yootheme-export.json';
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);

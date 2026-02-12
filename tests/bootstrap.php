@@ -25,7 +25,7 @@ if (!defined('YTCT_OPTION_NAME')) {
 }
 
 if (!defined('YTCT_PLUGIN_BASENAME')) {
-	define('YTCT_PLUGIN_BASENAME', 'yt-consent-translations/yt-consent-translations.php');
+	define('YTCT_PLUGIN_BASENAME', 'cybokron-consent-manager-translations-yootheme/cybokron-consent-manager-translations-yootheme.php');
 }
 
 $GLOBALS['ytct_option_store'] = [];

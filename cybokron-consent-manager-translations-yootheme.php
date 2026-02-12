@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: YT Consent Translations
+ * Plugin Name: Cybokron Consent Manager Translations for YOOtheme Pro
  * Plugin URI: https://github.com/ercanatay/yt-consent-translations
  * Description: Easily translate YOOtheme Pro 5 Consent Manager texts from the WordPress admin panel. Supports multiple languages including English, Turkish, Hindi, Korean, Arabic, and German.
- * Version: 1.3.10
+ * Version: 1.3.11
  * Author: Ercan ATAY
  * Author URI: https://www.ercanatay.com/en/
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: yt-consent-translations-main
+ * Text Domain: cybokron-consent-manager-translations-yootheme
  * Domain Path: /languages
  * Requires at least: 5.0
  * Requires PHP: 7.4
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('YTCT_VERSION', '1.3.10');
+define('YTCT_VERSION', '1.3.11');
 define('YTCT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('YTCT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('YTCT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -174,8 +174,8 @@ final class YT_Consent_Translations {
 	public function add_settings_link($links) {
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
-			admin_url('options-general.php?page=yt-consent-translations'),
-			__('Settings', 'yt-consent-translations-main')
+			admin_url('options-general.php?page=cybokron-consent-manager-translations-yootheme'),
+			__('Settings', 'cybokron-consent-manager-translations-yootheme')
 		);
 		array_unshift($links, $settings_link);
 		return $links;

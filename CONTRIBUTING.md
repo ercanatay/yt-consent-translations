@@ -1,4 +1,4 @@
-# Contributing to YT Consent Translations
+# Contributing to Cybokron Consent Manager Translations for YOOtheme Pro
 
 Thank you for your interest in contributing! Here's how you can help.
 

@@ -1,6 +1,6 @@
-# YT Consent Translations
+# Cybokron Consent Manager Translations for YOOtheme Pro
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.10-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.11-blue.svg)](https://github.com/ercanatay/yt-consent-translations)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -105,7 +105,7 @@ A lightweight WordPress plugin that allows you to customize all 21 text strings 
 ### Method 2: Manual Installation
 
 1. Download and extract the plugin
-2. Upload the `yt-consent-translations` folder to `/wp-content/plugins/`
+2. Upload the `cybokron-consent-manager-translations-yootheme` folder to `/wp-content/plugins/`
 3. Activate through **Plugins** menu in WordPress
 
 ### Method 3: Composer (GitHub VCS)
@@ -133,7 +133,7 @@ composer update ercanatay/yt-consent-translations
 
 ## ⚙️ Configuration
 
-1. Go to **Settings → YT Consent Translations**
+1. Go to **Settings → Cybokron Consent Manager Translations for YOOtheme Pro**
 2. Select your language preset or set to "Auto"
 3. Configure **WordPress.org Update Status** checks (site-wide toggle)
 4. Customize any text as needed
@@ -256,6 +256,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📝 Changelog
 
+### 1.3.11 (2026-02-12)
+- **Naming Compliance**: Renamed plugin display name and slug to `Cybokron Consent Manager Translations for YOOtheme Pro` / `cybokron-consent-manager-translations-yootheme`
+- **Metadata Alignment**: Updated plugin header metadata, admin settings page slug, text domain, and package file naming for the new slug
+- **QA**: Re-ran test suite, PHP syntax checks, and static scan with clean results
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.3.11`
+- **Release**: Published package/tag `v1.3.11` on GitHub Releases
+
 ### 1.3.10 (2026-02-11)
 - **Bugfix (i18n)**: Localized admin statistics summary text generated in JavaScript (`{customized}/{total} customized ({percent}%)`) via `wp_localize_script`
 - **PR Review**: Reviewed merged PR scope for `#28`, `#29`, and `#30` before release cut
@@ -280,7 +287,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ### 1.3.7 (2026-02-10)
 - **WordPress.org Compliance**: Removed custom updater hooks that modify WordPress update routines (`site_transient_update_plugins`, `pre_set_site_transient_update_plugins`, `auto_update_plugin`)
 - **Updater UX**: Reworked updater flow to read WordPress.org update metadata and display localized status labels (fixes raw `up_to_date` output)
-- **i18n**: Standardized plugin text domain usage to `yt-consent-translations-main` across plugin/admin/health/string modules
+- **i18n**: Standardized plugin text domain usage to `cybokron-consent-manager-translations-yootheme` across plugin/admin/health/string modules
 - **Compatibility**: Removed deprecated `wp_targeted_link_rel()` usage from admin sanitization path
 - **Plugin Check**: Added direct file access guards to CLI test files and aligned test coverage with the new updater behavior
 

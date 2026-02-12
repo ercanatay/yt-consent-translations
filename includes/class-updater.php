@@ -350,13 +350,13 @@ class YTCT_Updater {
 	public static function get_status_label($status) {
 		$status = sanitize_key((string) $status);
 		$labels = [
-			'idle' => __('Idle', 'yt-consent-translations-main'),
-			'up_to_date' => __('Up to date', 'yt-consent-translations-main'),
-			'update_available' => __('Update available', 'yt-consent-translations-main'),
-			'error' => __('Error', 'yt-consent-translations-main'),
-			'installing' => __('Installing', 'yt-consent-translations-main'),
-			'updated' => __('Updated', 'yt-consent-translations-main'),
-			'update_failed' => __('Update failed', 'yt-consent-translations-main')
+			'idle' => __('Idle', 'cybokron-consent-manager-translations-yootheme'),
+			'up_to_date' => __('Up to date', 'cybokron-consent-manager-translations-yootheme'),
+			'update_available' => __('Update available', 'cybokron-consent-manager-translations-yootheme'),
+			'error' => __('Error', 'cybokron-consent-manager-translations-yootheme'),
+			'installing' => __('Installing', 'cybokron-consent-manager-translations-yootheme'),
+			'updated' => __('Updated', 'cybokron-consent-manager-translations-yootheme'),
+			'update_failed' => __('Update failed', 'cybokron-consent-manager-translations-yootheme')
 		];
 
 		return isset($labels[$status]) ? $labels[$status] : $labels['idle'];

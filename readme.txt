@@ -1,9 +1,9 @@
-=== YT Consent Translations ===
+=== Cybokron Consent Manager Translations for YOOtheme Pro ===
 Contributors: ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.10
+Stable tag: 1.3.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,7 +12,7 @@ Easily translate YOOtheme Pro 5 Consent Manager texts from the WordPress admin p
 
 == Description ==
 
-YT Consent Translations allows you to customize all text strings in the YOOtheme Pro 5 Consent Manager directly from your WordPress admin panel.
+Cybokron Consent Manager Translations for YOOtheme Pro allows you to customize all text strings in the YOOtheme Pro 5 Consent Manager directly from your WordPress admin panel.
 
 **Features:**
 
@@ -42,9 +42,9 @@ English, Chinese, Spanish, French, Portuguese, Russian, Japanese, Indonesian, It
 
 == Installation ==
 
-1. Upload the `yt-consent-translations` folder to the `/wp-content/plugins/` directory
+1. Upload the `cybokron-consent-manager-translations-yootheme` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Settings → YT Consent Translations to configure
+3. Go to Settings → Cybokron Consent Manager Translations for YOOtheme Pro to configure
 
 == Frequently Asked Questions ==
 
@@ -85,6 +85,12 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 
 == Changelog ==
 
+= 1.3.11 =
+* Renamed plugin display name and slug to `Cybokron Consent Manager Translations for YOOtheme Pro` / `cybokron-consent-manager-translations-yootheme` for WordPress.org naming compliance.
+* Updated plugin metadata, admin settings page slug, text domain, and package file naming to align with the new slug.
+* QA: reran tests, PHP syntax checks, and static scan with clean results.
+* Synced plugin metadata/versioning to `1.3.11`.
+
 = 1.3.10 =
 * Bugfix (i18n): localized admin statistics summary text generated in JavaScript via `wp_localize_script`.
 * QA: reran tests, PHP syntax checks, JSON validation, and static scan with clean results.
@@ -108,7 +114,7 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 = 1.3.7 =
 * WordPress.org compliance: removed custom updater hooks that altered core update routines.
 * Updater refactor: switched updater state checks to WordPress core update metadata and human-readable admin status labels.
-* i18n: standardized text domain usage to `yt-consent-translations-main` across plugin files.
+* i18n: standardized text domain usage to `cybokron-consent-manager-translations-yootheme` across plugin files.
 * Compatibility: removed deprecated `wp_targeted_link_rel()` usage from admin sanitization flow.
 * Tests: added direct file access guards and updated updater tests for the new metadata-driven flow.
 * Synced plugin metadata/versioning to `1.3.7`.
@@ -216,6 +222,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 
 == Upgrade Notice ==
 
+= 1.3.11 =
+Naming-compliance release that updates plugin display name/slug and synchronizes metadata to the new unique identifier.
+
 = 1.3.10 =
 Maintenance bugfix release that localizes the admin statistics summary text in JavaScript and synchronizes release metadata.
 
@@ -277,4 +286,4 @@ Major performance improvement with lazy loading translations from JSON files.
 Added 30 new language presets for a total of 36 languages.
 
 = 1.0.0 =
-Initial release of YT Consent Translations.
+Initial release of Cybokron Consent Manager Translations for YOOtheme Pro.
