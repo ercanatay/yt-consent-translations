@@ -3,7 +3,7 @@ Contributors: cybokron, ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.14
+Stable tag: 1.3.15
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -85,8 +85,13 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 
 == Changelog ==
 
+= 1.3.15 =
+* Text domain: corrected all gettext text domain values from `cybokron-consent-manager-translations-yootheme-main` to `cybokron-consent-manager-translations-yootheme` to match the plugin slug exactly.
+* Packaging: removed `tests/` and `scripts/` directories from the distribution package entirely.
+* Added `.distignore` to prevent development-only files from being included in future release archives.
+
 = 1.3.14 =
-* Plugin Check compatibility: set plugin header and gettext text domain values to `cybokron-consent-manager-translations-yootheme-main` for this package slug.
+* Plugin Check compatibility: aligned plugin header and gettext text domain to `cybokron-consent-manager-translations-yootheme` matching the plugin slug.
 * Packaging cleanup: removed hidden/workflow root entries from plugin root (`.distignore`, `.github`) to avoid Plugin Check warnings.
 
 = 1.3.13 =
@@ -236,6 +241,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.15 =
+WordPress.org review compliance: corrected text domain to match plugin slug, removed development-only files (tests, scripts) from distribution.
 
 = 1.3.14 =
 Maintenance release for Plugin Check text-domain expectations and hidden-file packaging warnings.

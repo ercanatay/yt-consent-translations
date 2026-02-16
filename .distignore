@@ -1,0 +1,10 @@
+.git
+.github
+.gitignore
+.distignore
+tests
+scripts
+CONTRIBUTING.md
+SECURITY.md
+README.md
+composer.json
