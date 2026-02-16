@@ -1,6 +1,6 @@
 # Cybokron Consent Manager Translations for YOOtheme Pro
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.16-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.17-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -255,6 +255,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.17 (2026-02-16)
+- **Plugin Check**: Removed discouraged `load_plugin_textdomain()` call (WordPress 4.6+ loads translations automatically for WordPress.org hosted plugins)
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.3.17`
 
 ### 1.3.16 (2026-02-16)
 - **Security**: Added `wp_kses` output sanitization to gettext filter for defense-in-depth against stored XSS in custom translation strings

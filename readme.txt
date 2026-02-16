@@ -3,7 +3,7 @@ Contributors: cybokron, ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.16
+Stable tag: 1.3.17
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.17 =
+* Removed discouraged load_plugin_textdomain() call per Plugin Check (WordPress 4.6+ loads translations automatically for WordPress.org hosted plugins).
 
 = 1.3.16 =
 * Security: added wp_kses output sanitization to gettext filter for defense-in-depth against stored XSS in custom translation strings.
@@ -250,6 +253,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.17 =
+Plugin Check compliance: removed discouraged load_plugin_textdomain() call.
 
 = 1.3.16 =
 Security hardening and performance release: output sanitization for gettext filter, rate-limited health DB writes, safer snapshot IDs, and WordPress-native file reading.
