@@ -818,6 +818,7 @@ class CYBOCOMA_Admin {
 
 		$scope_locale = $this->get_scope_locale();
 		$options = CYBOCOMA_Options::get_options($scope_locale);
+		CYBOCOMA_Health::persist(true);
 		$summary = CYBOCOMA_Health::build_summary(isset($options['enabled']) ? (bool) $options['enabled'] : true);
 
 		wp_send_json_success([

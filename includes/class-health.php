@@ -34,6 +34,11 @@ class CYBOCOMA_Health {
 	private static $dirty = false;
 
 	/**
+	 * Minimum interval between DB persists (in seconds).
+	 */
+	const PERSIST_INTERVAL = 3600;
+
+	/**
 	 * Register lifecycle hooks.
 	 *
 	 * @return void
@@ -213,15 +218,40 @@ class CYBOCOMA_Health {
 	}
 
 	/**
-	 * Persist report if modified.
+	 * Check whether enough time has passed since last persist.
 	 *
+	 * @return bool
+	 */
+	private static function should_persist() {
+		$last = isset(self::$report['last_persisted_at']) ? (string) self::$report['last_persisted_at'] : '';
+		if ($last === '') {
+			return true;
+		}
+
+		$last_ts = strtotime($last);
+		if ($last_ts === false) {
+			return true;
+		}
+
+		return (time() - $last_ts) >= self::PERSIST_INTERVAL;
+	}
+
+	/**
+	 * Persist report if modified and interval has elapsed.
+	 *
+	 * @param bool $force Force persist regardless of interval.
 	 * @return void
 	 */
-	public static function persist() {
+	public static function persist($force = false) {
 		if (!self::$dirty || self::$report === null) {
 			return;
 		}
 
+		if (!$force && !self::should_persist()) {
+			return;
+		}
+
+		self::$report['last_persisted_at'] = gmdate('c');
 		update_option(self::OPTION_NAME, self::$report, false);
 		self::$dirty = false;
 	}

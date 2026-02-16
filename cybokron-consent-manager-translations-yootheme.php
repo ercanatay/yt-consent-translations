@@ -3,7 +3,7 @@
  * Plugin Name: Cybokron Consent Manager Translations for YOOtheme Pro
  * Plugin URI: https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme
  * Description: Easily translate YOOtheme Pro 5 Consent Manager texts from the WordPress admin panel. Supports multiple languages including English, Turkish, Hindi, Korean, Arabic, and German.
- * Version: 1.3.15
+ * Version: 1.3.16
  * Author: Ercan ATAY
  * Author URI: https://www.ercanatay.com/en/
  * License: GPL v2 or later
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('CYBOCOMA_VERSION', '1.3.15');
+define('CYBOCOMA_VERSION', '1.3.16');
 define('CYBOCOMA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CYBOCOMA_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CYBOCOMA_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -108,8 +108,11 @@ final class CYBOCOMA_Consent_Translations {
 	 * This method is kept for backward compatibility with self-hosted translations
 	 */
 	public function load_textdomain() {
-		// Translations are automatically loaded by WordPress 4.6+ for plugins hosted on WordPress.org
-		// Manual loading only needed for custom translation files not on WordPress.org
+		load_plugin_textdomain(
+			'cybokron-consent-manager-translations-yootheme',
+			false,
+			dirname(CYBOCOMA_PLUGIN_BASENAME) . '/languages'
+		);
 	}
 
 	/**
@@ -155,9 +158,6 @@ final class CYBOCOMA_Consent_Translations {
 		}
 
 		CYBOCOMA_Updater::on_activation();
-
-		// Flush rewrite rules
-		flush_rewrite_rules();
 	}
 
 	/**
@@ -165,7 +165,6 @@ final class CYBOCOMA_Consent_Translations {
 	 */
 	public function deactivate() {
 		CYBOCOMA_Updater::on_deactivation();
-		flush_rewrite_rules();
 	}
 
 	/**

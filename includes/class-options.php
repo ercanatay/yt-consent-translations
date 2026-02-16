@@ -99,6 +99,15 @@ class CYBOCOMA_Options {
 		$language = isset($options['language']) && is_scalar($options['language']) ? sanitize_text_field((string) $options['language']) : 'en';
 		$language = CYBOCOMA_Strings::is_valid_language($language) ? $language : 'en';
 
+		static $allowed_html = [
+			'a' => [
+				'href' => true,
+				'title' => true,
+				'target' => true,
+				'rel' => true,
+			],
+		];
+
 		$custom_strings = [];
 		if (isset($options['custom_strings']) && is_array($options['custom_strings'])) {
 			$valid_keys = CYBOCOMA_Strings::get_string_keys();
@@ -107,7 +116,7 @@ class CYBOCOMA_Options {
 					continue;
 				}
 
-				$value = (string) $value;
+				$value = wp_kses((string) $value, $allowed_html);
 				if ($value !== '') {
 					$custom_strings[$key] = $value;
 				}
@@ -195,7 +204,7 @@ class CYBOCOMA_Options {
 		}
 
 		$entry = [
-			'id' => uniqid('cybocoma_', true),
+			'id' => wp_generate_uuid4(),
 			'created_at' => gmdate('c'),
 			'label' => sanitize_key((string) $label),
 			'options' => self::sanitize_options($options)
@@ -304,6 +313,9 @@ class CYBOCOMA_Options {
 			$locale = strtoupper(str_replace('_', '-', $locale));
 
 			$value = maybe_unserialize($row['option_value']);
+			if (!is_array($value)) {
+				continue;
+			}
 			$results[$locale] = self::sanitize_options($value);
 		}
 

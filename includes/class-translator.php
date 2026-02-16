@@ -32,6 +32,18 @@ class CYBOCOMA_Translator {
 	private $translations = null;
 
 	/**
+	 * Allowed HTML tags for consent string output.
+	 */
+	private static $allowed_html = [
+		'a' => [
+			'href' => true,
+			'title' => true,
+			'target' => true,
+			'rel' => true,
+		],
+	];
+
+	/**
 	 * Original string to key mapping (cached)
 	 */
 	private $original_to_key = null;
@@ -174,7 +186,7 @@ class CYBOCOMA_Translator {
 
 		// Return custom translation if exists
 		if (isset($translations[$key]) && !empty($translations[$key])) {
-			return $translations[$key];
+			return wp_kses($translations[$key], self::$allowed_html);
 		}
 
 		return $translated;

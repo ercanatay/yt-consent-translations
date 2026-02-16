@@ -1,6 +1,6 @@
 # Cybokron Consent Manager Translations for YOOtheme Pro
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.15-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.16-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -255,6 +255,16 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.3.16 (2026-02-16)
+- **Security**: Added `wp_kses` output sanitization to gettext filter for defense-in-depth against stored XSS in custom translation strings
+- **Security**: Added type check after `maybe_unserialize` in locale option scan to prevent object injection
+- **Performance**: Added rate-limiting (1-hour interval) to health report DB persistence to avoid writes on every frontend page load
+- **Improvement**: Replaced `uniqid()` with `wp_generate_uuid4()` for snapshot IDs (cryptographically stronger, WordPress-native)
+- **Improvement**: Replaced `file_get_contents` with `wp_json_file_decode` (WP 5.9+) for language JSON loading with legacy fallback
+- **Improvement**: Implemented `load_plugin_textdomain()` for proper i18n text domain loading
+- **Cleanup**: Removed unnecessary `flush_rewrite_rules()` calls from activation/deactivation hooks
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.3.16`
 
 ### 1.3.15 (2026-02-16)
 - **Text Domain Fix**: Corrected all gettext text domain values from `cybokron-consent-manager-translations-yootheme-main` to `cybokron-consent-manager-translations-yootheme` to match the plugin slug exactly

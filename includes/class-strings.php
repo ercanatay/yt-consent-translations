@@ -299,22 +299,33 @@ class CYBOCOMA_Strings {
 	 * @return array|null
 	 */
 	private static function load_language_file($lang) {
+		if (!self::is_valid_language($lang)) {
+			return null;
+		}
+
 		$file_path = self::get_language_file_path($lang);
-		
+
 		if (!file_exists($file_path)) {
 			return null;
 		}
-		
+
+		if (function_exists('wp_json_file_decode')) {
+			$translations = wp_json_file_decode($file_path, ['associative' => true]);
+			return is_array($translations) ? $translations : null;
+		}
+
+		// Fallback for WordPress < 5.9.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Fallback for WP < 5.9; reading local plugin file.
 		$content = file_get_contents($file_path);
 		if ($content === false) {
 			return null;
 		}
-		
+
 		$translations = json_decode($content, true);
 		if (json_last_error() !== JSON_ERROR_NONE) {
 			return null;
 		}
-		
+
 		return $translations;
 	}
 

@@ -3,7 +3,7 @@ Contributors: cybokron, ercanatay
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.15
+Stable tag: 1.3.16
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,15 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.16 =
+* Security: added wp_kses output sanitization to gettext filter for defense-in-depth against stored XSS in custom translation strings.
+* Security: added type check after maybe_unserialize in locale option scan to prevent object injection.
+* Performance: added rate-limiting (1-hour interval) to health report DB persistence to avoid writes on every frontend page load.
+* Improvement: replaced uniqid() with wp_generate_uuid4() for snapshot IDs (cryptographically stronger, WordPress-native).
+* Improvement: replaced file_get_contents with wp_json_file_decode (WP 5.9+) for language JSON loading with legacy fallback.
+* Improvement: implemented load_plugin_textdomain() for proper i18n text domain loading.
+* Cleanup: removed unnecessary flush_rewrite_rules() calls from activation/deactivation hooks.
 
 = 1.3.15 =
 * Text domain: corrected all gettext text domain values from `cybokron-consent-manager-translations-yootheme-main` to `cybokron-consent-manager-translations-yootheme` to match the plugin slug exactly.
@@ -241,6 +250,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.3.16 =
+Security hardening and performance release: output sanitization for gettext filter, rate-limited health DB writes, safer snapshot IDs, and WordPress-native file reading.
 
 = 1.3.15 =
 WordPress.org review compliance: corrected text domain to match plugin slug, removed development-only files (tests, scripts) from distribution.
