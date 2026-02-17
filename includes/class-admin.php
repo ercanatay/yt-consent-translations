@@ -69,12 +69,15 @@ class CYBOCOMA_Admin {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		add_options_page(
+		$icon_url = CYBOCOMA_PLUGIN_URL . 'assets/images/icon-20.png';
+		add_menu_page(
 			__('Cybokron Consent Manager Translations for YOOtheme Pro', 'cybokron-consent-manager-translations-yootheme'),
-			__('Cybokron Consent Manager Translations for YOOtheme Pro', 'cybokron-consent-manager-translations-yootheme'),
+			__('Consent Translations', 'cybokron-consent-manager-translations-yootheme'),
 			'manage_options',
 			'cybokron-consent-manager-translations-yootheme',
-			[$this, 'render_settings_page']
+			[$this, 'render_settings_page'],
+			$icon_url,
+			81
 		);
 	}
 
@@ -85,7 +88,7 @@ class CYBOCOMA_Admin {
 	 * @return void
 	 */
 	public function enqueue_assets($hook) {
-		if ($hook !== 'settings_page_cybokron-consent-manager-translations-yootheme') {
+		if ($hook !== 'toplevel_page_cybokron-consent-manager-translations-yootheme') {
 			return;
 		}
 

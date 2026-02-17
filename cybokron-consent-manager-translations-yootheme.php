@@ -170,7 +170,7 @@ final class CYBOCOMA_Consent_Translations {
 	public function add_settings_link($links) {
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
-			admin_url('options-general.php?page=cybokron-consent-manager-translations-yootheme'),
+			admin_url('admin.php?page=cybokron-consent-manager-translations-yootheme'),
 			__('Settings', 'cybokron-consent-manager-translations-yootheme')
 		);
 		array_unshift($links, $settings_link);

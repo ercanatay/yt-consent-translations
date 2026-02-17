@@ -63,7 +63,7 @@ $cybocoma_updater_status_label = !empty($cybocoma_updater['statusLabel'])
 
 <div class="cybocoma-wrap">
 	<div class="cybocoma-header">
-		<h1><?php esc_html_e('Cybokron Consent Manager Translations for YOOtheme Pro', 'cybokron-consent-manager-translations-yootheme'); ?></h1>
+		<h1><img src="<?php echo esc_url(CYBOCOMA_PLUGIN_URL . 'assets/images/icon-64.png'); ?>" alt="" width="32" height="32" class="cybocoma-header-icon"><?php esc_html_e('Cybokron Consent Manager Translations for YOOtheme Pro', 'cybokron-consent-manager-translations-yootheme'); ?></h1>
 		<p><?php esc_html_e('Locale-aware consent translation management with live preview, health checks, and rollback snapshots.', 'cybokron-consent-manager-translations-yootheme'); ?></p>
 	</div>
 
