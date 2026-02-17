@@ -69,7 +69,7 @@ class CYBOCOMA_Admin {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$icon_url = CYBOCOMA_PLUGIN_URL . 'assets/images/icon-20.png';
+		$icon_url = CYBOCOMA_PLUGIN_URL . 'assets/images/icon-20-white.png';
 		add_menu_page(
 			__('Cybokron Consent Manager Translations for YOOtheme Pro', 'cybokron-consent-manager-translations-yootheme'),
 			__('Consent Translations', 'cybokron-consent-manager-translations-yootheme'),

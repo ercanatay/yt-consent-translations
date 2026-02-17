@@ -3,7 +3,7 @@ Contributors: cybokron
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 3. Live preview, action buttons, and snapshot rollback panel
 
 == Changelog ==
+
+= 1.4.2 =
+* Changed: Admin sidebar and settings page header now use white plugin icon for better visibility on dark admin backgrounds.
 
 = 1.4.1 =
 * CI: Fixed ABSPATH guard validation to accept WP_UNINSTALL_PLUGIN as valid guard for uninstall.php.
@@ -265,6 +268,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.4.2 =
+UI: White plugin icon for admin sidebar and settings page header.
 
 = 1.4.1 =
 CI fix: corrected deploy validation for uninstall.php guard check.
