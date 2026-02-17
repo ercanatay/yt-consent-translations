@@ -77,11 +77,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 
 == Screenshots ==
 
-1. Main settings page with language selector
-2. Banner strings translation
-3. Modal content translation
-4. Category translations
-5. Import/Export functionality
+1. Main settings page with locale scope, update status, compatibility health panel, and translation tabs
+2. Banner strings translation with inline QA checks and field-level validation
+3. Live preview, action buttons, and snapshot rollback panel
 
 == Changelog ==
 
