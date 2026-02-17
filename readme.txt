@@ -3,7 +3,7 @@ Contributors: cybokron
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.18
+Stable tag: 1.3.19
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,9 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 5. Import/Export functionality
 
 == Changelog ==
+
+= 1.3.19 =
+* CI: Added GitHub Actions workflow for automatic WordPress.org SVN deployment on release.
 
 = 1.3.18 =
 * Fixed Contributors field: removed invalid WordPress.org username `ercanatay`, kept only valid `cybokron` account.
