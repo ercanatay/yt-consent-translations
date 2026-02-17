@@ -133,6 +133,10 @@ jobs:
         run: |
           FAIL=0
           for FILE in $(find . -name '*.php' -not -path './.git/*'); do
+            # uninstall.php uses WP_UNINSTALL_PLUGIN (correct per WordPress docs)
+            if grep -q "WP_UNINSTALL_PLUGIN" "$FILE"; then
+              continue
+            fi
             if ! grep -q "ABSPATH" "$FILE"; then
               echo "::error::Missing ABSPATH check in $FILE"
               FAIL=1
