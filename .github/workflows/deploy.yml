@@ -5,8 +5,161 @@ on:
     types: [published]
 
 jobs:
+  validate:
+    name: Pre-deploy checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer
+
+      - name: PHP syntax check
+        run: find . -name '*.php' -not -path './.git/*' | xargs -n1 php -l
+
+      - name: Version consistency check
+        run: |
+          HEADER_VER=$(grep -oP "Version:\s*\K[0-9.]+" cybokron-consent-manager-translations-yootheme.php | head -1)
+          CONST_VER=$(grep -oP "CYBOCOMA_VERSION',\s*'\K[0-9.]+" cybokron-consent-manager-translations-yootheme.php)
+          README_VER=$(grep -oP "Stable tag:\s*\K[0-9.]+" readme.txt)
+
+          echo "Plugin header:  $HEADER_VER"
+          echo "PHP constant:   $CONST_VER"
+          echo "readme.txt:     $README_VER"
+
+          FAIL=0
+          if [ "$HEADER_VER" != "$CONST_VER" ]; then
+            echo "::error::Version mismatch: plugin header ($HEADER_VER) != CYBOCOMA_VERSION ($CONST_VER)"
+            FAIL=1
+          fi
+          if [ "$HEADER_VER" != "$README_VER" ]; then
+            echo "::error::Version mismatch: plugin header ($HEADER_VER) != readme.txt Stable tag ($README_VER)"
+            FAIL=1
+          fi
+          exit $FAIL
+
+      - name: Text domain check
+        run: |
+          SLUG="cybokron-consent-manager-translations-yootheme"
+          FAIL=0
+
+          # Check that all gettext calls use the correct text domain
+          BAD=$(grep -rn --include='*.php' -E "(__\(|_e\(|esc_html__\(|esc_html_e\(|esc_attr__\(|esc_attr_e\()" . \
+            | grep -v ".git/" \
+            | grep "'[^']*'" \
+            | grep -v "'${SLUG}'" \
+            | grep -v "// phpcs" \
+            || true)
+
+          if [ -n "$BAD" ]; then
+            # Filter for actual domain mismatches (lines with a text domain that isn't ours)
+            REAL_BAD=$(echo "$BAD" | grep -E "'[a-z]+-[a-z]+" | grep -v "'${SLUG}'" || true)
+            if [ -n "$REAL_BAD" ]; then
+              echo "::error::Possible text domain mismatch found:"
+              echo "$REAL_BAD"
+              FAIL=1
+            fi
+          fi
+
+          # Verify plugin header Text Domain
+          HEADER_DOMAIN=$(grep -oP "Text Domain:\s*\K.*" cybokron-consent-manager-translations-yootheme.php | tr -d '[:space:]')
+          if [ "$HEADER_DOMAIN" != "$SLUG" ]; then
+            echo "::error::Plugin header Text Domain ($HEADER_DOMAIN) != expected ($SLUG)"
+            FAIL=1
+          fi
+
+          exit $FAIL
+
+      - name: Contributors check
+        run: |
+          CONTRIBUTORS=$(grep -oP "Contributors:\s*\K.*" readme.txt | tr -d '[:space:]')
+          echo "Contributors: $CONTRIBUTORS"
+
+          # Check for known invalid usernames
+          if echo "$CONTRIBUTORS" | grep -q "ercanatay"; then
+            echo "::error::Contributors field contains 'ercanatay' which is not a valid WordPress.org username"
+            exit 1
+          fi
+
+          if [ -z "$CONTRIBUTORS" ]; then
+            echo "::error::Contributors field is empty"
+            exit 1
+          fi
+
+      - name: Forbidden files check
+        run: |
+          FAIL=0
+          for PATTERN in tests/ scripts/ .jules/ .Jules/ composer.lock node_modules/; do
+            if [ -e "$PATTERN" ]; then
+              echo "::error::Forbidden path found in repo: $PATTERN (should be in .distignore)"
+              FAIL=1
+            fi
+          done
+
+          # Verify .distignore exists
+          if [ ! -f ".distignore" ]; then
+            echo "::error::.distignore file is missing"
+            FAIL=1
+          fi
+
+          exit $FAIL
+
+      - name: Readme validation
+        run: |
+          FAIL=0
+
+          # Check required fields
+          for FIELD in "Stable tag" "Requires at least" "Tested up to" "Requires PHP" "License"; do
+            if ! grep -q "^${FIELD}:" readme.txt; then
+              echo "::error::readme.txt missing required field: $FIELD"
+              FAIL=1
+            fi
+          done
+
+          # Stable tag must not be trunk
+          STABLE=$(grep -oP "Stable tag:\s*\K.*" readme.txt | tr -d '[:space:]')
+          if [ "$STABLE" = "trunk" ]; then
+            echo "::error::Stable tag must not be 'trunk'"
+            FAIL=1
+          fi
+
+          exit $FAIL
+
+      - name: ABSPATH guard check
+        run: |
+          FAIL=0
+          for FILE in $(find . -name '*.php' -not -path './.git/*'); do
+            if ! grep -q "ABSPATH" "$FILE"; then
+              echo "::error::Missing ABSPATH check in $FILE"
+              FAIL=1
+            fi
+          done
+          exit $FAIL
+
+      - name: Discouraged functions check
+        run: |
+          FAIL=0
+          # Functions discouraged by WordPress.org Plugin Check
+          PATTERNS="load_plugin_textdomain\b"
+
+          FOUND=$(grep -rn --include='*.php' -E "$PATTERNS" . --exclude-dir=.git || true)
+          # Exclude commented-out lines
+          REAL=$(echo "$FOUND" | grep -v "^\s*//" | grep -v "^\s*\*" | grep -v "^$" || true)
+
+          if [ -n "$REAL" ]; then
+            echo "::error::Discouraged function(s) found:"
+            echo "$REAL"
+            FAIL=1
+          fi
+          exit $FAIL
+
   deploy:
     name: Deploy to WordPress.org SVN
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
