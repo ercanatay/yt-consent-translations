@@ -1,6 +1,6 @@
 # Cybokron Consent Manager Translations for YOOtheme Pro
 
-[![WordPress Plugin Version](https://img.shields.io/badge/version-1.3.19-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
+[![WordPress Plugin Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/ercanatay/cybokron-consent-manager-translations-yootheme)
 [![WordPress Tested](https://img.shields.io/badge/WordPress-5.0--6.9-green.svg)](https://wordpress.org)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-red.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -255,6 +255,12 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ```
 
 ## 📝 Changelog
+
+### 1.4.0 (2026-02-17)
+- **New**: Plugin icon displayed in WordPress admin sidebar menu
+- **New**: Plugin icon added to settings page header
+- **Changed**: Plugin menu moved to top-level admin menu with custom icon for better visibility
+- **Release Sync**: Updated plugin/readme/composer metadata to `1.4.0`
 
 ### 1.3.19 (2026-02-17)
 - **CI**: Added GitHub Actions workflow for automatic WordPress.org SVN deployment on release publish

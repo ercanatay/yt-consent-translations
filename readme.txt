@@ -3,7 +3,7 @@ Contributors: cybokron
 Tags: yootheme, consent-manager, gdpr, cookie-consent, translation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 1.3.19
+Stable tag: 1.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,11 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 3. Live preview, action buttons, and snapshot rollback panel
 
 == Changelog ==
+
+= 1.4.0 =
+* New: Plugin icon now displayed in WordPress admin sidebar menu.
+* New: Plugin icon added to settings page header.
+* Changed: Plugin menu moved to top-level admin menu with custom icon for better visibility.
 
 = 1.3.19 =
 * CI: Added GitHub Actions workflow for automatic WordPress.org SVN deployment on release.
@@ -257,6 +262,12 @@ Enable periodic checks from plugin settings. The plugin reads WordPress core upd
 * Tabbed admin interface
 
 == Upgrade Notice ==
+
+= 1.4.0 =
+Feature release: custom plugin icon in admin sidebar and settings page header, top-level admin menu.
+
+= 1.3.19 =
+CI: Added GitHub Actions workflow for automatic WordPress.org SVN deployment on release.
 
 = 1.3.18 =
 Contributors field fix: use only valid WordPress.org username.
