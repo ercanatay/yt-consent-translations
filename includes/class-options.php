@@ -53,7 +53,7 @@ class CYBOCOMA_Options {
 	public static function get_default_options() {
 		return [
 			'enabled' => true,
-			'language' => 'en',
+			'language' => 'auto',
 			'custom_strings' => [],
 			'updated_at' => gmdate('c')
 		];
